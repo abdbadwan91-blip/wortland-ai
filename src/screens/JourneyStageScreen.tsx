@@ -5,6 +5,7 @@ import styles from './JourneyStageScreen.module.css';
 import { mapTopic, mapTopicLabel } from '../modules/MapProgress/mapTopics';
 import { isBossStage, nextWorld, worldLabel } from '../modules/MapProgress/worlds';
 import { missionGoal, missionMeta } from '../modules/Progression/missionMeta';
+import { missionKindLabel, stageMission } from '../modules/Progression/stageMission';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -33,6 +34,7 @@ export function JourneyStageScreen() {
   const upcomingWorld = nextWorld(selectedLevel);
   const bossLabel = profile.appLanguage === 'ar' ? 'تحدي زعيم العالم' : profile.appLanguage === 'de' ? 'Welt-Boss' : 'World Boss';
   const meta = missionMeta(selectedLevel);
+  const mission = stageMission(selectedLevel);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -65,6 +67,7 @@ export function JourneyStageScreen() {
       </section>
 
       <section className={styles.missionBrief}>
+        <div className={styles.missionType}><span>{mission.icon}</span><strong>{missionKindLabel(mission,profile.appLanguage)}</strong></div>
         <p>{missionGoal(profile.appLanguage, meta.boss)}</p>
         <div className={styles.missionStats}>
           <span>⚡ {meta.xp} XP</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>{'★'.repeat(meta.stars)}</span>
