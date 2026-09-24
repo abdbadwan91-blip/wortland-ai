@@ -1,24 +1,18 @@
+import { LEARNING_WORLDS, localStage, worldForStage, worldLabel } from '../../modules/MapProgress/worlds';
 import styles from './WorldStrip.module.css';
 
-const WORLDS = [
-  { icon:'🌱', ar:'قرية البداية', en:'Starter Village', de:'Startdorf' },
-  { icon:'🌿', ar:'الحياة اليومية', en:'Daily Life', de:'Alltag' },
-  { icon:'🏙️', ar:'عالم المدينة', en:'City World', de:'Stadtwelt' },
-  { icon:'🧭', ar:'الحياة في ألمانيا', en:'Life in Germany', de:'Leben in Deutschland' },
-  { icon:'🏰', ar:'أرض الإتقان', en:'Master Land', de:'Meisterland' },
-];
-
 export function WorldStrip({ language, stage }:{ language:string; stage:number }) {
-  const active=Math.min(4,Math.floor((Math.max(1,stage)-1)/4));
-  const status=(index:number)=>index<active?'done':index===active?'active':'locked';
+  const activeWorld=worldForStage(stage);
+  const active=LEARNING_WORLDS.findIndex(w=>w.id===activeWorld.id);
+  const statusText=(state:string)=>language==='ar'?(state==='done'?'مكتمل':state==='active'?'الحالي':'مقفل'):language==='de'?(state==='done'?'Abgeschlossen':state==='active'?'Aktuell':'Gesperrt'):(state==='done'?'Completed':state==='active'?'Current':'Locked');
   return <div className={styles.strip} aria-label="Learning worlds">
-    {WORLDS.map((world,index)=>{
-      const label=language==='ar'?world.ar:language==='de'?world.de:world.en;
-      const state=status(index);
-      return <div key={world.en} className={state==='active'?styles.active:state==='done'?styles.done:styles.world}>
+    {LEARNING_WORLDS.map((world,index)=>{
+      const state=index<active?'done':index===active?'active':'locked';
+      const label=worldLabel(world,language);
+      return <div key={world.id} className={state==='active'?styles.active:state==='done'?styles.done:styles.world} aria-label={label+' — '+statusText(state)}>
         <span className={styles.icon}>{state==='done'?'✓':state==='locked'?'🔒':world.icon}</span>
         <span>{label}</span>
-        {state==='active'?<small>{Math.min(4,((stage-1)%4)+1)}/4</small>:null}
+        {state==='active'?<small>{localStage(stage)}/4</small>:null}
       </div>;
     })}
   </div>;
