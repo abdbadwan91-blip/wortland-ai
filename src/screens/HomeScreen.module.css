@@ -141,6 +141,30 @@
   color: var(--text-muted);
 }
 
+
+.journeyStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  margin-top: 5px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(12, 20, 42, 0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: var(--text);
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.readyDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #67e8a5;
+  box-shadow: 0 0 0 3px rgba(103,232,165,0.13), 0 0 10px rgba(103,232,165,0.55);
+}
+
 .journeyPlay {
   width: 52px;
   height: 52px;

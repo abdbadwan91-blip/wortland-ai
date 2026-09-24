@@ -110,7 +110,7 @@ export function HomeScreen() {
     (stage: number) => {
       const wheelLevel = ((stage - 1) % 20) + 1;
       setSelectedLevel(wheelLevel);
-      setScreen('levelWheel');
+      setScreen('journeyStage');
     },
     [setScreen, setSelectedLevel],
   );
@@ -171,6 +171,9 @@ export function HomeScreen() {
 
   const goalsDone = allGoalsComplete(daily);
   const bonusReady = goalsDone && !daily.bonusClaimed;
+  const journeyStage = mapProgress.unlockedStage;
+  const journeyLevel = ((journeyStage - 1) % 20) + 1;
+  const journeyCefr = levelToCefr(journeyLevel);
 
   return (
     <div className="screen with-nav fade-in">
@@ -221,8 +224,12 @@ export function HomeScreen() {
           <span className={styles.journeyKicker}>WortLand AI</span>
           <h2 className={styles.journeyTitle}>{t('home.map.title')}</h2>
           <p className={styles.journeyMeta}>
-            {t('home.level', { n: mapProgress.unlockedStage })} · {t(cefrLabelKey(levelToCefr(((mapProgress.unlockedStage - 1) % 20) + 1)))}
+            {t('map.stage', { n: journeyStage })} · {t('home.level', { n: journeyLevel })} · {t(cefrLabelKey(journeyCefr))}
           </p>
+          <div className={styles.journeyStatus}>
+            <span className={styles.readyDot} aria-hidden />
+            <span>{t('home.continueLearning')}</span>
+          </div>
         </div>
         <button type="button" className={styles.journeyPlay} onClick={continueLearning}>
           ▶

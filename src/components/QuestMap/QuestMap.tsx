@@ -48,6 +48,7 @@ function StageNode({
       <span className={styles.nodeInner}>
         {state === 'completed' ? '✓' : state === 'locked' ? '🔒' : zoneLabel(stage).n}
       </span>
+      {state === 'current' ? <span className={styles.playBadge} aria-hidden>▶</span> : null}
     </button>
   );
 }

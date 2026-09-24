@@ -37,6 +37,7 @@ export type Screen =
   | 'profile'
   | 'settings'
   | 'levelWheel'
+  | 'journeyStage'
   | 'topicPicker'
   | 'gameModes'
   | 'arenaStub'

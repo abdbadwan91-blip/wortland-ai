@@ -6,7 +6,6 @@ import styles from './GamesHubScreen.module.css';
 import { assetUrl } from '../modules/Content/assetUrl';
 
 const COMING_SOON = [
-  { id: 'conversation', icon: '💬', tone: 'coral' },
   { id: 'sentenceRace', icon: '🏁', tone: 'violet' },
 ] as const;
 
