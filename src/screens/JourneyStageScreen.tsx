@@ -24,7 +24,8 @@ export function JourneyStageScreen() {
     t, profile, selectedLevel, selectedTopic, setSelectedTopic, setSelectedMode, setScreen,
   } = useApp();
   const cefr = levelToCefr(selectedLevel);
-  const previewMode = getJourneyMode(selectedLevel, selectedTopic);
+  const normalMode = getJourneyMode(selectedLevel, selectedTopic);
+  const previewMode: GameModeId = isWorldBoss ? 'master' : normalMode;
   const missionTopic = mapTopic(selectedLevel);
   const missionLabel = mapTopicLabel(selectedLevel, profile.appLanguage);
   const isWorldBoss = isBossStage(selectedLevel);
@@ -32,7 +33,7 @@ export function JourneyStageScreen() {
   const bossLabel = profile.appLanguage === 'ar' ? 'تحدي زعيم العالم' : profile.appLanguage === 'de' ? 'Welt-Boss' : 'World Boss';
 
   const playTopic = (topicId: string) => {
-    const mode = getJourneyMode(selectedLevel, topicId);
+    const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
     setSelectedTopic(topicId);
     setSelectedMode(mode);
     setScreen(MODE_SCREENS[mode]);
