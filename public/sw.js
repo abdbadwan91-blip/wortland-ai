@@ -1,11 +1,12 @@
-const CACHE_NAME = 'wortland-shell-v1';
+const CACHE_NAME = 'wortland-shell-v2';
+const scope = self.registration.scope;
 const SHELL_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/favicon.svg',
-  '/icon-192.svg',
-  '/icon-512.svg',
+  scope,
+  scope + 'index.html',
+  scope + 'manifest.webmanifest',
+  scope + 'favicon.svg',
+  scope + 'icon-192.svg',
+  scope + 'icon-512.svg',
 ];
 
 self.addEventListener('install', (event) => {
@@ -30,16 +31,18 @@ self.addEventListener('fetch', (event) => {
       fetch(event.request)
         .then((response) => {
           const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put('/index.html', copy));
+          caches.open(CACHE_NAME).then((cache) => cache.put(scope + 'index.html', copy));
           return response;
         })
-        .catch(() => caches.match('/index.html').then((response) => response || caches.match('/'))),
+        .catch(() =>
+          caches.match(scope + 'index.html').then((response) => response || caches.match(scope)),
+        ),
     );
     return;
   }
 
   const url = new URL(event.request.url);
-  const isContentImage = url.pathname.startsWith('/content/');
+  const isContentImage = url.pathname.includes('/content/');
   const isStaticAsset = ['script', 'style', 'image', 'font', 'manifest'].includes(event.request.destination);
   if (!isContentImage && !isStaticAsset) return;
 
@@ -56,5 +59,3 @@ self.addEventListener('fetch', (event) => {
     }),
   );
 });
-
-// Offline replay covers visited shell/assets only; fresh content and app data still need a connection.
