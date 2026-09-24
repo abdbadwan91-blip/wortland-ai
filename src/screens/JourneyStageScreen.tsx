@@ -6,6 +6,10 @@ import { mapTopic, mapTopicLabel } from '../modules/MapProgress/mapTopics';
 import { isBossStage, nextWorld, worldLabel } from '../modules/MapProgress/worlds';
 import { missionGoal, missionMeta } from '../modules/Progression/missionMeta';
 import { missionKindLabel, stageMission } from '../modules/Progression/stageMission';
+import { learningObjective, objectiveLabel } from '../modules/Progression/learningObjective';
+import { rewardHint, stageReward } from '../modules/Progression/stageReward';
+import { stageTip, stageTipLabel } from '../modules/Progression/stageTips';
+import { rankInfo } from '../modules/Progression/journeyRank';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -35,6 +39,10 @@ export function JourneyStageScreen() {
   const bossLabel = profile.appLanguage === 'ar' ? 'تحدي زعيم العالم' : profile.appLanguage === 'de' ? 'Welt-Boss' : 'World Boss';
   const meta = missionMeta(selectedLevel);
   const mission = stageMission(selectedLevel);
+  const objective = learningObjective(selectedLevel);
+  const reward = stageReward(selectedLevel, meta.boss);
+  const tip = stageTip(selectedLevel);
+  const rank = rankInfo(selectedLevel, profile.appLanguage);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -69,9 +77,12 @@ export function JourneyStageScreen() {
       <section className={styles.missionBrief}>
         <div className={styles.missionType}><span>{mission.icon}</span><strong>{missionKindLabel(mission,profile.appLanguage)}</strong></div>
         <p>{missionGoal(profile.appLanguage, meta.boss)}</p>
+        <div className={styles.objective}><span>🎓</span><span>{objectiveLabel(objective,profile.appLanguage)} · {objective.target}</span></div>
         <div className={styles.missionStats}>
-          <span>⚡ {meta.xp} XP</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>{'★'.repeat(meta.stars)}</span>
+          <span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>{'★'.repeat(meta.stars)}</span>
         </div>
+        <div className={styles.tip}><span>{tip.icon}</span><span>{stageTipLabel(tip,profile.appLanguage)}</span></div>
+        <div className={styles.rewardHint}><span>{rank.icon} {rank.label}</span><span>{rewardHint(profile.appLanguage,meta.boss)}</span></div>
         <button type="button" className={styles.startMission} onClick={() => playTopic(selectedTopic)}>{profile.appLanguage==='ar'?'ابدأ المهمة':profile.appLanguage==='de'?'Mission starten':'Start mission'} ▶</button>
       </section>
 
