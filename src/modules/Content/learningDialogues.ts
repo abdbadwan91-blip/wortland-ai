@@ -1,0 +1,47 @@
+import type { DialogueDomain } from './dialogueCorpus';
+
+export type DialogueLevel = 'A1' | 'A2' | 'B1' | 'B2' | 'C1';
+
+export interface LearningDialogue {
+  id: string;
+  level: DialogueLevel;
+  domain: DialogueDomain;
+  topicId: string;
+  title: string;
+  scene: string;
+  sourceCorpus: 'bcontrast-wmt20';
+  turns: Array<{ speaker: 'Anna' | 'Max'; de: string; en: string }>;
+}
+
+/**
+ * Pedagogically adapted seed missions inspired by BConTrasT task domains.
+ * These are deliberately short; the importer/curation pipeline can grow the
+ * catalogue without coupling the UI to raw corpus JSON.
+ */
+export const LEARNING_DIALOGUES: LearningDialogue[] = [
+  { id:'coffee-a1', level:'A1', domain:'coffee', topicId:'essen', title:'Im Café', scene:'☕', sourceCorpus:'bcontrast-wmt20', turns:[
+    {speaker:'Anna',de:'Guten Tag! Einen Kaffee, bitte.',en:'Hello! A coffee, please.'},
+    {speaker:'Max',de:'Gerne. Mit Milch?',en:'Sure. With milk?'},
+    {speaker:'Anna',de:'Ja, bitte. Danke!',en:'Yes, please. Thank you!'}]},
+  { id:'restaurant-a2', level:'A2', domain:'restaurant', topicId:'essen', title:'Im Restaurant', scene:'🍽️', sourceCorpus:'bcontrast-wmt20', turns:[
+    {speaker:'Max',de:'Haben Sie einen Tisch für zwei Personen?',en:'Do you have a table for two?'},
+    {speaker:'Anna',de:'Ja. Möchten Sie am Fenster sitzen?',en:'Yes. Would you like to sit by the window?'},
+    {speaker:'Max',de:'Sehr gern. Können wir die Speisekarte bekommen?',en:'Gladly. Can we have the menu?'}]},
+  { id:'ride-b1', level:'B1', domain:'transport', topicId:'transport', title:'Eine Fahrt organisieren', scene:'🚕', sourceCorpus:'bcontrast-wmt20', turns:[
+    {speaker:'Anna',de:'Ich möchte morgen früh zum Bahnhof fahren.',en:'I would like to go to the station tomorrow morning.'},
+    {speaker:'Max',de:'Um wie viel Uhr sollen wir Sie abholen?',en:'What time should we pick you up?'},
+    {speaker:'Anna',de:'Bitte gegen halb sieben. Mein Zug fährt um sieben Uhr zehn.',en:'Around six thirty, please. My train leaves at seven ten.'}]},
+  { id:'cinema-b2', level:'B2', domain:'cinema', topicId:'familie', title:'Kinokarten reservieren', scene:'🎬', sourceCorpus:'bcontrast-wmt20', turns:[
+    {speaker:'Max',de:'Ich würde gern zwei Karten für die Abendvorstellung reservieren.',en:'I would like to reserve two tickets for the evening screening.'},
+    {speaker:'Anna',de:'Bevorzugen Sie Plätze in der Mitte oder eher hinten?',en:'Do you prefer seats in the middle or toward the back?'},
+    {speaker:'Max',de:'Wenn möglich in der Mitte, solange die Plätze nebeneinander sind.',en:'In the middle if possible, as long as the seats are next to each other.'}]},
+  { id:'auto-c1', level:'C1', domain:'auto', topicId:'arbeit', title:'Werkstatttermin klären', scene:'🔧', sourceCorpus:'bcontrast-wmt20', turns:[
+    {speaker:'Anna',de:'Seit einigen Tagen tritt beim Bremsen ein ungewöhnliches Geräusch auf, das ich gern überprüfen lassen würde.',en:'For several days an unusual noise has occurred while braking, which I would like to have checked.'},
+    {speaker:'Max',de:'Könnten Sie das Fahrzeug vormittags bringen und uns mitteilen, unter welchen Bedingungen das Geräusch besonders auffällt?',en:'Could you bring the vehicle in the morning and tell us under which conditions the noise is particularly noticeable?'},
+    {speaker:'Anna',de:'Ja. Vor allem bei niedriger Geschwindigkeit ist es deutlich zu hören.',en:'Yes. It is particularly noticeable at low speed.'}]},
+];
+
+export function dialoguesFor(level: DialogueLevel, topicId?: string): LearningDialogue[] {
+  const exact = LEARNING_DIALOGUES.filter((d) => d.level === level && (!topicId || d.topicId === topicId));
+  return exact.length ? exact : LEARNING_DIALOGUES.filter((d) => d.level === level);
+}
