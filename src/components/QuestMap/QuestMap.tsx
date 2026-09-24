@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import type { MapProgress, StageState } from '../../modules/MapProgress/mapProgress';
-import { getStageState, zoneLabel } from '../../modules/MapProgress/mapProgress';
+import { getStageState } from '../../modules/MapProgress/mapProgress';
 import { FOREST_NODES, MOUNTAIN_NODES } from './stageLayout';
 import { MountainScene } from './MountainScene';
 import { ForestScene } from './ForestScene';
