@@ -101,7 +101,7 @@
   display: grid;
   place-items: center;
 }
-.art img { width: 88%; height: 88%; object-fit: contain; }
+.art img { width: 100%; height: 100%; object-fit: cover; }
 .meta { display: flex; flex-direction: column; gap: 2px; min-height: 72px; }
 .meta strong { font-size: 0.92rem; font-weight: 900; line-height: 1.2; }
 .desc { font-size: 0.72rem; color: var(--text-muted); line-height: 1.3; }

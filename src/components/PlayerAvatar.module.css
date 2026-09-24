@@ -24,11 +24,23 @@
 
 .frame {
   position: absolute;
-  inset: -10%;
-  width: 120%;
-  height: 120%;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
   pointer-events: none;
-  object-fit: contain;
+}
+
+.framed { border-radius: 50%; }
+.framed .face {
+  position: absolute;
+  inset: 19%;
+  width: 62%;
+  height: 62%;
+  border-radius: 50%;
+  border-width: 2px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
 }
 
 .badge {
@@ -37,7 +49,9 @@
   bottom: -6%;
   width: 42%;
   height: 42%;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.85);
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
 }
 
@@ -47,7 +61,9 @@
   top: -10%;
   width: 40%;
   height: 40%;
-  object-fit: contain;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.85);
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
 }
 

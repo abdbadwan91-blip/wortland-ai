@@ -39,10 +39,13 @@ export function PlayerAvatar({
 
   return (
     <div
-      className={`${styles.wrap} ${styles[rarity]} ${className}`}
+      className={`${styles.wrap} ${styles[rarity]} ${frame ? styles.framed : ''} ${className}`}
       style={{ width: size, height: size }}
       data-player-avatar
     >
+      {frame && (
+        <img className={styles.frame} src={assetUrl(frame.image)} alt="" draggable={false} />
+      )}
       <div
         className={styles.face}
         style={{ background: shopAvatar ? 'transparent' : base?.bg || '#334155' }}
@@ -53,9 +56,6 @@ export function PlayerAvatar({
           <span aria-hidden>{base?.emoji || '🧒'}</span>
         )}
       </div>
-      {frame && (
-        <img className={styles.frame} src={assetUrl(frame.image)} alt="" draggable={false} />
-      )}
       {showBadge && badge && (
         <img className={styles.badge} src={assetUrl(badge.image)} alt="" draggable={false} />
       )}
