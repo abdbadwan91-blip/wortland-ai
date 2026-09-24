@@ -2,6 +2,7 @@
 import { TOPICS, cefrLabelKey, levelToCefr, type GameModeId } from '../modules/Content/cefr';
 import { getJourneyMode } from '../modules/Progression/journeyMode';
 import styles from './JourneyStageScreen.module.css';
+import { mapTopic, mapTopicLabel } from '../modules/MapProgress/mapTopics';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -19,10 +20,12 @@ const MODE_SCREENS: Record<GameModeId, Screen> = {
 
 export function JourneyStageScreen() {
   const {
-    t, selectedLevel, selectedTopic, setSelectedTopic, setSelectedMode, setScreen,
+    t, profile, selectedLevel, selectedTopic, setSelectedTopic, setSelectedMode, setScreen,
   } = useApp();
   const cefr = levelToCefr(selectedLevel);
   const previewMode = getJourneyMode(selectedLevel, selectedTopic);
+  const missionTopic = mapTopic(selectedLevel);
+  const missionLabel = mapTopicLabel(selectedLevel, profile.appLanguage);
 
   const playTopic = (topicId: string) => {
     const mode = getJourneyMode(selectedLevel, topicId);
@@ -39,12 +42,13 @@ export function JourneyStageScreen() {
 
       <section className={styles.hero}>
         <span className={styles.kicker}>WortLand AI · Journey</span>
+        <div className={styles.missionTopic}><span>{missionTopic.icon}</span><strong>{missionLabel}</strong></div>
         <div className={styles.heroRow}>
           <div>
             <h1>{t('home.level', { n: selectedLevel })}</h1>
             <p>{t(cefrLabelKey(cefr))} · {t(`modes.${previewMode}`)}</p>
           </div>
-          <div className={styles.stageOrb}>{selectedLevel}</div>
+          <div className={styles.stageOrb}>{missionTopic.icon}</div>
         </div>
         <div className={styles.progressTrack} aria-hidden>
           <span style={{ width: `${Math.max(5, Math.min(100, selectedLevel * 5))}%` }} />
