@@ -1,5 +1,6 @@
 import type { Screen } from '../Auth/AppContext';
 import { resolveNextChallenge } from './nextChallenge';
+import { loadMapProgress } from '../MapProgress/mapProgress';
 
 type AppNav = {
   setScreen: (s: Screen) => void;
@@ -17,6 +18,13 @@ export function handleNextChallenge(
     onRetry: () => void;
   },
 ): void {
+  if (opts.passed) {
+    const progress = loadMapProgress();
+    app.setSelectedLevel(progress.unlockedStage);
+    app.setScreen('journeyStage');
+    return;
+  }
+
   const next = resolveNextChallenge({
     currentMode: opts.currentMode,
     level: opts.level,
