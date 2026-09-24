@@ -9,6 +9,7 @@ import {
 } from '../modules/FlashArena/wordPuzzle';
 import { getLevelParams } from '../modules/Content/levelDifficulty';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import styles from './WordPuzzleScreen.module.css';
 
@@ -409,7 +410,9 @@ export function WordPuzzleScreen({ onFinish }: Props) {
       data-answer={round.answer.join('')}
     >
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {

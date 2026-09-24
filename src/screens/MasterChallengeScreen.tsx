@@ -6,6 +6,7 @@ import {
 } from '../modules/FlashArena/masterChallenge';
 import { recordResult } from '../modules/Mastery';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { MASTER_ROUND_SIZE } from '../modules/Rewards/rewards';
 import type { Article, LearningObject } from '../modules/Content/types';
 import styles from './MasterChallengeScreen.module.css';
@@ -215,7 +216,9 @@ export function MasterChallengeScreen({ onFinish }: Props) {
       data-kind={q.kind}
     >
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {

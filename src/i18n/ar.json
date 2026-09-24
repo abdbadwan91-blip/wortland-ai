@@ -631,5 +631,8 @@
   "settings.updateError": "تعذّر التحقق الآن. حاول لاحقاً.",
   "settings.updateSkipped": "لم يُطبَّق تحديث.",
   "settings.updateReadyToast": "تحديث جديد جاهز — سيُطبَّق عند فتح اللعبة مرة أخرى",
-  "settings.otaHint": "يبقى تقدّم اللعبة على هذا الجهاز مع التحديثات المباشرة."
+  "settings.otaHint": "يبقى تقدّم اللعبة على هذا الجهاز مع التحديثات المباشرة.",
+  "settings.speechRate": "سرعة النطق",
+  "settings.speechRateDesc": "سرعة نطق الكلمات الألمانية",
+  "settings.speechRateNormal": "عادي"
 }

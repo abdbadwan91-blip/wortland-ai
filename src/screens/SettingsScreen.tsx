@@ -9,6 +9,8 @@ import {
   getEmbeddedBundleVersion,
   getEmbeddedNativeVersionCode,
 } from '../modules/Ota/liveUpdate';
+import { SPEECH_RATES, type SpeechRate } from '../modules/Settings/settings';
+import { formatSpeechRateLabel, speakGermanAtRate } from '../modules/Audio/speech';
 import styles from './SettingsScreen.module.css';
 
 function Toggle({
@@ -153,6 +155,31 @@ export function SettingsScreen() {
             aria-label={t('settings.volume')}
             onChange={(event) => updateSettings({ volume: Number(event.target.value) })}
           />
+          <div className={styles.rateBlock}>
+            <span className={styles.rowIcon} aria-hidden>🔊</span>
+            <span className={styles.rowCopy}>
+              <strong>{t('settings.speechRate')}</strong>
+              <small>{t('settings.speechRateDesc')}</small>
+            </span>
+          </div>
+          <div className={styles.rateChoices} role="radiogroup" aria-label={t('settings.speechRate')}>
+            {SPEECH_RATES.map((rate) => (
+              <button
+                type="button"
+                key={rate}
+                className={`${styles.rateChoice} ${settings.speechRate === rate ? styles.rateChoiceOn : ''}`}
+                role="radio"
+                aria-checked={settings.speechRate === rate}
+                onClick={() => {
+                  updateSettings({ speechRate: rate as SpeechRate });
+                  speakGermanAtRate('Hallo', rate as SpeechRate);
+                }}
+              >
+                {formatSpeechRateLabel(rate)}
+                {rate === 1 ? <small>{t('settings.speechRateNormal')}</small> : null}
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 

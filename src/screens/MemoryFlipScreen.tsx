@@ -7,6 +7,7 @@ import {
 import { getMemoryPairCount } from '../modules/Content/levelDifficulty';
 import { assetUrl } from '../modules/Content/assetUrl';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import styles from './MemoryFlipScreen.module.css';
 
@@ -163,7 +164,9 @@ export function MemoryFlipScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-memory-flip>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {

@@ -128,14 +128,20 @@
 .feature:active { transform: scale(0.96); }
 
 .fIcon {
-  width: 40px;
-  height: 40px;
+  width: 52px;
+  height: 52px;
   border-radius: 14px;
-  background: linear-gradient(145deg, #2a4a7a, #1a3358);
+  overflow: hidden;
   display: grid;
   place-items: center;
-  font-size: 1.2rem;
-  box-shadow: inset 0 -3px 0 rgba(0,0,0,0.2);
+  background: rgba(255,255,255,.08);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.1);
+}
+.fIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .fLabel {
@@ -185,13 +191,20 @@
 .missionIcon {
   width: 44px;
   height: 44px;
-  border-radius: 16px;
+  border-radius: 14px;
   display: grid;
   place-items: center;
-  font-size: 1.35rem;
-  background: linear-gradient(145deg, #ffb347, #ff7a2f);
-  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18), 0 6px 14px rgba(255, 122, 47, 0.28);
+  padding: 0;
+  overflow: hidden;
+  background: rgba(255,255,255,.1);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
   flex-shrink: 0;
+}
+.missionIcon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .missionTitles {

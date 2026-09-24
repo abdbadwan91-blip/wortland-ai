@@ -8,6 +8,7 @@ import {
 } from '../modules/FlashArena/conversationMission';
 import { recordResult } from '../modules/Mastery';
 import styles from './ConversationMissionScreen.module.css';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 
 type ChoiceState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -119,7 +120,9 @@ export function ConversationMissionScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-conversation-mission>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => setScreen('gameModes')}

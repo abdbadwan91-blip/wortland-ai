@@ -45,3 +45,10 @@
 .checkButton:disabled { opacity: .6; }
 .checkButton:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 .updateStatus { margin: 8px 0 0; color: var(--accent-2); font-size: .68rem; font-weight: 700; text-align: center; }
+.rateBlock { display: flex; align-items: flex-start; gap: 11px; min-height: 48px; margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--border); }
+.rateChoices { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; margin-inline-start: 41px; }
+.rateChoice { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; min-height: 40px; padding: 4px 2px; border: 1px solid var(--border); border-radius: 11px; background: rgba(255,255,255,.05); color: var(--text-muted); font-size: .72rem; font-weight: 900; }
+.rateChoice small { font-size: .55rem; font-weight: 700; opacity: .85; }
+.rateChoiceOn { border-color: var(--accent); background: var(--accent-soft); color: var(--text); }
+.rateChoice:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+@media (max-width: 360px) { .rateChoices { grid-template-columns: repeat(4, 1fr); margin-inline-start: 0; } }

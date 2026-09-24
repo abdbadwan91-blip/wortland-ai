@@ -7,6 +7,7 @@ import {
 } from '../modules/FlashArena/quickPick';
 import { getLevelParams } from '../modules/Content/levelDifficulty';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import type { LearningObject } from '../modules/Content/types';
 import styles from './QuickPickScreen.module.css';
@@ -180,7 +181,9 @@ export function QuickPickScreen({ onFinish }: Props) {
       data-smart-training={isSmart ? '1' : undefined}
     >
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           aria-label={t('a11y.back')}

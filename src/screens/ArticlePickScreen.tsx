@@ -6,6 +6,7 @@ import {
 } from '../modules/FlashArena/articlePick';
 import { recordResult } from '../modules/Mastery';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { getLevelParams } from '../modules/Content/levelDifficulty';
 import type { Article } from '../modules/Content/types';
 import styles from './ArticlePickScreen.module.css';
@@ -139,7 +140,9 @@ export function ArticlePickScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-article-pick>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {

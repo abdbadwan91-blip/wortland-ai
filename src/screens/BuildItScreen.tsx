@@ -9,6 +9,7 @@ import {
   type BuildRound,
 } from '../modules/FlashArena/buildIt';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import styles from './BuildItScreen.module.css';
 
@@ -219,7 +220,9 @@ export function BuildItScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-build-it data-answer={round.answer.join('|')}>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {

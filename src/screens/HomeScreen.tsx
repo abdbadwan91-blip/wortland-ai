@@ -32,14 +32,14 @@ import { SMART_TOPIC_ID } from '../modules/FlashArena/quickPick';
 import styles from './HomeScreen.module.css';
 
 const FEATURES = [
-  { id: 'flash', icon: '⚡', key: 'home.feature.flashcards', action: 'levelWheel' as const },
-  { id: 'games', icon: '🎮', key: 'home.feature.games', action: 'games' as const },
-  { id: 'daily', icon: '🎯', key: 'home.feature.daily', action: 'daily' as const },
-  { id: 'challenges', icon: '🏅', key: 'home.feature.challenges', action: null },
-  { id: 'family', icon: '👨‍👩‍👧', key: 'home.feature.family', action: 'family' as const },
-  { id: 'board', icon: '🏆', key: 'home.feature.leaderboard', action: null },
-  { id: 'stats', icon: '📊', key: 'home.feature.stats', action: 'progress' as const },
-  { id: 'shop', icon: '🛒', key: 'home.feature.shop', action: 'shop' as const },
+  { id: 'flash', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-cards.png`, key: 'home.feature.flashcards', action: 'levelWheel' as const },
+  { id: 'games', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-games.png`, key: 'home.feature.games', action: 'games' as const },
+  { id: 'daily', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-daily.png`, key: 'home.feature.daily', action: 'daily' as const },
+  { id: 'challenges', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-challenges.png`, key: 'home.feature.challenges', action: null },
+  { id: 'family', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-family.png`, key: 'home.feature.family', action: 'family' as const },
+  { id: 'board', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-leaderboard.png`, key: 'home.feature.leaderboard', action: null },
+  { id: 'stats', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-stats.png`, key: 'home.feature.stats', action: 'progress' as const },
+  { id: 'shop', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-shop.png`, key: 'home.feature.shop', action: 'shop' as const },
 ];
 
 const GOAL_ICONS: Record<DailyGoalId, string> = {
@@ -229,7 +229,7 @@ export function HomeScreen() {
           aria-expanded={missionExpanded}
         >
           <span className={styles.missionIcon} aria-hidden>
-            🎯
+            <img src={`${import.meta.env.BASE_URL}ui/home/home-daily.png`} alt="" width={44} height={44} />
           </span>
           <div className={styles.missionTitles}>
             <strong>{t('daily.title')}</strong>
@@ -373,7 +373,7 @@ export function HomeScreen() {
             data-feature={f.id}
           >
             <span className={styles.fIcon} aria-hidden>
-              {f.icon}
+              <img src={f.iconSrc} alt="" width={56} height={56} />
             </span>
             <span className={styles.fLabel}>{t(f.key)}</span>
             {!f.action && <span className={styles.soon}>{t('home.feature.soon')}</span>}

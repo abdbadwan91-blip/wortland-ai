@@ -631,5 +631,8 @@
   "settings.updateError": "Could not check right now. Try again later.",
   "settings.updateSkipped": "No update applied.",
   "settings.updateReadyToast": "New update ready — it will apply the next time you open the game",
-  "settings.otaHint": "Game progress stays on this device across live updates."
+  "settings.otaHint": "Game progress stays on this device across live updates.",
+  "settings.speechRate": "Speech speed",
+  "settings.speechRateDesc": "How fast German words are spoken",
+  "settings.speechRateNormal": "normal"
 }

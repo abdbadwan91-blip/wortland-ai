@@ -6,6 +6,7 @@ import {
 } from '../modules/FlashArena/pictureMatch';
 import { getLevelParams } from '../modules/Content/levelDifficulty';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import type { LearningObject } from '../modules/Content/types';
 import styles from './PictureMatchScreen.module.css';
@@ -191,7 +192,9 @@ export function PictureMatchScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-picture-match>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           aria-label={t('a11y.back')}

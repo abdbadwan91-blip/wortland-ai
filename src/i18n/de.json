@@ -631,5 +631,8 @@
   "settings.updateError": "Gerade nicht möglich. Später nochmal versuchen.",
   "settings.updateSkipped": "Kein Update angewendet.",
   "settings.updateReadyToast": "Neues Update bereit — wird beim nächsten Öffnen angewendet",
-  "settings.otaHint": "Spielstand bleibt bei Live-Updates auf diesem Gerät erhalten."
+  "settings.otaHint": "Spielstand bleibt bei Live-Updates auf diesem Gerät erhalten.",
+  "settings.speechRate": "Sprechtempo",
+  "settings.speechRateDesc": "Wie schnell deutsche Wörter gesprochen werden",
+  "settings.speechRateNormal": "normal"
 }

@@ -7,6 +7,7 @@ import {
 } from '../modules/FlashArena/speedRound';
 import { getLevelParams } from '../modules/Content/levelDifficulty';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import type { LearningObject } from '../modules/Content/types';
 import styles from './SpeedRoundScreen.module.css';
@@ -168,7 +169,9 @@ export function SpeedRoundScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-speed-round>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {

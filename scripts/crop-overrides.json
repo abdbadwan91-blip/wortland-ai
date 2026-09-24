@@ -1,0 +1,62 @@
+{
+  "zuhause/uhr.png": {
+    "cx": 0.42,
+    "cy": 0.4,
+    "scale": 0.85
+  },
+  "zuhause/stuhl.png": {
+    "cx": 0.48,
+    "cy": 0.48,
+    "scale": 0.95
+  },
+  "zuhause/kueche.png": {
+    "cx": 0.55,
+    "cy": 0.48,
+    "scale": 0.9
+  },
+  "zuhause/bad.png": {
+    "cx": 0.52,
+    "cy": 0.46,
+    "scale": 0.92
+  },
+  "zuhause/tasse.png": {
+    "cx": 0.5,
+    "cy": 0.44,
+    "scale": 0.9
+  },
+  "zuhause/schluessel.png": {
+    "cx": 0.4,
+    "cy": 0.45,
+    "scale": 0.95
+  },
+  "farben/lila.png": {
+    "cx": 0.5,
+    "cy": 0.42,
+    "scale": 0.88
+  },
+  "farben/orange.png": {
+    "cx": 0.5,
+    "cy": 0.42,
+    "scale": 0.88
+  },
+  "farben/blau.png": {
+    "cx": 0.5,
+    "cy": 0.4,
+    "scale": 0.88
+  },
+  "arbeit/feuerwehrmann.png": {
+    "cx": 0.5,
+    "cy": 0.48,
+    "scale": 1.0
+  },
+  "arbeit/verkaeufer.png": {
+    "cx": 0.5,
+    "cy": 0.46,
+    "scale": 0.95
+  },
+  "farben/gruen.png": {
+    "cx": 0.48,
+    "cy": 0.45,
+    "scale": 0.9
+  }
+}

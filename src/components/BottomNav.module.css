@@ -1,5 +1,4 @@
 .nav {
-  /* Viewport-fixed — not relative to .app-frame — so scroll never moves it */
   position: fixed;
   bottom: 0;
   left: max(0px, calc(50% - (var(--app-max) / 2)));
@@ -11,7 +10,6 @@
   padding: 8px 6px calc(10px + env(safe-area-inset-bottom, 0px));
   background: rgba(8, 16, 40, 0.96);
   border-top: 1px solid var(--border);
-  /* Avoid backdrop-filter here — it can create containing-block bugs on Android WebView */
   pointer-events: auto;
   box-sizing: border-box;
 }
@@ -34,8 +32,29 @@
 }
 
 .icon {
-  font-size: 1.2rem;
-  line-height: 1;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  transition: transform var(--anim), filter var(--anim), box-shadow var(--anim), width var(--anim), height var(--anim);
+  filter: saturate(0.7) brightness(0.92);
+  background: rgba(255,255,255,.06);
+}
+.icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.on .icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  filter: none;
+  box-shadow: 0 0 12px rgba(255, 179, 71, 0.45), 0 0 0 1px rgba(255, 179, 71, 0.28);
+  transform: translateY(-1px);
 }
 .label {
   font-size: 0.68rem;

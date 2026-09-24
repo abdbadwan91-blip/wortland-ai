@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
 import { buildDeck } from '../modules/FlashArena/classicCards';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
+import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { translationFor } from '../modules/Content/types';
 import styles from './ClassicCardsScreen.module.css';
 
@@ -87,7 +88,9 @@ export function ClassicCardsScreen({ onFinish }: Props) {
   return (
     <div className={`screen fade-in ${styles.wrap}`} data-classic-cards>
       <div className={styles.topBar}>
-        <button
+        
+        <SpeechSpeedChip />
+<button
           type="button"
           className="back-chip"
           onClick={() => {
