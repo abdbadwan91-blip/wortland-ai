@@ -1,4 +1,5 @@
 import { getGameModes, type GameModeId } from '../Content/cefr';
+import { stageMission } from './stageMission';
 
 const TOPIC_ORDER = [
   'tiere', 'essen', 'zuhause', 'schule', 'familie', 'farben', 'kleidung',
@@ -16,5 +17,7 @@ export function getJourneyMode(level: number, topicId: string): GameModeId {
     : unlocked;
   const pool = activePool.length ? activePool : unlocked;
   const topicIndex = Math.max(0, TOPIC_ORDER.indexOf(topicId));
+  const preferred = stageMission(level).preferred;
+  if (pool.some((mode) => mode.id === preferred)) return preferred;
   return pool[(Math.max(1, level) + topicIndex) % pool.length]?.id ?? 'picture';
 }
