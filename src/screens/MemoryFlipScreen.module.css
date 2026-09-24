@@ -187,13 +187,13 @@
   padding: 0;
   border-radius: 14px;
   overflow: hidden;
-  background: transparent;
+  background: linear-gradient(145deg, #fff7ed, #e0f2fe);
 }
 
 .image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 12px;
   display: block;
 }

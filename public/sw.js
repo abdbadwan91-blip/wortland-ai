@@ -1,12 +1,14 @@
-const CACHE_NAME = 'wortland-shell-v4';
+const CACHE_NAME = 'wortland-shell-v5';
 const scope = self.registration.scope;
 const SHELL_ASSETS = [
   scope,
   scope + 'index.html',
   scope + 'manifest.webmanifest',
-  scope + 'favicon.svg',
-  scope + 'icon-192.svg',
-  scope + 'icon-512.svg',
+  scope + 'favicon.png',
+  scope + 'icon-192.png',
+  scope + 'icon-512.png',
+  scope + 'icon-512-maskable.png',
+  scope + 'apple-touch-icon.png',
 ];
 
 self.addEventListener('install', (event) => {
