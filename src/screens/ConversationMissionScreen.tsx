@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function ConversationMissionScreen({ onFinish }: Props) {
-  const { t, setScreen, selectedLevel, selectedTopic } = useApp();
+  const { t, setScreen, selectedLevel, selectedTopic, profile } = useApp();
   const mission = useMemo(() => getDefaultMission(), []);
   const cefr = levelToCefr(selectedLevel) as DialogueLevel;
   const learningDialogue = useMemo(() => dialoguesFor(cefr, selectedTopic)[0] ?? dialoguesFor(cefr)[0], [cefr, selectedTopic]);
@@ -145,7 +145,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
       {learningDialogue ? <section className={styles.dialoguePreview} aria-label={learningDialogue.title}>
         {learningDialogue.turns.map((turn, i) => <div key={i} className={`${styles.dialogueLine} ${turn.speaker === 'Anna' ? styles.annaLine : styles.maxLine}`}>
           <button type="button" className={styles.speakerButton} onClick={() => speakGerman(turn.de)} aria-label={`${turn.speaker} anhören`}>🔊</button>
-          <div><b>{turn.speaker}</b><p lang="de">{turn.de}</p><small>{turn.en}</small></div>
+          <div><b>{turn.speaker}</b><p lang="de">{turn.de}</p><small>{profile.translationLanguage === 'ar' ? (turn.ar ?? turn.en) : turn.en}</small></div>
         </div>)}
       </section> : null}
       <div className={styles.cast} aria-label="Anna und Max">
