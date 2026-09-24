@@ -6,6 +6,7 @@ import { cefrColor, cefrLabelKey, levelToCefr } from '../modules/Content/cefr';
 import { BottomNav } from '../components/BottomNav';
 import { QuestMap } from '../components/QuestMap/QuestMap';
 import { WorldStrip } from '../components/QuestMap/WorldStrip';
+import { WorldStagePanel } from '../components/QuestMap/WorldStagePanel';
 import { FalconTransition } from '../components/QuestMap/FalconTransition';
 import {
   loadMapProgress,
@@ -241,6 +242,7 @@ export function HomeScreen() {
 
       <section className={styles.mapSection} aria-label={t('home.map.title')}>
         <WorldStrip language={profile.appLanguage} stage={journeyStage} />
+        <WorldStagePanel language={profile.appLanguage} stage={journeyStage} onSelect={openStage} />
         <QuestMap
           progress={mapProgress}
           mountainTitle={t('map.zone.mountain')}
