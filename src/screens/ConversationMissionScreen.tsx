@@ -10,6 +10,8 @@ import { recordResult } from '../modules/Mastery';
 import styles from './ConversationMissionScreen.module.css';
 import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { speakGerman } from '../modules/Audio/speech';
+import { dialoguesFor, type DialogueLevel } from '../modules/Content/learningDialogues';
+import { levelToCefr } from '../modules/Content/cefr';
 
 type ChoiceState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -18,8 +20,10 @@ interface Props {
 }
 
 export function ConversationMissionScreen({ onFinish }: Props) {
-  const { t, setScreen } = useApp();
+  const { t, setScreen, selectedLevel, selectedTopic } = useApp();
   const mission = useMemo(() => getDefaultMission(), []);
+  const cefr = levelToCefr(selectedLevel) as DialogueLevel;
+  const learningDialogue = useMemo(() => dialoguesFor(cefr, selectedTopic)[0] ?? dialoguesFor(cefr)[0], [cefr, selectedTopic]);
   const beats = useMemo(() => buildSession(mission), [mission]);
   const [index, setIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
@@ -137,7 +141,13 @@ export function ConversationMissionScreen({ onFinish }: Props) {
         </span>
       </div>
 
-      <p className={styles.missionTitle}>{t(mission.titleKey)}</p>
+      <p className={styles.missionTitle}>{learningDialogue?.scene} {learningDialogue?.title ?? t(mission.titleKey)} · {cefr}</p>
+      {learningDialogue ? <section className={styles.dialoguePreview} aria-label={learningDialogue.title}>
+        {learningDialogue.turns.map((turn, i) => <div key={i} className={`${styles.dialogueLine} ${turn.speaker === 'Anna' ? styles.annaLine : styles.maxLine}`}>
+          <button type="button" className={styles.speakerButton} onClick={() => speakGerman(turn.de)} aria-label={`${turn.speaker} anhören`}>🔊</button>
+          <div><b>{turn.speaker}</b><p lang="de">{turn.de}</p><small>{turn.en}</small></div>
+        </div>)}
+      </section> : null}
       <div className={styles.cast} aria-label="Anna und Max">
         <span className={styles.avatar}>👩🏻 <b>Anna</b></span>
         <span className={styles.chatPulse}>•••</span>
