@@ -8,7 +8,7 @@ export interface StageTheme {
   world: 'start' | 'daily' | 'city' | 'life' | 'advanced';
 }
 
-const THEMES = [
+const THEMES: Array<[string, string, string, string, string, StageTheme['world']]> = [
   ['begrüßung','👋','Begrüßung','Greetings','التحية','start'],
   ['vorstellen','🙋','Sich vorstellen','Introducing yourself','التعريف بالنفس','start'],
   ['zahlen','🔢','Zahlen & Uhrzeit','Numbers & time','الأرقام والوقت','start'],
@@ -54,11 +54,11 @@ const THEMES = [
   ['umwelt','♻️','Umwelt','Environment','البيئة','advanced'],
   ['technik','💻','Technik & Internet','Technology & internet','التقنية والإنترنت','advanced'],
   ['meister','🏆','Meisterprüfung','Master challenge','اختبار الإتقان','advanced'],
-] as const;
+];
 
-export const TOPIC_CATALOG = THEMES.map((t, i) => ({
+export const TOPIC_CATALOG: StageTheme[] = THEMES.map((t, i) => ({
   stage: i + 1, topicId:t[0], icon:t[1], de:t[2], en:t[3], ar:t[4], world:t[5],
-})) satisfies StageTheme[];
+}));
 
 /** Current map keeps 20 progression nodes; topics beyond 20 are ready for new worlds. */
 export const STAGE_THEMES: StageTheme[] = TOPIC_CATALOG.slice(0, 20);
