@@ -26,7 +26,6 @@ export function GameModesScreen() {
 
   const modes = useMemo(() => getGameModes(selectedLevel), [selectedLevel]);
 
-  // Keep selection valid for current level (prefer unlocked mode for this level)
   useEffect(() => {
     const current = modes.find((m) => m.id === selectedMode);
     if (current && !current.locked) return;
@@ -56,8 +55,13 @@ export function GameModesScreen() {
     if (fallback) setSelectedMode(fallback.id);
   }, [modes, selectedLevel, selectedMode, setSelectedMode]);
 
+  const startMode = (modeId: string) => {
+    setSelectedMode(modeId as GameModeId);
+    setScreen(screenForMode(modeId));
+  };
+
   return (
-    <div className="screen fade-in">
+    <div className="screen fade-in" data-game-modes>
       <button type="button" className="back-chip" onClick={() => setScreen('topicPicker')}>
         ← {t('modes.back')}
       </button>
@@ -70,42 +74,48 @@ export function GameModesScreen() {
         {modes.map((m) => {
           const on = selectedMode === m.id && !m.locked;
           return (
-            <button
+            <div
               key={m.id}
-              type="button"
-              disabled={m.locked}
-              className={`${styles.row} ${on ? styles.on : ''} ${m.locked ? styles.locked : ''}`}
+              className={`${styles.rowWrap} ${on ? styles.rowWrapOn : ''} ${m.locked ? styles.locked : ''}`}
               style={{ ['--mode' as string]: m.color }}
-              onClick={() => !m.locked && setSelectedMode(m.id)}
-              data-mode={m.id}
-              data-locked={m.locked ? '1' : '0'}
+              data-mode-row={m.id}
             >
-              <span className={styles.icon} aria-hidden>
-                {m.icon.includes('/') ? (
-                  <img src={assetUrl(m.icon)} alt="" className={styles.iconImg} draggable={false} />
-                ) : (
-                  m.icon
-                )}
-              </span>
-              <span className={styles.body}>
-                <strong>{t(`modes.${m.id}`)}</strong>
-                <small>{m.locked ? t('modes.locked') : t(`modes.${m.id}.desc`)}</small>
-              </span>
-              {m.locked ? <span>🔒</span> : on ? <span className={styles.check}>✓</span> : null}
-            </button>
+              <button
+                type="button"
+                disabled={m.locked}
+                className={`${styles.row} ${on ? styles.on : ''}`}
+                onClick={() => !m.locked && setSelectedMode(m.id)}
+                data-mode={m.id}
+                data-locked={m.locked ? '1' : '0'}
+                aria-pressed={on}
+              >
+                <span className={styles.icon} aria-hidden>
+                  {m.icon.includes('/') ? (
+                    <img src={assetUrl(m.icon)} alt="" className={styles.iconImg} draggable={false} />
+                  ) : (
+                    m.icon
+                  )}
+                </span>
+                <span className={styles.body}>
+                  <strong>{t(`modes.${m.id}`)}</strong>
+                  <small>{m.locked ? t('modes.locked') : t(`modes.${m.id}.desc`)}</small>
+                </span>
+                {m.locked ? <span aria-hidden>🔒</span> : null}
+              </button>
+              {on && (
+                <button
+                  type="button"
+                  className={styles.inlineStart}
+                  onClick={() => startMode(m.id)}
+                  data-start-mode={m.id}
+                >
+                  {t('modes.start')}
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
-
-      <div className={styles.spacer} />
-      <button
-        type="button"
-        className="btn-primary"
-        onClick={() => setScreen(screenForMode(selectedMode))}
-        data-start-mode={selectedMode}
-      >
-        {t('modes.start')}
-      </button>
     </div>
   );
 }

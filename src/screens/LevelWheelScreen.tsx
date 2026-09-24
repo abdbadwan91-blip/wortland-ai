@@ -86,6 +86,18 @@ export function LevelWheelScreen() {
         </div>
       </div>
 
+      <button
+        type="button"
+        className={`${styles.inlineConfirm} btn-blue`}
+        onClick={() => {
+          setSelectedLevel(level);
+          setScreen('topicPicker');
+        }}
+        data-confirm-level={level}
+      >
+        {t('wheel.confirm')} · {level}
+      </button>
+
       <div className={styles.legend}>
         {LEGEND.map((b) => (
           <span key={b} className={styles.legItem}>
@@ -94,18 +106,6 @@ export function LevelWheelScreen() {
           </span>
         ))}
       </div>
-
-      <div className={styles.spacer} />
-      <button
-        type="button"
-        className="btn-blue"
-        onClick={() => {
-          setSelectedLevel(level);
-          setScreen('topicPicker');
-        }}
-      >
-        {t('wheel.confirm')}
-      </button>
     </div>
   );
 }

@@ -150,7 +150,7 @@
   "modes.conversation": "Gesprächsmission",
   "modes.conversation.desc": "Wähle die beste deutsche Antwort in einer Mini-Szene",
   "modes.locked": "Bald",
-  "modes.start": "Start",
+  "modes.start": "Starten",
   "modes.back": "Zurück",
   "arena.coming": "Demnächst: Flash Arena Level {n}",
   "arena.coming.desc": "{mode} for {topic} is next. Scaffold ready!",

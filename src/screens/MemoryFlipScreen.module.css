@@ -180,28 +180,21 @@
 }
 
 .imageFrame {
-  /* Before: min(88%, 92px) square ≈ 89×89 on mobile (~76% of card width).
-     After: nearly fill the portrait face (~30% larger linear / much larger area). */
-  width: 94%;
-  height: 78%;
-  max-width: 140px;
-  max-height: 160px;
-  aspect-ratio: auto;
+  position: absolute;
+  inset: 4px;
   display: grid;
   place-items: center;
-  padding: 4px;
+  padding: 0;
   border-radius: 14px;
-  background: #fffaf0;
-  box-shadow:
-    inset 0 0 0 1px rgba(91, 61, 35, 0.12),
-    0 4px 10px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  background: transparent;
 }
 
 .image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  border-radius: 10px;
+  object-fit: cover;
+  border-radius: 12px;
   display: block;
 }
 
