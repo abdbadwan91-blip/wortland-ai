@@ -41,6 +41,23 @@ export const LEARNING_DIALOGUES: LearningDialogue[] = [
     {speaker:'Anna',de:'Ja. Vor allem bei niedriger Geschwindigkeit ist es deutlich zu hören.',en:'Yes. It is particularly noticeable at low speed.',ar:'نعم. يُسمع بوضوح خصوصاً عند السرعة المنخفضة.'}]},
 ];
 
+
+const LEVEL_ORDER: DialogueLevel[] = ['A1','A2','B1','B2','C1'];
+
+export function dialogueLevelForCefr(cefr: string): DialogueLevel {
+  if (cefr === 'Pre-A1') return 'A1';
+  return LEVEL_ORDER.includes(cefr as DialogueLevel) ? cefr as DialogueLevel : 'A1';
+}
+
+export function pickDialogue(level: DialogueLevel, topicId: string, seed = 0): LearningDialogue | undefined {
+  const exact = LEARNING_DIALOGUES.filter((d) => d.level === level && d.topicId === topicId);
+  const sameLevel = LEARNING_DIALOGUES.filter((d) => d.level === level);
+  const pool = exact.length ? exact : sameLevel;
+  if (!pool.length) return undefined;
+  const safeSeed = Math.abs(seed) % pool.length;
+  return pool[safeSeed];
+}
+
 export function dialoguesFor(level: DialogueLevel, topicId?: string): LearningDialogue[] {
   const exact = LEARNING_DIALOGUES.filter((d) => d.level === level && (!topicId || d.topicId === topicId));
   return exact.length ? exact : LEARNING_DIALOGUES.filter((d) => d.level === level);
