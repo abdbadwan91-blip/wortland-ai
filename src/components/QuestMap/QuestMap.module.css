@@ -258,6 +258,26 @@
   z-index: -1;
 }
 
+
+.playBadge {
+  position: absolute;
+  inset-inline-end: -9px;
+  bottom: -8px;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #fff3a8, #ffad42);
+  border: 2px solid #fff8df;
+  color: #4a1b00;
+  font-size: 0.62rem;
+  line-height: 1;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.38);
+  pointer-events: none;
+}
+
 @keyframes nodePulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
