@@ -9,6 +9,7 @@ import {
 import { recordResult } from '../modules/Mastery';
 import styles from './ConversationMissionScreen.module.css';
 import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
+import { speakGerman } from '../modules/Audio/speech';
 
 type ChoiceState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -27,6 +28,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
   const [locked, setLocked] = useState(false);
   const [choiceStates, setChoiceStates] = useState<Record<string, ChoiceState>>({});
   const [imageError, setImageError] = useState(false);
+  const [showTranslation, setShowTranslation] = useState<string | null>(null);
   const advancing = useRef(false);
   const failsRef = useRef(0);
 
@@ -39,6 +41,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
     setLocked(false);
     setChoiceStates({});
     setImageError(false);
+    setShowTranslation(null);
     advancing.current = false;
   }, [index]);
 
@@ -135,6 +138,11 @@ export function ConversationMissionScreen({ onFinish }: Props) {
       </div>
 
       <p className={styles.missionTitle}>{t(mission.titleKey)}</p>
+      <div className={styles.cast} aria-label="Anna und Max">
+        <span className={styles.avatar}>👩🏻 <b>Anna</b></span>
+        <span className={styles.chatPulse}>•••</span>
+        <span className={styles.avatar}>👦🏻 <b>Max</b></span>
+      </div>
 
       <div className={styles.progress}>
         <span className={styles.progressLabel}>
@@ -183,7 +191,16 @@ export function ConversationMissionScreen({ onFinish }: Props) {
               data-choice={choice.id}
               data-correct={choice.id === beat.correctId ? '1' : '0'}
             >
-              <span dir="ltr">{choice.german}</span>
+              <span className={styles.choiceCopy}>
+                <span dir="ltr">{choice.german}</span>
+                {showTranslation === choice.id && choice.translation ? (
+                  <small className={styles.translation}>{choice.translation}</small>
+                ) : null}
+              </span>
+              <span className={styles.choiceTools}>
+                <button type="button" className={styles.miniTool} aria-label="Deutsch anhören" onClick={(e) => { e.stopPropagation(); speakGerman(choice.german); }}>🔊</button>
+                {choice.translation ? <button type="button" className={styles.miniTool} aria-label="Übersetzung" onClick={(e) => { e.stopPropagation(); setShowTranslation((id) => id === choice.id ? null : choice.id); }}>文</button> : null}
+              </span>
               {st === 'correct' && (
                 <span className={styles.checkMark} aria-hidden>
                   ✓
