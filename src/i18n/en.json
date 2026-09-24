@@ -261,6 +261,7 @@
   "mf.tryAgain": "Not quite — try again",
   "mf.hiddenCard": "Hidden card",
   "mf.pictureOf": "Picture of {word}",
+  "mf.replay": "Replay sound",
   "mf.resultsTitle": "All pairs found!",
   "mf.score": "{matched}/{total} pairs matched",
   "mf.stars": "{n} stars",

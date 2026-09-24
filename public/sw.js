@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wortland-shell-v2';
+const CACHE_NAME = 'wortland-shell-v3';
 const scope = self.registration.scope;
 const SHELL_ASSETS = [
   scope,
@@ -45,6 +45,23 @@ self.addEventListener('fetch', (event) => {
   const isContentImage = url.pathname.includes('/content/');
   const isStaticAsset = ['script', 'style', 'image', 'font', 'manifest'].includes(event.request.destination);
   if (!isContentImage && !isStaticAsset) return;
+
+  // Network-first for JS/CSS so deploys are not stuck on stale shell assets
+  const isCode = event.request.destination === 'script' || event.request.destination === 'style';
+  if (isCode) {
+    event.respondWith(
+      fetch(event.request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request).then((r) => r || Response.error())),
+    );
+    return;
+  }
 
   event.respondWith(
     caches.match(event.request).then((cached) => {

@@ -261,6 +261,7 @@
   "mf.tryAgain": "ليس بعد — حاول مرة أخرى",
   "mf.hiddenCard": "بطاقة مخفية",
   "mf.pictureOf": "صورة {word}",
+  "mf.replay": "إعادة الصوت",
   "mf.resultsTitle": "وجدت كل الأزواج!",
   "mf.score": "{matched}/{total} أزواج",
   "mf.stars": "{n} نجوم",

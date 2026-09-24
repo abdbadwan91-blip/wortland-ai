@@ -261,6 +261,7 @@
   "mf.tryAgain": "Noch nicht — versuch’s nochmal",
   "mf.hiddenCard": "Verdeckte Karte",
   "mf.pictureOf": "Bild von {word}",
+  "mf.replay": "Noch einmal anhören",
   "mf.resultsTitle": "Alle Paare gefunden!",
   "mf.score": "{matched}/{total} Paare",
   "mf.stars": "{n} Sterne",

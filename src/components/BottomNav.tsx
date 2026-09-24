@@ -11,12 +11,18 @@ const ITEMS: { id: Screen; icon: string; key: string }[] = [
   { id: 'profile', icon: '👤', key: 'nav.profile' },
 ];
 
+/**
+ * Main tab bar — portaled to document.body with position:fixed so it stays
+ * pinned to the viewport bottom even when .app-frame / .screen scroll.
+ * (Absolute positioning inside .app-frame failed on mobile web when the frame
+ * grew taller than the viewport and the page scrolled.)
+ */
 export function BottomNav() {
   const { t, screen, setScreen } = useApp();
-  const [host, setHost] = useState<Element | null>(null);
+  const [host, setHost] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    setHost(document.querySelector('.app-frame') || document.body);
+    setHost(document.body);
   }, []);
 
   const active = (['home', 'learn', 'games', 'progress', 'profile'] as Screen[]).includes(screen)

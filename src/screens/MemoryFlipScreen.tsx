@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type SyntheticEvent } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
 import {
   buildBoard,
   type MemoryCard,
 } from '../modules/FlashArena/memoryFlip';
 import { getMemoryPairCount } from '../modules/Content/levelDifficulty';
+import { assetUrl } from '../modules/Content/assetUrl';
 import { speakGerman, stopSpeech, warmSpeechVoices } from '../modules/Audio/speech';
 import { recordResult } from '../modules/Mastery';
 import styles from './MemoryFlipScreen.module.css';
@@ -19,6 +20,12 @@ const FALLBACK_EMOJI: Record<string, string> = {
   suppe: '🍲', salat: '🥗', tomate: '🍅', karotte: '🥕', kartoffel: '🥔',
   eis: '🍦', kuchen: '🍰', schokolade: '🍫', pizza: '🍕', orange: '🍊',
 };
+
+const CARD_BACK_SRC = assetUrl('ui/memory/card-back.png');
+
+function spokenPhrase(card: MemoryCard): string {
+  return `${card.article} ${card.lemma}`.trim();
+}
 
 export interface MemoryFlipStats {
   moves: number;
@@ -84,16 +91,25 @@ export function MemoryFlipScreen({ onFinish }: Props) {
     }
   }, [matchedLos, pairCount, moves, sessionXp, onFinish]);
 
+  const replayCard = useCallback((card: MemoryCard, e?: SyntheticEvent) => {
+    e?.stopPropagation();
+    e?.preventDefault();
+    speakGerman(spokenPhrase(card), 'normal');
+  }, []);
+
   const onCardTap = useCallback(
     (card: MemoryCard) => {
-      if (locked) return;
       if (matchedIds.has(card.id)) return;
+      if (locked) return;
       if (flippedIds.includes(card.id)) return;
       if (flippedIds.length >= 2) return;
 
       const nextFlipped = [...flippedIds, card.id];
       setFlippedIds(nextFlipped);
       setFeedback(null);
+
+      // Speak German (article + lemma) whenever any card flips face-up
+      speakGerman(spokenPhrase(card), 'normal');
 
       if (nextFlipped.length < 2) return;
 
@@ -109,7 +125,7 @@ export function MemoryFlipScreen({ onFinish }: Props) {
       if (isMatch) {
         recordResult(selectedTopic, a.loId, true);
         setFeedback('match');
-        speakGerman(a.lemma, 'normal');
+        // Already spoke on the second flip — skip a second utterance to avoid double-speak
         const gained = 5;
         setSessionXp((x) => x + gained);
         setMatchedIds((prev) => {
@@ -199,7 +215,7 @@ export function MemoryFlipScreen({ onFinish }: Props) {
               key={card.id}
               type="button"
               role="listitem"
-              disabled={isMatched || locked}
+              disabled={locked && !faceUp}
               className={`${styles.card} ${faceUp ? styles.faceUp : styles.faceDown} ${
                 isMatched ? styles.matched : ''
               }`}
@@ -212,16 +228,20 @@ export function MemoryFlipScreen({ onFinish }: Props) {
               aria-label={
                 faceUp
                   ? card.kind === 'word'
-                    ? card.lemma
-                    : t('mf.pictureOf', { word: card.lemma })
+                    ? spokenPhrase(card)
+                    : t('mf.pictureOf', { word: spokenPhrase(card) })
                   : t('mf.hiddenCard')
               }
             >
               <span className={styles.cardInner}>
                 <span className={`${styles.face} ${styles.back}`}>
-                  <span className={styles.backPattern} aria-hidden>
-                    🧠
-                  </span>
+                  <img
+                    className={styles.backArt}
+                    src={CARD_BACK_SRC}
+                    alt=""
+                    draggable={false}
+                    aria-hidden
+                  />
                 </span>
                 <span className={`${styles.face} ${styles.front}`}>
                   {card.kind === 'image' ? (
@@ -250,6 +270,18 @@ export function MemoryFlipScreen({ onFinish }: Props) {
                     <span className={styles.wordFace}>
                       <span className={styles.article}>{card.article}</span>
                       <span className={styles.lemma}>{card.lemma}</span>
+                    </span>
+                  )}
+                  {faceUp && (
+                    <span
+                      className={styles.speakBtn}
+                      role="img"
+                      aria-label={t('mf.replay')}
+                      data-memory-speak
+                      onClick={(e) => replayCard(card, e)}
+                      onPointerDown={(e) => e.stopPropagation()}
+                    >
+                      🔊
                     </span>
                   )}
                   {isMatched && (

@@ -1,9 +1,10 @@
 .nav {
-  position: absolute;
-  left: 0;
-  right: 0;
+  /* Viewport-fixed — not relative to .app-frame — so scroll never moves it */
+  position: fixed;
   bottom: 0;
-  z-index: 50;
+  left: max(0px, calc(50% - (var(--app-max) / 2)));
+  width: min(100%, var(--app-max));
+  z-index: 1000;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2px;
@@ -12,6 +13,7 @@
   border-top: 1px solid var(--border);
   /* Avoid backdrop-filter here — it can create containing-block bugs on Android WebView */
   pointer-events: auto;
+  box-sizing: border-box;
 }
 
 .item {

@@ -130,10 +130,38 @@
   border: 2px solid rgba(252, 231, 243, 0.45);
 }
 
-.backPattern {
-  font-size: 1.85rem;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
-  opacity: 0.95;
+.backArt {
+  width: 72%;
+  height: 72%;
+  object-fit: cover;
+  border-radius: 16px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+  pointer-events: none;
+  user-select: none;
+}
+
+.speakBtn {
+  position: absolute;
+  bottom: 5px;
+  inset-inline-start: 5px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+  line-height: 1;
+  background: rgba(15, 23, 42, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 2;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.speakBtn:active {
+  transform: scale(0.92);
+  filter: brightness(1.15);
 }
 
 .front {
@@ -141,8 +169,8 @@
   background: linear-gradient(160deg, #2f2048, #1a1028);
   border: 2px solid rgba(244, 114, 182, 0.4);
   flex-direction: column;
-  gap: 4px;
-  padding: 6px;
+  gap: 2px;
+  padding: 2px;
 }
 
 .matched .front {
@@ -152,11 +180,16 @@
 }
 
 .imageFrame {
-  width: min(88%, 92px);
-  aspect-ratio: 1;
+  /* Before: min(88%, 92px) square ≈ 89×89 on mobile (~76% of card width).
+     After: nearly fill the portrait face (~30% larger linear / much larger area). */
+  width: 94%;
+  height: 78%;
+  max-width: 140px;
+  max-height: 160px;
+  aspect-ratio: auto;
   display: grid;
   place-items: center;
-  padding: 5px;
+  padding: 4px;
   border-radius: 14px;
   background: #fffaf0;
   box-shadow:
@@ -173,13 +206,13 @@
 }
 
 .emoji {
-  font-size: 2.2rem;
+  font-size: 2.85rem;
   line-height: 1;
   filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.35));
 }
 
 html[data-mode='junior'] .emoji {
-  font-size: 2.5rem;
+  font-size: 3.25rem;
 }
 
 .wordFace {
@@ -193,7 +226,7 @@ html[data-mode='junior'] .emoji {
 }
 
 .article {
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #f9a8d4;
   text-transform: lowercase;
@@ -201,7 +234,7 @@ html[data-mode='junior'] .emoji {
 }
 
 .lemma {
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   font-weight: 900;
   color: #fff;
   line-height: 1.15;
@@ -210,7 +243,7 @@ html[data-mode='junior'] .emoji {
 }
 
 html[data-mode='junior'] .lemma {
-  font-size: 0.98rem;
+  font-size: 1.25rem;
 }
 
 .checkMark {
@@ -274,7 +307,7 @@ html[data-mode='junior'] .lemma {
   }
 
   .lemma {
-    font-size: 1rem;
+    font-size: 1.28rem;
   }
 }
 
@@ -289,5 +322,5 @@ html[data-mode='junior'] .lemma {
 }
 
 .grid[data-pairs="8"] .lemma {
-  font-size: 0.85rem;
+  font-size: 1.05rem;
 }
