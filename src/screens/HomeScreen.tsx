@@ -110,7 +110,7 @@ export function HomeScreen() {
     (stage: number) => {
       const wheelLevel = ((stage - 1) % 20) + 1;
       setSelectedLevel(wheelLevel);
-      setScreen('levelWheel');
+      setScreen('journeyStage');
     },
     [setScreen, setSelectedLevel],
   );
