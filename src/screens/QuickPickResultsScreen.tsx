@@ -48,7 +48,7 @@ export function QuickPickResultsScreen({
     let showFalcon = false;
     if (rewards.mapAdvance) {
       const progress = loadMapProgress();
-      const result = completeCurrentStage(progress);
+      const result = completeCurrentStage(progress, selectedLevel);
       showFalcon = result.showFalcon;
     }
 

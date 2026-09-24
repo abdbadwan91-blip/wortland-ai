@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
-import { useApp, type Screen } from '../modules/Auth/AppContext';
-import { TOPICS, cefrLabelKey, getGameModes, levelToCefr, type GameModeId } from '../modules/Content/cefr';
+ import { useApp, type Screen } from '../modules/Auth/AppContext';
+import { TOPICS, cefrLabelKey, levelToCefr, type GameModeId } from '../modules/Content/cefr';
+import { getJourneyMode } from '../modules/Progression/journeyMode';
 import styles from './JourneyStageScreen.module.css';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
@@ -22,17 +22,13 @@ export function JourneyStageScreen() {
     t, selectedLevel, selectedTopic, setSelectedTopic, setSelectedMode, setScreen,
   } = useApp();
   const cefr = levelToCefr(selectedLevel);
-  const playable = useMemo(
-    () => getGameModes(selectedLevel).filter((mode) => !mode.locked),
-    [selectedLevel],
-  );
-  const recommended = playable[playable.length - 1];
+  const previewMode = getJourneyMode(selectedLevel, selectedTopic);
 
   const playTopic = (topicId: string) => {
-    if (!recommended) return;
+    const mode = getJourneyMode(selectedLevel, topicId);
     setSelectedTopic(topicId);
-    setSelectedMode(recommended.id);
-    setScreen(MODE_SCREENS[recommended.id]);
+    setSelectedMode(mode);
+    setScreen(MODE_SCREENS[mode]);
   };
 
   return (
@@ -46,7 +42,7 @@ export function JourneyStageScreen() {
         <div className={styles.heroRow}>
           <div>
             <h1>{t('home.level', { n: selectedLevel })}</h1>
-            <p>{t(cefrLabelKey(cefr))} · {recommended ? t(`modes.${recommended.id}`) : ''}</p>
+            <p>{t(cefrLabelKey(cefr))} · {t(`modes.${previewMode}`)}</p>
           </div>
           <div className={styles.stageOrb}>{selectedLevel}</div>
         </div>
@@ -60,7 +56,7 @@ export function JourneyStageScreen() {
           <span>{t('topic.title')}</span>
           <strong>{t('topic.subtitle', { n: selectedLevel, cefr: t(cefrLabelKey(cefr)) })}</strong>
         </div>
-        <span className={styles.modePill}>▶ {recommended ? t(`modes.${recommended.id}`) : ''}</span>
+        <span className={styles.modePill}>▶ {t(`modes.${previewMode}`)}</span>
       </div>
 
       <div className={styles.topicGrid}>

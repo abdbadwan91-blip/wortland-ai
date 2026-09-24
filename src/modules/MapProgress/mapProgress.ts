@@ -64,11 +64,14 @@ export function zoneLabel(stage: number): { zone: 'mountain' | 'forest'; n: numb
  * Mark current stage complete and unlock the next.
  * Returns whether falcon transition should play (just unlocked Forest).
  */
-export function completeCurrentStage(progress: MapProgress): {
+export function completeCurrentStage(progress: MapProgress, expectedStage?: number): {
   next: MapProgress;
   showFalcon: boolean;
 } {
   const current = progress.unlockedStage;
+  if (expectedStage !== undefined && expectedStage !== current) {
+    return { next: progress, showFalcon: false };
+  }
   const completed = progress.completed.includes(current)
     ? progress.completed
     : [...progress.completed, current];
