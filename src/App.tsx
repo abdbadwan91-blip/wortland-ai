@@ -7,6 +7,7 @@ import { ModeScreen } from './screens/ModeScreen';
 import { EmailScreen } from './screens/EmailScreen';
 import { HomeScreen } from './screens/HomeScreen';
 import { LevelWheelScreen } from './screens/LevelWheelScreen';
+import { JourneyStageScreen } from './screens/JourneyStageScreen';
 import { TopicPickerScreen } from './screens/TopicPickerScreen';
 import { GameModesScreen } from './screens/GameModesScreen';
 import { ArenaStubScreen } from './screens/ArenaStubScreen';
@@ -49,6 +50,8 @@ function Router() {
       return <HomeScreen />;
     case 'levelWheel':
       return <LevelWheelScreen />;
+    case 'journeyStage':
+      return <JourneyStageScreen />;
     case 'topicPicker':
       return <TopicPickerScreen />;
     case 'gameModes':
