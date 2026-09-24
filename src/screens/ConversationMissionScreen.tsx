@@ -10,7 +10,7 @@ import { recordResult } from '../modules/Mastery';
 import styles from './ConversationMissionScreen.module.css';
 import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { speakGerman } from '../modules/Audio/speech';
-import { dialoguesFor, type DialogueLevel } from '../modules/Content/learningDialogues';
+import { dialogueLevelForCefr, pickDialogue } from '../modules/Content/learningDialogues';
 import { levelToCefr } from '../modules/Content/cefr';
 import { translateDialogueWord } from '../modules/Content/dialogueGlossary';
 
@@ -23,8 +23,9 @@ interface Props {
 export function ConversationMissionScreen({ onFinish }: Props) {
   const { t, setScreen, selectedLevel, selectedTopic, profile } = useApp();
   const mission = useMemo(() => getDefaultMission(), []);
-  const cefr = levelToCefr(selectedLevel) as DialogueLevel;
-  const learningDialogue = useMemo(() => dialoguesFor(cefr, selectedTopic)[0] ?? dialoguesFor(cefr)[0], [cefr, selectedTopic]);
+  const cefr = levelToCefr(selectedLevel);
+  const dialogueLevel = dialogueLevelForCefr(cefr);
+  const learningDialogue = useMemo(() => pickDialogue(dialogueLevel, selectedTopic, selectedLevel), [dialogueLevel, selectedTopic, selectedLevel]);
   const beats = useMemo(() => buildSession(mission), [mission]);
   const [index, setIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
