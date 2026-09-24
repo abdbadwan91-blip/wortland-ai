@@ -15,7 +15,7 @@ export function ArenaStubScreen() {
     const progress = loadMapProgress();
     // Advance world map only when finishing the current unlocked stage
     if (selectedLevel === progress.unlockedStage) {
-      const { showFalcon } = completeCurrentStage(progress);
+      const { showFalcon } = completeCurrentStage(progress, selectedLevel);
       updateProfile({
         xp: profile.xp + 25,
         coins: profile.coins + 10,
