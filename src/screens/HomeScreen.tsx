@@ -248,6 +248,7 @@ export function HomeScreen() {
           lockedLabel={t('map.locked')}
           onSelect={openStage}
           scrollToZone={scrollZone}
+          language={profile.appLanguage}
         />
         <button
           type="button"
