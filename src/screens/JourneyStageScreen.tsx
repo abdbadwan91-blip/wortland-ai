@@ -3,6 +3,7 @@ import { TOPICS, cefrLabelKey, levelToCefr, type GameModeId } from '../modules/C
 import { getJourneyMode } from '../modules/Progression/journeyMode';
 import styles from './JourneyStageScreen.module.css';
 import { mapTopic, mapTopicLabel } from '../modules/MapProgress/mapTopics';
+import { isBossStage, nextWorld, worldLabel } from '../modules/MapProgress/worlds';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -26,7 +27,8 @@ export function JourneyStageScreen() {
   const previewMode = getJourneyMode(selectedLevel, selectedTopic);
   const missionTopic = mapTopic(selectedLevel);
   const missionLabel = mapTopicLabel(selectedLevel, profile.appLanguage);
-  const isWorldBoss = selectedLevel % 4 === 0 || selectedLevel === 20;
+  const isWorldBoss = isBossStage(selectedLevel);
+  const upcomingWorld = nextWorld(selectedLevel);
   const bossLabel = profile.appLanguage === 'ar' ? 'تحدي زعيم العالم' : profile.appLanguage === 'de' ? 'Welt-Boss' : 'World Boss';
 
   const playTopic = (topicId: string) => {
@@ -46,6 +48,7 @@ export function JourneyStageScreen() {
         <span className={styles.kicker}>WortLand AI · Journey</span>
         <div className={styles.missionTopic}><span>{missionTopic.icon}</span><strong>{missionLabel}</strong></div>
         {isWorldBoss ? <div className={styles.bossBanner}><span>👑</span><strong>{bossLabel}</strong><small> · {t('modes.master')}</small></div> : null}
+        {isWorldBoss && upcomingWorld ? <div className={styles.nextWorld}><span>🔓</span><span>{profile.appLanguage==='ar'?'التالي: ':profile.appLanguage==='de'?'Als Nächstes: ':'Next: '}{worldLabel(upcomingWorld,profile.appLanguage)}</span></div> : null}
         <div className={styles.heroRow}>
           <div>
             <h1>{t('home.level', { n: selectedLevel })}</h1>
