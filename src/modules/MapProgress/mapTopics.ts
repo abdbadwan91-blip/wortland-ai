@@ -1,5 +1,6 @@
 export interface MapTopic {
   id: string;
+  contentTopicId?: string;
   icon: string;
   de: string;
   en: string;
@@ -17,16 +18,16 @@ export const MAP_TOPICS: MapTopic[] = [
   {id:'koerper',icon:'🧍',de:'Körper',en:'Body',ar:'الجسم'},
   {id:'gesundheit',icon:'🩺',de:'Gesundheit',en:'Health',ar:'الصحة'},
   {id:'transport',icon:'🚌',de:'Unterwegs',en:'Transport',ar:'المواصلات'},
-  {id:'stadt',icon:'🏙️',de:'In der Stadt',en:'In the city',ar:'في المدينة'},
-  {id:'restaurant',icon:'🍴',de:'Restaurant',en:'Restaurant',ar:'المطعم'},
+  {id:'stadt',contentTopicId:'transport',icon:'🏙️',de:'In der Stadt',en:'In the city',ar:'في المدينة'},
+  {id:'restaurant',contentTopicId:'essen',icon:'🍴',de:'Restaurant',en:'Restaurant',ar:'المطعم'},
   {id:'arbeit',icon:'💼',de:'Arbeit',en:'Work',ar:'العمل'},
-  {id:'termine',icon:'📅',de:'Termine',en:'Appointments',ar:'المواعيد'},
-  {id:'wohnen',icon:'🔑',de:'Wohnung & Miete',en:'Housing & rent',ar:'السكن والإيجار'},
-  {id:'behoerden',icon:'🏛️',de:'Behörden',en:'Public offices',ar:'الدوائر الرسمية'},
-  {id:'freizeit',icon:'⚽',de:'Freizeit',en:'Free time',ar:'وقت الفراغ'},
-  {id:'reisen',icon:'🧳',de:'Reisen',en:'Travel',ar:'السفر'},
-  {id:'umgangssprache',icon:'💬',de:'Alltagsdeutsch',en:'Everyday German',ar:'الألمانية اليومية'},
-  {id:'meister',icon:'🏆',de:'Meisterprüfung',en:'Master challenge',ar:'اختبار الإتقان'},
+  {id:'termine',contentTopicId:'arbeit',icon:'📅',de:'Termine',en:'Appointments',ar:'المواعيد'},
+  {id:'wohnen',contentTopicId:'zuhause',icon:'🔑',de:'Wohnung & Miete',en:'Housing & rent',ar:'السكن والإيجار'},
+  {id:'behoerden',contentTopicId:'arbeit',icon:'🏛️',de:'Behörden',en:'Public offices',ar:'الدوائر الرسمية'},
+  {id:'freizeit',contentTopicId:'natur',icon:'⚽',de:'Freizeit',en:'Free time',ar:'وقت الفراغ'},
+  {id:'reisen',contentTopicId:'transport',icon:'🧳',de:'Reisen',en:'Travel',ar:'السفر'},
+  {id:'umgangssprache',contentTopicId:'schule',icon:'💬',de:'Alltagsdeutsch',en:'Everyday German',ar:'الألمانية اليومية'},
+  {id:'meister',contentTopicId:'arbeit',icon:'🏆',de:'Meisterprüfung',en:'Master challenge',ar:'اختبار الإتقان'},
 ];
 
 export function mapTopic(stage:number):MapTopic {
@@ -36,4 +37,10 @@ export function mapTopic(stage:number):MapTopic {
 export function mapTopicLabel(stage:number,language:string):string {
   const topic=mapTopic(stage);
   return language==='ar'?topic.ar:language==='de'?topic.de:topic.en;
+}
+
+/** Safe playable content topic for a journey stage. Semantic map labels remain unchanged. */
+export function mapContentTopic(stage:number):string {
+  const topic=mapTopic(stage);
+  return topic.contentTopicId ?? topic.id;
 }
