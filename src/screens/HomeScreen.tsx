@@ -30,6 +30,7 @@ import {
 } from '../modules/Rewards/badges';
 import { SMART_TOPIC_ID } from '../modules/FlashArena/quickPick';
 import styles from './HomeScreen.module.css';
+import { mapTopic } from '../modules/MapProgress/mapTopics';
 
 const FEATURES = [
   { id: 'journey', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-cards.png`, key: 'home.continueLearning', action: 'levelWheel' as const },
@@ -110,9 +111,10 @@ export function HomeScreen() {
     (stage: number) => {
       const wheelLevel = ((stage - 1) % 20) + 1;
       setSelectedLevel(wheelLevel);
+      setSelectedTopic(mapTopic(stage).id);
       setScreen('journeyStage');
     },
-    [setScreen, setSelectedLevel],
+    [setScreen, setSelectedLevel, setSelectedTopic],
   );
 
   const continueLearning = () => {
@@ -246,6 +248,7 @@ export function HomeScreen() {
           lockedLabel={t('map.locked')}
           onSelect={openStage}
           scrollToZone={scrollZone}
+          language={profile.appLanguage}
         />
         <button
           type="button"
