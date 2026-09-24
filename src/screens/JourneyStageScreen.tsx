@@ -26,6 +26,8 @@ export function JourneyStageScreen() {
   const previewMode = getJourneyMode(selectedLevel, selectedTopic);
   const missionTopic = mapTopic(selectedLevel);
   const missionLabel = mapTopicLabel(selectedLevel, profile.appLanguage);
+  const isWorldBoss = selectedLevel % 4 === 0 || selectedLevel === 20;
+  const bossLabel = profile.appLanguage === 'ar' ? 'تحدي زعيم العالم' : profile.appLanguage === 'de' ? 'Welt-Boss' : 'World Boss';
 
   const playTopic = (topicId: string) => {
     const mode = getJourneyMode(selectedLevel, topicId);
@@ -43,6 +45,7 @@ export function JourneyStageScreen() {
       <section className={styles.hero}>
         <span className={styles.kicker}>WortLand AI · Journey</span>
         <div className={styles.missionTopic}><span>{missionTopic.icon}</span><strong>{missionLabel}</strong></div>
+        {isWorldBoss ? <div className={styles.bossBanner}><span>👑</span><strong>{bossLabel}</strong><small> · {t('modes.master')}</small></div> : null}
         <div className={styles.heroRow}>
           <div>
             <h1>{t('home.level', { n: selectedLevel })}</h1>
