@@ -10,11 +10,15 @@ const WORLDS = [
 
 export function WorldStrip({ language, stage }:{ language:string; stage:number }) {
   const active=Math.min(4,Math.floor((Math.max(1,stage)-1)/4));
+  const status=(index:number)=>index<active?'done':index===active?'active':'locked';
   return <div className={styles.strip} aria-label="Learning worlds">
     {WORLDS.map((world,index)=>{
       const label=language==='ar'?world.ar:language==='de'?world.de:world.en;
-      return <div key={world.en} className={index===active?styles.active:styles.world}>
-        <span className={styles.icon}>{world.icon}</span><span>{label}</span>
+      const state=status(index);
+      return <div key={world.en} className={state==='active'?styles.active:state==='done'?styles.done:styles.world}>
+        <span className={styles.icon}>{state==='done'?'✓':state==='locked'?'🔒':world.icon}</span>
+        <span>{label}</span>
+        {state==='active'?<small>{Math.min(4,((stage-1)%4)+1)}/4</small>:null}
       </div>;
     })}
   </div>;
