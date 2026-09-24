@@ -282,3 +282,26 @@
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.08); }
 }
+
+
+.topicLabel {
+  position:absolute;
+  top:54px;
+  left:50%;
+  transform:translateX(-50%);
+  max-width:92px;
+  padding:3px 7px;
+  border-radius:8px;
+  background:rgba(7,18,38,.82);
+  border:1px solid rgba(255,255,255,.12);
+  color:#fff7d6;
+  font-size:.58rem;
+  font-weight:850;
+  line-height:1.15;
+  text-align:center;
+  white-space:normal;
+  box-shadow:0 3px 9px rgba(0,0,0,.28);
+  pointer-events:none;
+}
+.current .topicLabel { top:61px; background:rgba(92,45,8,.9); border-color:rgba(255,220,140,.55); }
+.locked .topicLabel { opacity:.5; }
