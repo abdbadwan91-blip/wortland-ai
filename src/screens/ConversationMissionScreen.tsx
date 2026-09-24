@@ -12,6 +12,7 @@ import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { speakGerman } from '../modules/Audio/speech';
 import { dialoguesFor, type DialogueLevel } from '../modules/Content/learningDialogues';
 import { levelToCefr } from '../modules/Content/cefr';
+import { translateDialogueWord } from '../modules/Content/dialogueGlossary';
 
 type ChoiceState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -33,6 +34,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
   const [choiceStates, setChoiceStates] = useState<Record<string, ChoiceState>>({});
   const [imageError, setImageError] = useState(false);
   const [showTranslation, setShowTranslation] = useState<string | null>(null);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const advancing = useRef(false);
   const failsRef = useRef(0);
 
@@ -46,6 +48,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
     setChoiceStates({});
     setImageError(false);
     setShowTranslation(null);
+    setSelectedWords([]);
     advancing.current = false;
   }, [index]);
 
@@ -145,7 +148,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
       {learningDialogue ? <section className={styles.dialoguePreview} aria-label={learningDialogue.title}>
         {learningDialogue.turns.map((turn, i) => <div key={i} className={`${styles.dialogueLine} ${turn.speaker === 'Anna' ? styles.annaLine : styles.maxLine}`}>
           <button type="button" className={styles.speakerButton} onClick={() => speakGerman(turn.de)} aria-label={`${turn.speaker} anhören`}>🔊</button>
-          <div><b>{turn.speaker}</b><p lang="de">{turn.de}</p><small>{profile.translationLanguage === 'ar' ? (turn.ar ?? turn.en) : turn.en}</small></div>
+          <div><b>{turn.speaker}</b><p lang="de">{turn.de.split(/(\\s+)/).map((token, tokenIndex) => { const meaning = translateDialogueWord(token, profile.translationLanguage); const key = `${i}-${tokenIndex}`; if (!meaning || /^\\s+$/.test(token)) return <span key={key}>{token}</span>; const active=selectedWords.includes(key); return <button key={key} type="button" className={`${styles.wordTap} ${active ? styles.wordActive : ''}`} onClick={() => setSelectedWords((prev) => active ? prev.filter((x)=>x!==key) : prev.length < 3 ? [...prev,key] : prev)}>{token}{active ? <em>{meaning}</em> : null}</button>; })}</p><small>{profile.translationLanguage === 'ar' ? (turn.ar ?? turn.en) : turn.en}</small></div>
         </div>)}
       </section> : null}
       <div className={styles.cast} aria-label="Anna und Max">
