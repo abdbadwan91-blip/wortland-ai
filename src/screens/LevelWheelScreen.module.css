@@ -1,0 +1,77 @@
+.dialWrap {
+  position: relative;
+  width: 280px;
+  height: 280px;
+  margin: 8px auto 18px;
+}
+
+.dial {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.35));
+}
+
+.center {
+  position: absolute;
+  inset: 50%;
+  width: 110px;
+  height: 110px;
+  margin: -55px;
+  border-radius: 50%;
+  background: linear-gradient(160deg, #1e3a6e, #0f2348);
+  border: 4px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-soft), inset 0 0 24px rgba(0,0,0,0.25);
+  animation: snapPop 280ms ease;
+}
+
+.big {
+  font-size: 2.4rem;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.band {
+  font-weight: 900;
+  font-size: 0.95rem;
+  margin-top: 2px;
+}
+
+.center small {
+  color: var(--text-muted);
+  font-weight: 700;
+  font-size: 0.7rem;
+  margin-top: 2px;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.legItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+}
+
+.legItem i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.spacer { flex: 1; min-height: 16px; }

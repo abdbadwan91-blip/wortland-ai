@@ -1,0 +1,264 @@
+.scroller {
+  height: 420px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-radius: 28px;
+  scroll-snap-type: y mandatory;
+  -webkit-overflow-scrolling: touch;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.12),
+    0 16px 36px rgba(0, 0, 0, 0.4);
+  background: #0a2244;
+}
+
+.zone {
+  position: relative;
+  /* Portrait panel (~3:4) for cover-crop of landscape hero art */
+  height: 580px;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+.zone :global(.scene-bg) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.zone :global(.scene-painted) {
+  z-index: 0;
+  background: #0a2244;
+}
+
+.zone :global(.scene-art) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Bias crop toward painted path / landmarks */
+.zone :global(.scene-art-mountain) {
+  object-position: 78% 45%;
+}
+
+.zone :global(.scene-art-forest) {
+  object-position: 38% 55%;
+}
+
+.zone :global(.scene-vignette) {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 42%, rgba(6, 16, 36, 0.45) 100%),
+    linear-gradient(180deg, rgba(8, 18, 40, 0.28) 0%, transparent 18%, transparent 62%, rgba(6, 14, 32, 0.58) 100%);
+  pointer-events: none;
+}
+
+.zone :global(.scene-path-overlay) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* --- Legacy scenic motion hooks (harmless if unused) --- */
+.zone :global(.mt-summit-glow) {
+  animation: summitPulse 2.8s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.zone :global(.mt-shimmer),
+.zone :global(.fr-shimmer) {
+  animation: shimmerSoft 3.5s ease-in-out infinite;
+}
+
+.zone :global(.fr-sunbeam) {
+  animation: beamDrift 6s ease-in-out infinite alternate;
+}
+
+.zone :global(.fr-firefly) {
+  animation: fireflyFloat 3.2s ease-in-out infinite;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.zone :global(.mt-cloud) {
+  animation: cloudDrift 18s ease-in-out infinite alternate;
+}
+
+@keyframes summitPulse {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@keyframes shimmerSoft {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes beamDrift {
+  0% { opacity: 0.4; }
+  100% { opacity: 0.65; }
+}
+
+@keyframes fireflyFloat {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translateY(0) scale(0.85);
+  }
+  40% {
+    opacity: 1;
+    transform: translateY(-6px) scale(1.15);
+  }
+  70% {
+    opacity: 0.55;
+    transform: translateY(-2px) scale(1);
+  }
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(8px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zone :global(.mt-summit-glow),
+  .zone :global(.mt-shimmer),
+  .zone :global(.fr-shimmer),
+  .zone :global(.fr-sunbeam),
+  .zone :global(.fr-firefly),
+  .zone :global(.mt-cloud) {
+    animation: none !important;
+  }
+
+  .zone :global(.fr-firefly) {
+    opacity: 0.7;
+  }
+
+  .current .nodeInner {
+    animation: none !important;
+  }
+}
+
+.banner {
+  position: absolute;
+  top: 12px;
+  inset-inline: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  background: rgba(10, 24, 50, 0.78);
+  border: 1px solid rgba(255, 220, 140, 0.35);
+  color: #ffe9a8;
+  font-weight: 800;
+  font-size: 0.88rem;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+}
+
+.bannerIcon { font-size: 1.05rem; }
+
+.node {
+  position: absolute;
+  z-index: 4;
+  width: 48px;
+  height: 48px;
+  transform: translate(-50%, -50%);
+  border: none;
+  background: none;
+  padding: 0;
+}
+
+.nodeInner {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-weight: 900;
+  font-size: 0.95rem;
+  color: #fff;
+  border: 3px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.42),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.22),
+    inset 0 2px 0 rgba(255, 255, 255, 0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+}
+
+.node:active:not(:disabled) .nodeInner {
+  transform: scale(0.92);
+}
+
+.completed .nodeInner {
+  background: linear-gradient(165deg, #86efac, #22c55e 45%, #15803d);
+  border-color: #d1fae5;
+  color: #052e16;
+  box-shadow:
+    0 0 0 3px rgba(74, 222, 128, 0.4),
+    0 6px 16px rgba(0, 0, 0, 0.35),
+    inset 0 2px 0 rgba(255, 255, 255, 0.35);
+}
+
+.current {
+  z-index: 5;
+}
+
+.current .nodeInner {
+  width: 58px;
+  height: 58px;
+  font-size: 1.15rem;
+  background: linear-gradient(165deg, #ffd078, #ff9a3c 40%, #ff6a1a);
+  border-color: #fff6d8;
+  color: #3b1400;
+  box-shadow:
+    0 0 0 5px rgba(255, 176, 70, 0.5),
+    0 0 22px rgba(255, 140, 40, 0.55),
+    0 8px 22px rgba(255, 122, 47, 0.55),
+    inset 0 2px 0 rgba(255, 255, 255, 0.45);
+  animation: nodePulse 1.5s ease-in-out infinite;
+}
+
+.locked {
+  cursor: not-allowed;
+}
+
+.locked .nodeInner {
+  background: linear-gradient(180deg, #64748b, #334155);
+  border-color: #94a3b8;
+  color: #cbd5e1;
+  opacity: 0.42;
+  filter: grayscale(0.75) brightness(0.85);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Soft dim overlay cue for locked nodes on scenic bg */
+.locked::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.28);
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes nodePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}

@@ -1,0 +1,138 @@
+.splash {
+  align-items: center;
+  text-align: center;
+  justify-content: flex-end;
+  padding-bottom: 28px;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 12%, rgba(255, 200, 120, 0.18), transparent 50%),
+    linear-gradient(180deg, #1e4a8c 0%, #0b1a3a 55%, #071228 100%);
+}
+
+.artWrap {
+  position: absolute;
+  inset: 0 0 38% 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.scenery {
+  width: 100%;
+  height: 100%;
+  display: block;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.25));
+}
+
+.brandLockup {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.brandPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  margin-bottom: 8px;
+  border: 1px solid rgba(252, 211, 77, .35);
+  border-radius: 999px;
+  background: rgba(252, 211, 77, .1);
+  color: #fde68a;
+  font-size: .69rem;
+  font-weight: 900;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.wordmark {
+  margin: 0;
+  font-size: 2.05rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  color: var(--gold);
+  text-shadow: 0 3px 0 #b45309, 0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+.description {
+  max-width: 280px;
+  margin: 0 0 19px;
+  color: rgba(219, 234, 254, .76);
+  font-size: .78rem;
+  line-height: 1.45;
+}
+
+.tagline {
+  position: relative;
+  z-index: 4;
+  margin: 4px 0 24px;
+  color: #c7d7f5;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  font-size: 0.88rem;
+  line-height: 1.35;
+  max-width: 92%;
+}
+
+.actions {
+  position: relative;
+  z-index: 4;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.langWrap {
+  position: relative;
+  z-index: 5;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.langBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.langMenu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  inset-inline: 0;
+  max-height: 240px;
+  overflow-y: auto;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-soft);
+  padding: 6px;
+}
+
+.langItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  font-weight: 700;
+  text-align: start;
+}
+
+.langItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+}

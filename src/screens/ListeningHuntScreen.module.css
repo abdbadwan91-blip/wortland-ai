@@ -1,0 +1,325 @@
+.wrap {
+  gap: 12px;
+  padding-top: 12px;
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.progress {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.progressLabel {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-2), var(--accent));
+  transition: width 280ms ease;
+}
+
+.xpChip {
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.18);
+  color: var(--xp);
+  border: 1px solid rgba(96, 165, 250, 0.35);
+  white-space: nowrap;
+}
+
+.promptCard {
+  margin-top: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 20px 16px 18px;
+  text-align: center;
+}
+
+.promptLabel {
+  margin: 0 0 10px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.audioRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.speaker {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #60a5fa, var(--blue-deep));
+  box-shadow: 0 6px 0 #1e40af, 0 10px 22px rgba(37, 99, 235, 0.4);
+  font-size: 1.8rem;
+  display: grid;
+  place-items: center;
+  transition: transform var(--anim);
+}
+
+.speaker:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 #1e40af;
+}
+
+.speaker.pulse {
+  animation: pulseSpeak 0.9s ease;
+}
+
+@keyframes pulseSpeak {
+  0%, 100% { transform: scale(1); }
+  40% { transform: scale(1.08); }
+}
+
+.slowBtn {
+  min-width: 56px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+  font-size: 1.35rem;
+  display: grid;
+  place-items: center;
+}
+
+.slowBtn:active {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.lemmaHint {
+  margin: 12px 0 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  opacity: 0.7;
+  min-height: 1.1em;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.card {
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, #1e3a6a, #142848);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: transform var(--anim), border-color var(--anim), box-shadow var(--anim), opacity var(--anim);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.imageFrame {
+  width: min(78%, 148px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  border-radius: 20px;
+  background: #fffaf0;
+  box-shadow: inset 0 0 0 1px rgba(91, 61, 35, 0.12), 0 5px 14px rgba(0, 0, 0, 0.16);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 14px;
+  display: block;
+}
+
+.emoji {
+  font-size: 3.4rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35));
+}
+
+html[data-mode='junior'] .emoji {
+  font-size: 3.8rem;
+}
+
+.card.correct {
+  border-color: var(--success);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.35), var(--shadow-card);
+  background: linear-gradient(160deg, #166534, #14532d);
+}
+
+.card.wrong {
+  border-color: var(--danger);
+  animation: shake 0.45s ease;
+  opacity: 0.55;
+}
+
+.card.dim {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-4px); }
+  80% { transform: translateX(4px); }
+}
+
+.checkMark {
+  position: absolute;
+  top: 8px;
+  inset-inline-end: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--success);
+  color: #fff;
+  font-weight: 900;
+  font-size: 0.9rem;
+  display: grid;
+  place-items: center;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+
+.feedback {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 1rem;
+}
+
+.feedbackOk {
+  color: var(--success);
+}
+
+.feedbackRetry {
+  color: var(--warning);
+}
+
+.feedbackHint {
+  color: var(--gold);
+  font-size: 0.95rem;
+}
+
+
+.softTimer {
+  align-self: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(234, 179, 8, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  letter-spacing: 0.02em;
+}
+
+.softTimerLow {
+  background: rgba(239, 68, 68, 0.18);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.4);
+  animation: softPulse 0.8s ease infinite alternate;
+}
+
+@keyframes softPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.04); }
+}
+
+.spacer { flex: 1; min-height: 8px; }
+
+.grid[data-options="5"],
+.grid[data-options="6"] {
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.grid[data-options="5"] .card,
+.grid[data-options="6"] .card {
+  aspect-ratio: 1;
+}
+
+.grid[data-options="5"] .emoji,
+.grid[data-options="6"] .emoji {
+  font-size: 2.6rem;
+}
+
+.grid[data-options="5"] .imageFrame,
+.grid[data-options="6"] .imageFrame {
+  width: min(86%, 110px);
+  padding: 6px;
+  border-radius: 14px;
+}
+
+/* Listening Hunt: bigger soft replay affordance */
+.replayBtn {
+  min-width: 120px;
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  background: rgba(96, 165, 250, 0.16);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  color: #93c5fd;
+  font-weight: 800;
+  font-size: 0.88rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.replayBtn:active {
+  background: rgba(96, 165, 250, 0.28);
+}
+
+.audioCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}

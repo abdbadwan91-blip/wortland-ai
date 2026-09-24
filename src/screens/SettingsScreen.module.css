@@ -1,0 +1,36 @@
+.header { position: relative; margin-bottom: 12px; }
+.header .back-chip { margin-bottom: 16px; }
+.eyebrow { margin: 0 0 4px; color: var(--accent-2); font-size: .72rem; font-weight: 900; letter-spacing: .13em; text-transform: uppercase; }
+.headerIcon { position: absolute; inset-inline-end: 4px; bottom: 25px; display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid rgba(255,255,255,.16); border-radius: 16px; background: rgba(255,255,255,.1); font-size: 1.35rem; }
+.group { flex: 0 0 auto; overflow: hidden; margin: 0 0 14px; border: 1px solid var(--border); border-radius: var(--radius-lg); background: rgba(255,255,255,.065); box-shadow: var(--shadow-card); }
+.groupTitle { display: flex; align-items: center; gap: 9px; margin: 0; padding: 14px 15px 11px; color: var(--text); font-size: .86rem; font-weight: 900; letter-spacing: .02em; }
+.groupTitle span { display: grid; place-items: center; width: 27px; height: 27px; border-radius: 9px; background: var(--accent-soft); font-size: .95rem; }
+.groupBody { padding: 0 15px 14px; }
+.row, .selectRow, .volumeRow, .accountNote, .privacyNote { display: flex; align-items: center; gap: 11px; min-height: 58px; }
+.row + .row, .volumeRow { border-top: 1px solid var(--border); }
+.rowIcon { flex: 0 0 30px; display: grid; place-items: center; width: 30px; height: 30px; border-radius: 10px; background: rgba(255,255,255,.08); font-size: .95rem; }
+.rowCopy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 3px; }
+.rowCopy strong { color: var(--text); font-size: .86rem; font-weight: 800; }
+.rowCopy small { color: var(--text-muted); font-size: .69rem; font-weight: 600; line-height: 1.3; }
+.selectRow { border-bottom: 1px solid var(--border); }
+.select { max-width: 132px; min-height: 38px; padding: 5px 8px; border: 1px solid rgba(255,255,255,.2); border-radius: 11px; background: var(--surface-2); color: var(--text); font-size: .75rem; font-weight: 800; }
+.select:focus, .range:focus, .linkButton:focus-visible, .modeChoice:focus-visible, .toggle:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.currentLanguage { margin: 9px 0 0 41px; color: var(--text-muted); font-size: .67rem; font-weight: 700; }
+.toggle { position: relative; flex: 0 0 auto; width: 45px; height: 26px; padding: 3px; border-radius: 999px; background: rgba(255,255,255,.16); transition: background var(--anim); }
+.toggleOn { background: var(--accent); }
+.toggleThumb { display: block; width: 20px; height: 20px; border-radius: 50%; background: white; box-shadow: 0 2px 5px rgba(0,0,0,.24); transform: translateX(0); transition: transform var(--anim); }
+.toggleOn .toggleThumb { transform: translateX(19px); }
+[dir="rtl"] .toggleOn .toggleThumb { transform: translateX(-19px); }
+.volumeValue { min-width: 35px; color: var(--accent-2); font-size: .77rem; font-weight: 900; text-align: end; }
+.range { display: block; width: calc(100% - 41px); margin: -1px 0 2px 41px; accent-color: var(--accent); }
+.modeChoices { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.modeChoice { position: relative; display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 52px; padding: 9px 7px; border: 1px solid var(--border); border-radius: 14px; background: rgba(255,255,255,.05); color: var(--text-muted); font-size: .77rem; font-weight: 800; }
+.modeChoiceOn { border-color: var(--accent); background: var(--accent-soft); color: var(--text); box-shadow: 0 0 0 2px rgba(255,122,47,.1); }
+.modeChoice b { position: absolute; inset-inline-end: 7px; top: 5px; color: var(--accent-2); font-size: .7rem; }
+.helper { margin: 9px 0 0; color: var(--text-muted); font-size: .68rem; line-height: 1.35; text-align: center; }
+.accountNote, .privacyNote { align-items: flex-start; padding-top: 4px; }
+.accountAvatar { flex: 0 0 33px; display: grid; place-items: center; width: 33px; height: 33px; border-radius: 11px; background: rgba(255,255,255,.09); }
+.privacyNote > span:first-child { padding-top: 4px; font-size: 1.05rem; }
+.linkButton { flex: 0 0 auto; padding: 5px 0; color: var(--accent-2); font-size: .71rem; font-weight: 900; text-decoration: underline; text-underline-offset: 3px; }
+.footerNote { margin: 2px 0 4px; color: var(--text-muted); font-size: .68rem; font-weight: 600; text-align: center; }
+@media (max-width: 360px) { .select { max-width: 116px; } .linkButton { font-size: .65rem; } }

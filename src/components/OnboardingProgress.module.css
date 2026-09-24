@@ -1,0 +1,29 @@
+.wrap {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px 12px;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 24px;
+  color: var(--text-muted);
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .02em;
+}
+.brand { color: var(--gold); font-size: .82rem; }
+.brand span { color: var(--accent-2); }
+.count { text-align: end; }
+.track {
+  grid-column: 1 / -1;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255,255,255,.1);
+}
+.fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--accent), var(--gold));
+  transition: width var(--anim);
+}

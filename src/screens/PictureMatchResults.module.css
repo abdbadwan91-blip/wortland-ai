@@ -1,0 +1,95 @@
+.wrap {
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.hero {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft);
+  padding: 28px 20px 22px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 2rem;
+  margin-bottom: 12px;
+}
+
+.starOn { filter: drop-shadow(0 2px 6px rgba(252, 211, 77, 0.55)); }
+.starOff { opacity: 0.25; }
+
+.title {
+  margin: 0 0 6px;
+  font-size: 1.45rem;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+
+.score {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.rewards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.pill {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
+}
+
+.pillXp { color: var(--xp); }
+.pillCoin { color: var(--coin); }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(252, 211, 77, 0.2), rgba(255, 122, 47, 0.15));
+  border: 1px solid rgba(252, 211, 77, 0.45);
+  color: var(--gold);
+  font-weight: 800;
+  font-size: 0.92rem;
+}
+
+.mapNote {
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  color: var(--success);
+  font-weight: 700;
+}
+
+.mapNoteMiss {
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.transLabel {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}

@@ -1,0 +1,14 @@
+.hero {
+  width: 72px;
+  height: 72px;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #2a4a7a, #1a3358);
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15);
+}
+
+.input { font-size: 1.25rem; text-align: center; }
+.spacer { flex: 1; min-height: 24px; }
