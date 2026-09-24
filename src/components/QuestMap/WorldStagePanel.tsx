@@ -1,5 +1,6 @@
 import { mapTopic, mapTopicLabel } from '../../modules/MapProgress/mapTopics';
 import { isBossStage, worldForStage, worldLabel } from '../../modules/MapProgress/worlds';
+import { missionKindLabel, stageMission } from '../../modules/Progression/stageMission';
 import styles from './WorldStagePanel.module.css';
 
 export function WorldStagePanel({ language, stage, onSelect }:{language:string;stage:number;onSelect:(stage:number)=>void}) {
@@ -17,7 +18,7 @@ export function WorldStagePanel({ language, stage, onSelect }:{language:string;s
       return <button type="button" key={n} className={n===stage?styles.current:styles.stage} disabled={locked} onClick={()=>onSelect(n)} aria-label={stageText(n)+' — '+mapTopicLabel(n,language)}>
         <span className={styles.icon}>{locked?'🔒':completed?'✓':boss?'👑':topic.icon}</span>
         <span className={styles.name}>{mapTopicLabel(n,language)}</span>
-        <small>{boss?'Boss · ':''}{stageText(n)}</small>
+        <small>{boss?'Boss · ':missionKindLabel(stageMission(n),language)+' · '}{stageText(n)}</small>
       </button>;
     })}</div>
   </div>;
