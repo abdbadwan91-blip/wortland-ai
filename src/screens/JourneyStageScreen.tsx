@@ -4,6 +4,7 @@ import { getJourneyMode } from '../modules/Progression/journeyMode';
 import styles from './JourneyStageScreen.module.css';
 import { mapTopic, mapTopicLabel } from '../modules/MapProgress/mapTopics';
 import { isBossStage, nextWorld, worldLabel } from '../modules/MapProgress/worlds';
+import { missionGoal, missionMeta } from '../modules/Progression/missionMeta';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -24,15 +25,17 @@ export function JourneyStageScreen() {
     t, profile, selectedLevel, selectedTopic, setSelectedTopic, setSelectedMode, setScreen,
   } = useApp();
   const cefr = levelToCefr(selectedLevel);
-  const previewMode = getJourneyMode(selectedLevel, selectedTopic);
+  const isWorldBoss = isBossStage(selectedLevel);
+  const normalMode = getJourneyMode(selectedLevel, selectedTopic);
+  const previewMode: GameModeId = isWorldBoss ? 'master' : normalMode;
   const missionTopic = mapTopic(selectedLevel);
   const missionLabel = mapTopicLabel(selectedLevel, profile.appLanguage);
-  const isWorldBoss = isBossStage(selectedLevel);
   const upcomingWorld = nextWorld(selectedLevel);
   const bossLabel = profile.appLanguage === 'ar' ? 'تحدي زعيم العالم' : profile.appLanguage === 'de' ? 'Welt-Boss' : 'World Boss';
+  const meta = missionMeta(selectedLevel);
 
   const playTopic = (topicId: string) => {
-    const mode = getJourneyMode(selectedLevel, topicId);
+    const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
     setSelectedTopic(topicId);
     setSelectedMode(mode);
     setScreen(MODE_SCREENS[mode]);
@@ -59,6 +62,14 @@ export function JourneyStageScreen() {
         <div className={styles.progressTrack} aria-hidden>
           <span style={{ width: `${Math.max(5, Math.min(100, selectedLevel * 5))}%` }} />
         </div>
+      </section>
+
+      <section className={styles.missionBrief}>
+        <p>{missionGoal(profile.appLanguage, meta.boss)}</p>
+        <div className={styles.missionStats}>
+          <span>⚡ {meta.xp} XP</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>{'★'.repeat(meta.stars)}</span>
+        </div>
+        <button type="button" className={styles.startMission} onClick={() => playTopic(selectedTopic)}>{profile.appLanguage==='ar'?'ابدأ المهمة':profile.appLanguage==='de'?'Mission starten':'Start mission'} ▶</button>
       </section>
 
       <div className={styles.sectionHead}>
