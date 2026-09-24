@@ -5,6 +5,7 @@ import { FOREST_NODES, MOUNTAIN_NODES } from './stageLayout';
 import { MountainScene } from './MountainScene';
 import { ForestScene } from './ForestScene';
 import styles from './QuestMap.module.css';
+import { getStageTheme, stageThemeLabel } from '../../modules/MapProgress/stageThemes';
 
 interface Props {
   progress: MapProgress;
@@ -15,6 +16,7 @@ interface Props {
   lockedLabel: string;
   onSelect: (stage: number) => void;
   scrollToZone?: 'mountain' | 'forest';
+  language?: string;
 }
 
 function StageNode({
@@ -25,6 +27,7 @@ function StageNode({
   label,
   lockedLabel,
   onSelect,
+  language = 'en',
 }: {
   stage: number;
   state: StageState;
@@ -33,8 +36,11 @@ function StageNode({
   label: string;
   lockedLabel: string;
   onSelect: (stage: number) => void;
+  language?: string;
 }) {
   const locked = state === 'locked';
+  const theme = getStageTheme(stage);
+  const themeLabel = stageThemeLabel(stage, language);
   return (
     <button
       type="button"
@@ -42,12 +48,13 @@ function StageNode({
       style={{ left: `${x}%`, top: `${y}%` }}
       disabled={locked}
       onClick={() => !locked && onSelect(stage)}
-      aria-label={locked ? `${label} — ${lockedLabel}` : label}
+      aria-label={locked ? `${label} — ${themeLabel} — ${lockedLabel}` : `${label} — ${themeLabel}`}
       aria-disabled={locked}
     >
       <span className={styles.nodeInner}>
-        {state === 'completed' ? '✓' : state === 'locked' ? '🔒' : zoneLabel(stage).n}
+        {state === 'completed' ? '✓' : state === 'locked' ? '🔒' : theme.icon}
       </span>
+      <span className={styles.topicLabel}>{themeLabel}</span>
       {state === 'current' ? <span className={styles.playBadge} aria-hidden>▶</span> : null}
     </button>
   );
@@ -62,6 +69,7 @@ export function QuestMap({
   lockedLabel,
   onSelect,
   scrollToZone,
+  language = 'en',
 }: Props) {
   const scroller = useRef<HTMLDivElement>(null);
   const mountainRef = useRef<HTMLElement>(null);
@@ -102,6 +110,7 @@ export function QuestMap({
               label={stageLabel(stage)}
               lockedLabel={lockedLabel}
               onSelect={onSelect}
+              language={language}
             />
           );
         })}
@@ -133,6 +142,7 @@ export function QuestMap({
               label={forestStageLabel(local)}
               lockedLabel={lockedLabel}
               onSelect={onSelect}
+              language={language}
             />
           );
         })}
