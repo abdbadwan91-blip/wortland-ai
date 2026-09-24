@@ -179,3 +179,13 @@
   flex: 1;
   min-height: 8px;
 }
+
+
+.cast { display:flex; align-items:center; justify-content:center; gap:12px; margin:-2px 0 2px; }
+.avatar { display:inline-flex; align-items:center; gap:5px; padding:6px 9px; border-radius:999px; background:rgba(255,255,255,.07); border:1px solid rgba(255,255,255,.1); font-size:.72rem; }
+.chatPulse { color:#fda4af; letter-spacing:.12em; font-weight:900; }
+.choiceCopy { display:flex; flex:1; min-width:0; flex-direction:column; align-items:center; gap:4px; }
+.translation { color:#6fb4ff; font-size:.72rem; line-height:1.35; font-weight:800; direction:auto; }
+.choiceTools { display:flex; gap:5px; flex:0 0 auto; }
+.miniTool { display:grid; place-items:center; width:29px; height:29px; padding:0; border-radius:9px; border:1px solid rgba(255,255,255,.12); background:rgba(12,25,52,.72); color:var(--text); font-size:.72rem; }
+.miniTool:active { transform:scale(.92); }

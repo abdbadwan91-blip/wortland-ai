@@ -7,6 +7,8 @@ export interface ConversationChoice {
   id: string;
   /** German reply shown on the button (content, not i18n) */
   german: string;
+  /** Compact translation fallback; UI language packs can replace this later. */
+  translation?: string;
 }
 
 export interface ConversationBeat {
@@ -42,9 +44,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       image: '☕',
       imageKind: 'emoji',
       choices: [
-        { id: 'a', german: 'Guten Tag!' },
-        { id: 'b', german: 'Gute Nacht!' },
-        { id: 'c', german: 'Auf Wiedersehen!' },
+        { id: 'a', german: 'Guten Tag!', translation: 'مرحباً!' },
+        { id: 'b', german: 'Gute Nacht!', translation: 'تصبح على خير!' },
+        { id: 'c', german: 'Auf Wiedersehen!', translation: 'إلى اللقاء!' },
       ],
       correctId: 'a',
     },
@@ -54,9 +56,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       image: '🪑',
       imageKind: 'emoji',
       choices: [
-        { id: 'a', german: 'Nein, danke.' },
-        { id: 'b', german: 'Ja, bitte. Einen Tisch für eine Person.' },
-        { id: 'c', german: 'Ich bin ein Hund.' },
+        { id: 'a', german: 'Nein, danke.', translation: 'لا، شكراً.' },
+        { id: 'b', german: 'Ja, bitte. Einen Tisch für eine Person.', translation: 'نعم، من فضلك. طاولة لشخص واحد.' },
+        { id: 'c', german: 'Ich bin ein Hund.', translation: 'أنا كلب.' },
       ],
       correctId: 'b',
     },
@@ -68,9 +70,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       loId: 'wasser',
       topicId: 'essen',
       choices: [
-        { id: 'a', german: 'Einen Kaffee, bitte.' },
-        { id: 'b', german: 'Ich schlafe jetzt.' },
-        { id: 'c', german: 'Wo ist der Bahnhof?' },
+        { id: 'a', german: 'Einen Kaffee, bitte.', translation: 'قهوة من فضلك.' },
+        { id: 'b', german: 'Ich schlafe jetzt.', translation: 'أنا أنام الآن.' },
+        { id: 'c', german: 'Wo ist der Bahnhof?', translation: 'أين محطة القطار؟' },
       ],
       correctId: 'a',
     },
@@ -82,9 +84,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       loId: 'kuchen',
       topicId: 'essen',
       choices: [
-        { id: 'a', german: 'Das ist mein Auto.' },
-        { id: 'b', german: 'Und ein Stück Kuchen, bitte.' },
-        { id: 'c', german: 'Ich habe Hunger… nach Schuhen.' },
+        { id: 'a', german: 'Das ist mein Auto.', translation: 'هذه سيارتي.' },
+        { id: 'b', german: 'Und ein Stück Kuchen, bitte.', translation: 'وقطعة كعك من فضلك.' },
+        { id: 'c', german: 'Ich habe Hunger… nach Schuhen.', translation: 'أنا جائع... للأحذية.' },
       ],
       correctId: 'b',
     },
@@ -94,9 +96,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       image: '😊',
       imageKind: 'emoji',
       choices: [
-        { id: 'a', german: 'Das schmeckt nicht.' },
-        { id: 'b', german: 'Hilfe!' },
-        { id: 'c', german: 'Danke schön!' },
+        { id: 'a', german: 'Das schmeckt nicht.', translation: 'هذا لا طعم له جيداً.' },
+        { id: 'b', german: 'Hilfe!', translation: 'النجدة!' },
+        { id: 'c', german: 'Danke schön!', translation: 'شكراً جزيلاً!' },
       ],
       correctId: 'c',
     },
@@ -106,9 +108,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       image: '💶',
       imageKind: 'emoji',
       choices: [
-        { id: 'a', german: 'Die Rechnung, bitte.' },
-        { id: 'b', german: 'Ich fliege nach Hause.' },
-        { id: 'c', german: 'Guten Appetit… für dich.' },
+        { id: 'a', german: 'Die Rechnung, bitte.', translation: 'الحساب من فضلك.' },
+        { id: 'b', german: 'Ich fliege nach Hause.', translation: 'أنا أطير إلى المنزل.' },
+        { id: 'c', german: 'Guten Appetit… für dich.', translation: 'شهية طيبة... لك.' },
       ],
       correctId: 'a',
     },
@@ -118,9 +120,9 @@ export const CAFE_GREETING_MISSION: ConversationMission = {
       image: '👋',
       imageKind: 'emoji',
       choices: [
-        { id: 'a', german: 'Guten Morgen!' },
-        { id: 'b', german: 'Auf Wiedersehen! Schönen Tag noch.' },
-        { id: 'c', german: 'Mein Name ist Tisch.' },
+        { id: 'a', german: 'Guten Morgen!', translation: 'صباح الخير!' },
+        { id: 'b', german: 'Auf Wiedersehen! Schönen Tag noch.', translation: 'إلى اللقاء! أتمنى لك يوماً سعيداً.' },
+        { id: 'c', german: 'Mein Name ist Tisch.', translation: 'اسمي طاولة.' },
       ],
       correctId: 'b',
     },
