@@ -10,6 +10,8 @@ import { learningObjective, objectiveLabel } from '../modules/Progression/learni
 import { rewardHint, stageReward } from '../modules/Progression/stageReward';
 import { stageTip, stageTipLabel } from '../modules/Progression/stageTips';
 import { rankInfo } from '../modules/Progression/journeyRank';
+import { skillBadge } from '../modules/Progression/skillBadge';
+import { missionPace, paceLabel } from '../modules/Progression/missionPace';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -43,6 +45,8 @@ export function JourneyStageScreen() {
   const reward = stageReward(selectedLevel, meta.boss);
   const tip = stageTip(selectedLevel);
   const rank = rankInfo(selectedLevel, profile.appLanguage);
+  const skill = skillBadge(objective.focus, profile.appLanguage);
+  const pace = missionPace(selectedLevel, meta.boss);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -79,7 +83,7 @@ export function JourneyStageScreen() {
         <p>{missionGoal(profile.appLanguage, meta.boss)}</p>
         <div className={styles.objective}><span>🎓</span><span>{objectiveLabel(objective,profile.appLanguage)} · {objective.target}</span></div>
         <div className={styles.missionStats}>
-          <span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>{'★'.repeat(meta.stars)}</span>
+          <span>{skill.icon} {skill.label}</span><span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>🔥 {paceLabel(pace,profile.appLanguage)} {pace.intensity}/5</span><span>{'★'.repeat(meta.stars)}</span>
         </div>
         <div className={styles.tip}><span>{tip.icon}</span><span>{stageTipLabel(tip,profile.appLanguage)}</span></div>
         <div className={styles.rewardHint}><span>{rank.icon} {rank.label}</span><span>{rewardHint(profile.appLanguage,meta.boss)}</span></div>
