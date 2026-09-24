@@ -79,7 +79,7 @@ export function JourneyStageScreen() {
         ))}
       </div>
 
-      <button type="button" className={styles.moreModes} onClick={() => setScreen('topicPicker')}>
+      <button type="button" className={styles.moreModes} onClick={() => setScreen('gameModes')}>
         {t('modes.title')} →
       </button>
     </div>
