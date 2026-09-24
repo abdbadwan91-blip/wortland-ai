@@ -32,7 +32,7 @@ import { SMART_TOPIC_ID } from '../modules/FlashArena/quickPick';
 import styles from './HomeScreen.module.css';
 
 const FEATURES = [
-  { id: 'flash', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-cards.png`, key: 'home.feature.flashcards', action: 'levelWheel' as const },
+  { id: 'journey', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-cards.png`, key: 'home.continueLearning', action: 'levelWheel' as const },
   { id: 'games', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-games.png`, key: 'home.feature.games', action: 'games' as const },
   { id: 'daily', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-daily.png`, key: 'home.feature.daily', action: 'daily' as const },
   { id: 'challenges', iconSrc: `${import.meta.env.BASE_URL}ui/home/home-challenges.png`, key: 'home.feature.challenges', action: null },
@@ -216,6 +216,39 @@ export function HomeScreen() {
         </div>
       </header>
 
+      <section className={styles.journeyIntro} aria-label={t('home.map.title')}>
+        <div className={styles.journeyCopy}>
+          <span className={styles.journeyKicker}>WortLand AI</span>
+          <h2 className={styles.journeyTitle}>{t('home.map.title')}</h2>
+          <p className={styles.journeyMeta}>
+            {t('home.level', { n: mapProgress.unlockedStage })} · {t(cefrLabelKey(levelToCefr(((mapProgress.unlockedStage - 1) % 20) + 1)))}
+          </p>
+        </div>
+        <button type="button" className={styles.journeyPlay} onClick={continueLearning}>
+          ▶
+        </button>
+      </section>
+
+      <section className={styles.mapSection} aria-label={t('home.map.title')}>
+        <QuestMap
+          progress={mapProgress}
+          mountainTitle={t('map.zone.mountain')}
+          forestTitle={t('map.zone.forest')}
+          stageLabel={(n) => t('map.stage', { n })}
+          forestStageLabel={(n) => t('map.forest.stage', { n })}
+          lockedLabel={t('map.locked')}
+          onSelect={openStage}
+          scrollToZone={scrollZone}
+        />
+        <button
+          type="button"
+          className={`btn-primary ${styles.continueBtn}`}
+          onClick={continueLearning}
+        >
+          {t('home.continueLearning')}
+        </button>
+      </section>
+
       <section
         ref={missionRef}
         className={styles.mission}
@@ -342,26 +375,6 @@ export function HomeScreen() {
           ›
         </span>
       </button>
-
-      <section className={styles.mapSection} aria-label={t('home.map.title')}>
-        <QuestMap
-          progress={mapProgress}
-          mountainTitle={t('map.zone.mountain')}
-          forestTitle={t('map.zone.forest')}
-          stageLabel={(n) => t('map.stage', { n })}
-          forestStageLabel={(n) => t('map.forest.stage', { n })}
-          lockedLabel={t('map.locked')}
-          onSelect={openStage}
-          scrollToZone={scrollZone}
-        />
-        <button
-          type="button"
-          className={`btn-primary ${styles.continueBtn}`}
-          onClick={continueLearning}
-        >
-          {t('home.continueLearning')}
-        </button>
-      </section>
 
       <section className={styles.features}>
         {FEATURES.map((f) => (
