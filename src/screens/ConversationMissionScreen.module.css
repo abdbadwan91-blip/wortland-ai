@@ -189,3 +189,12 @@
 .choiceTools { display:flex; gap:5px; flex:0 0 auto; }
 .miniTool { display:grid; place-items:center; width:29px; height:29px; padding:0; border-radius:9px; border:1px solid rgba(255,255,255,.12); background:rgba(12,25,52,.72); color:var(--text); font-size:.72rem; }
 .miniTool:active { transform:scale(.92); }
+
+
+.dialoguePreview { display:flex; flex-direction:column; gap:8px; padding:12px; border-radius:20px; background:rgba(16,34,69,.72); border:1px solid rgba(111,180,255,.18); }
+.dialogueLine { display:flex; align-items:flex-start; gap:8px; width:92%; padding:9px 10px; border-radius:15px; background:rgba(255,255,255,.07); }
+.dialogueLine p { margin:2px 0; font-size:.82rem; font-weight:800; line-height:1.4; }
+.dialogueLine small { display:block; color:#6fb4ff; font-size:.67rem; font-weight:700; line-height:1.35; }
+.annaLine { align-self:flex-start; border-bottom-left-radius:5px; }
+.maxLine { align-self:flex-end; border-bottom-right-radius:5px; }
+.speakerButton { flex:0 0 auto; width:28px; height:28px; padding:0; border-radius:9px; border:1px solid rgba(255,255,255,.12); background:rgba(255,255,255,.06); color:var(--text); }
