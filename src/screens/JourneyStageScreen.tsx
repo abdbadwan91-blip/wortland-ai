@@ -12,6 +12,8 @@ import { stageTip, stageTipLabel } from '../modules/Progression/stageTips';
 import { rankInfo } from '../modules/Progression/journeyRank';
 import { skillBadge } from '../modules/Progression/skillBadge';
 import { missionPace, paceLabel } from '../modules/Progression/missionPace';
+import { masteryTarget, masteryText } from '../modules/Progression/masteryTarget';
+import { milestoneLabel, stageMilestone } from '../modules/Progression/stageMilestone';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -47,6 +49,8 @@ export function JourneyStageScreen() {
   const rank = rankInfo(selectedLevel, profile.appLanguage);
   const skill = skillBadge(objective.focus, profile.appLanguage);
   const pace = missionPace(selectedLevel, meta.boss);
+  const mastery = masteryTarget(selectedLevel, meta.boss);
+  const milestone = stageMilestone(selectedLevel);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -85,6 +89,8 @@ export function JourneyStageScreen() {
         <div className={styles.missionStats}>
           <span>{skill.icon} {skill.label}</span><span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>🔥 {paceLabel(pace,profile.appLanguage)} {pace.intensity}/5</span><span>{'★'.repeat(meta.stars)}</span>
         </div>
+        <div className={styles.mastery}><span>🎯</span><span>{masteryText(profile.appLanguage,mastery)}</span></div>
+        <div className={styles.milestone}><span>{milestone.icon}</span><span>{milestoneLabel(milestone,profile.appLanguage)}</span></div>
         <div className={styles.tip}><span>{tip.icon}</span><span>{stageTipLabel(tip,profile.appLanguage)}</span></div>
         <div className={styles.rewardHint}><span>{rank.icon} {rank.label}</span><span>{rewardHint(profile.appLanguage,meta.boss)}</span></div>
         <button type="button" className={styles.startMission} onClick={() => playTopic(selectedTopic)}>{profile.appLanguage==='ar'?'ابدأ المهمة':profile.appLanguage==='de'?'Mission starten':'Start mission'} ▶</button>
