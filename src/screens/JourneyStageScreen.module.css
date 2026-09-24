@@ -45,3 +45,5 @@
 .missionTopic{display:inline-flex;align-items:center;gap:7px;margin-top:9px;padding:6px 9px;border-radius:12px;background:rgba(4,14,35,.28);border:1px solid rgba(255,255,255,.1);color:#fff3cf}.missionTopic span{font-size:1.15rem}.missionTopic strong{font-size:.76rem}
 
 .bossBanner{display:flex;align-items:center;gap:6px;margin-top:9px;padding:7px 10px;border-radius:12px;background:linear-gradient(90deg,rgba(255,177,48,.24),rgba(190,82,255,.18));border:1px solid rgba(255,211,112,.38);color:#fff0ba}.bossBanner span{font-size:1.1rem}.bossBanner strong{font-size:.72rem}.bossBanner small{font-size:.62rem;opacity:.78}
+
+.nextWorld{display:flex;align-items:center;gap:6px;margin-top:7px;color:#b8f4d2;font-size:.68rem;font-weight:800}.nextWorld span:first-child{display:grid;place-items:center;width:24px;height:24px;border-radius:8px;background:rgba(103,232,165,.12)}
