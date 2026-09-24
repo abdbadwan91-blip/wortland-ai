@@ -10,7 +10,7 @@ import { recordResult } from '../modules/Mastery';
 import styles from './ConversationMissionScreen.module.css';
 import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { speakGerman } from '../modules/Audio/speech';
-import { dialogueLevelForCefr, pickDialogue } from '../modules/Content/learningDialogues';
+import { dialogueLevelForCefr, dialogueMissionOptions } from '../modules/Content/learningDialogues';
 import { levelToCefr } from '../modules/Content/cefr';
 import { translateDialogueWord } from '../modules/Content/dialogueGlossary';
 
@@ -25,7 +25,8 @@ export function ConversationMissionScreen({ onFinish }: Props) {
   const mission = useMemo(() => getDefaultMission(), []);
   const cefr = levelToCefr(selectedLevel);
   const dialogueLevel = dialogueLevelForCefr(cefr);
-  const learningDialogue = useMemo(() => pickDialogue(dialogueLevel, selectedTopic, selectedLevel), [dialogueLevel, selectedTopic, selectedLevel]);
+  const dialogueOptions = useMemo(() => dialogueMissionOptions(dialogueLevel, selectedTopic), [dialogueLevel, selectedTopic]);
+  const learningDialogue = dialogueOptions[dialogueIndex % Math.max(1, dialogueOptions.length)];
   const beats = useMemo(() => buildSession(mission), [mission]);
   const [index, setIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
@@ -36,6 +37,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
   const [imageError, setImageError] = useState(false);
   const [showTranslation, setShowTranslation] = useState<string | null>(null);
   const [selectedWords, setSelectedWords] = useState<string[]>([]);
+  const [dialogueIndex, setDialogueIndex] = useState(0);
   const advancing = useRef(false);
   const failsRef = useRef(0);
 
@@ -50,6 +52,7 @@ export function ConversationMissionScreen({ onFinish }: Props) {
     setImageError(false);
     setShowTranslation(null);
     setSelectedWords([]);
+    setDialogueIndex(0);
     advancing.current = false;
   }, [index]);
 
@@ -146,6 +149,9 @@ export function ConversationMissionScreen({ onFinish }: Props) {
       </div>
 
       <p className={styles.missionTitle}>{learningDialogue?.scene} {learningDialogue?.title ?? t(mission.titleKey)} · {cefr}</p>
+      {dialogueOptions.length > 1 ? <div className={styles.missionRail} aria-label="Dialogmissionen">
+        {dialogueOptions.map((option, index) => <button key={option.id} type="button" className={`${styles.missionChip} ${index === dialogueIndex ? styles.missionChipActive : ''}`} onClick={() => { setDialogueIndex(index); setSelectedWords([]); }}><span>{option.scene}</span>{option.title}</button>)}
+      </div> : null}
       {learningDialogue ? <section className={styles.dialoguePreview} aria-label={learningDialogue.title}>
         {learningDialogue.turns.map((turn, i) => <div key={i} className={`${styles.dialogueLine} ${turn.speaker === 'Anna' ? styles.annaLine : styles.maxLine}`}>
           <button type="button" className={styles.speakerButton} onClick={() => speakGerman(turn.de)} aria-label={`${turn.speaker} anhören`}>🔊</button>

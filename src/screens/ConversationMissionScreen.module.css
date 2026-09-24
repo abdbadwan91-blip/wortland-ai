@@ -204,3 +204,9 @@
 .wordTap:active { background:rgba(111,180,255,.12); }
 .wordActive { background:rgba(111,180,255,.14); box-shadow:inset 0 -1px #6fb4ff; }
 .wordTap em { margin-top:1px; color:#6fb4ff; font-size:.56rem; font-style:normal; font-weight:800; direction:auto; }
+
+
+.missionRail { display:flex; gap:7px; overflow-x:auto; padding:2px 1px 5px; scrollbar-width:none; }
+.missionRail::-webkit-scrollbar { display:none; }
+.missionChip { display:flex; align-items:center; gap:5px; flex:0 0 auto; min-height:35px; padding:6px 10px; border-radius:12px; border:1px solid rgba(255,255,255,.1); background:rgba(255,255,255,.055); color:var(--text-muted); font-size:.68rem; font-weight:850; white-space:nowrap; }
+.missionChipActive { color:#fff0cf; border-color:rgba(255,190,98,.45); background:rgba(255,174,69,.14); box-shadow:0 5px 14px rgba(0,0,0,.15); }

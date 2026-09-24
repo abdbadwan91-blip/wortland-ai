@@ -62,3 +62,9 @@ export function dialoguesFor(level: DialogueLevel, topicId?: string): LearningDi
   const exact = LEARNING_DIALOGUES.filter((d) => d.level === level && (!topicId || d.topicId === topicId));
   return exact.length ? exact : LEARNING_DIALOGUES.filter((d) => d.level === level);
 }
+
+export function dialogueMissionOptions(level: DialogueLevel, topicId: string): LearningDialogue[] {
+  const exact = LEARNING_DIALOGUES.filter((d) => d.level === level && d.topicId === topicId);
+  const sameLevel = LEARNING_DIALOGUES.filter((d) => d.level === level && d.topicId !== topicId);
+  return [...exact, ...sameLevel].slice(0, 6);
+}
