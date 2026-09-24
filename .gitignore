@@ -28,3 +28,11 @@ dist-ssr
 wortland-preview*
 screenshots/
 *.log
+
+# Capacitor / Android local build outputs (android/.gitignore also covers these)
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+*.apk
+*.aab

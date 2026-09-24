@@ -50,15 +50,23 @@ The mode catalog has 11 entries. The Games Hub also renders Conversation Mission
 
 ## Learning, rewards, and settings
 
-- [x] Browser speech synthesis for German (`de-DE`), including normal/slow playback controls where used.
+- [x] German TTS: Web Speech API (`speechSynthesis`, de-DE) on the web; `@capacitor-community/text-to-speech` on native Android (same `speakGerman` helper, normal/slow rates).
 - [x] Per-word mastery score and review scheduling, plus weak/due-word Smart Training.
 - [x] XP, coins, streak display, daily practice heatmap, daily missions, badges, and titles in the implemented flows.
 - [x] Speech, volume, reduced-motion, and high-contrast settings.
 - [x] Local family board with generated invite code and demo companions.
 - [ ] Cross-device family synchronization (requires a server).
 - [ ] Human-recorded German audio.
-- [ ] Native mobile apps.
+- [x] Native Android app via Capacitor (debug APK published as GitHub Release `android-latest`).
 
 ## Persistence note
 
 The app is currently local-first. Storage keys are defined in the modules that own them; the complete overview is in the root [`README.md`](../README.md#browser-storage). The local family implementation explicitly does not provide real multi-device multiplayer sync.
+
+## Android app (Capacitor)
+
+- [x] Capacitor 8 Android shell (`appId` `ai.wortland.app`, label **WortLand AI**, portrait, `versionCode` 1 / `versionName` 1.0.0).
+- [x] App icons and splash generated from PWA brand assets (`assets/`, `@capacitor/assets`).
+- [x] Native TTS plugin wired through `src/modules/Audio/speech.ts`; service worker skipped on native.
+- [x] GitHub Actions workflow `.github/workflows/build-android.yml` builds `assembleDebug` and publishes `WortLand-AI.apk` to the prerelease tag `android-latest`.
+- [x] GitHub Pages deploy (`.github/workflows/deploy-pages.yml` with `VITE_BASE=/wortland-ai/`) remains separate and unchanged in intent.

@@ -25,6 +25,8 @@ Other scripts:
 
 - `npm run lint` — run oxlint
 - `npm run build` — type-check and create the Vite production bundle in `dist/`
+- `npm run build:app` — same production build with base `/` for Capacitor
+- `npm run cap:sync` — `build:app` then `npx cap sync android`
 
 ## What is live in the prototype
 
@@ -34,7 +36,7 @@ Other scripts:
 - **Level Wheel:** levels 1–20 grouped into Starter/Pre-A1, A1, A2, B1, B2, and C1 difficulty bands. Level changes alter round length, option count, audio speed, weak-word bias, and (from level 7) the soft timer.
 - **Topics:** all 14 topics in the current content catalog are selectable and have learning-object pools: Tiere, Essen, Zuhause, Schule, Familie, Farben, Kleidung, Körper, Wetter, Transport, Gesundheit, Arbeit, Natur, and Zahlen.
 - **Practice:** results award XP/coins and update map progress, streaks, mastery, daily practice, daily missions, and badges where the relevant flow supports them.
-- **Audio:** on-demand German `de-DE` speech through the browser Web Speech API (`speechSynthesis`), with speech settings and normal/slow playback options. This is synthetic device/browser audio, not recorded human audio.
+- **Audio:** on-demand German `de-DE` speech — Web Speech API in the browser, Capacitor Text-to-Speech on Android — with speech settings and normal/slow playback. Synthetic device audio, not recorded human audio.
 - **Progress and profile:** mastery counts (tracked, weak, due), Smart Training for weak/due words, a 35-day practice heatmap, streak summary, topic averages, earned badges, and titles.
 - **Settings:** interface language, speech toggle, volume, reduced motion, high contrast, Junior/Standard mode, and local guest/email profile display.
 - **Family:** a local-only family board with a client-generated invite code, local/demo companion rows, XP ranking, copy-code, join, and leave actions. It does not synchronize between devices.
@@ -76,9 +78,43 @@ The prototype has no server account or database. Data is stored in the current b
 
 **Reset behavior:** Profile → Reset onboarding resets the onboarding/profile, map, mastery, and badges used by the profile flow. It does not remove settings, family data, the practice heatmap, or daily-mission data. Clear the site’s browser storage to remove everything.
 
+
+## Android app
+
+WortLand AI can run as a Capacitor Android app (`appId`: `ai.wortland.app`).
+
+### Download the APK
+
+Every push to `main` builds a **debug** APK in GitHub Actions and publishes it to the prerelease tag [`android-latest`](https://github.com/abdbadwan91-blip/wortland-ai/releases/tag/android-latest):
+
+- Release page: https://github.com/abdbadwan91-blip/wortland-ai/releases/tag/android-latest
+- Direct asset: https://github.com/abdbadwan91-blip/wortland-ai/releases/download/android-latest/WortLand-AI.apk
+
+On the phone, allow installs from unknown sources (browser/file manager) when prompted. This debug build is **not** signed for Google Play.
+
+### Build locally (web + sync)
+
+```bash
+npm ci
+npm run build:app          # Vite build with base /
+npx cap sync android       # copy web assets into android/
+```
+
+Or in one step: `npm run cap:sync`.
+
+Open `android/` in Android Studio (or run `./gradlew assembleDebug` with a local SDK) to produce the APK. CI uses Temurin JDK 21 and Gradle via the Capacitor wrapper.
+
+### TTS on Android
+
+Android WebView does not reliably support `speechSynthesis`. The shared helper in `src/modules/Audio/speech.ts` uses `@capacitor-community/text-to-speech` with `lang: de-DE` when `Capacitor.isNativePlatform()` is true, and falls back to the Web Speech API on the web. If no German voice pack is installed on the device, speech fails quietly (a one-time console warning).
+
+### GitHub Pages
+
+The web deploy at https://abdbadwan91-blip.github.io/wortland-ai/ is unchanged: `.github/workflows/deploy-pages.yml` still builds with `VITE_BASE=/wortland-ai/`. The Android workflow builds with base `/` for the WebView.
+
 ## Known next steps
 
-- Package the web experience as native mobile apps.
+- Ship a signed Play Store / App Store release (current Android artifact is a debug APK).
 - Replace the local family MVP with authenticated server-backed family sync across devices.
 - Add human-recorded German audio alongside the current browser speech synthesis.
 
