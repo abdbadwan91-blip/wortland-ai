@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wortland-shell-v7';
+const CACHE_NAME = 'wortland-shell-v8';
 const scope = self.registration.scope;
 const SHELL_ASSETS = [
   scope,
