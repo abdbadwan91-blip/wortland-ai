@@ -30,7 +30,12 @@ jobs:
 
       - name: Build web assets (base /)
         run: npm run build:app
-        # VITE_BASE intentionally unset so the Capacitor WebView loads from /
+        env:
+          # Capacitor WebView loads from /
+          VITE_BASE: /
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          VITE_NATIVE_VERSION_CODE: '7'
 
       - name: Sync Capacitor Android
         run: npx cap sync android
@@ -41,23 +46,54 @@ jobs:
           distribution: temurin
           java-version: '21'
 
-      - name: Build debug APK
-        working-directory: android
+      - name: Decode release keystore
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
         run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug --no-daemon
+          set -euo pipefail
+          if [ -z "${ANDROID_KEYSTORE_BASE64:-}" ]; then
+            echo "Missing ANDROID_KEYSTORE_BASE64 secret" >&2
+            exit 1
+          fi
+          mkdir -p "$HOME/keystore"
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > "$HOME/keystore/wortland-release.keystore"
+          chmod 600 "$HOME/keystore/wortland-release.keystore"
+          echo "ANDROID_KEYSTORE_PATH=$HOME/keystore/wortland-release.keystore" >> "$GITHUB_ENV"
 
-      - name: Prepare APK artifact
+      - name: Build signed release APK + AAB
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
+          set -euo pipefail
+          chmod +x gradlew
+          ./gradlew assembleRelease bundleRelease --no-daemon
+
+      - name: Verify APK signature
+        run: |
+          set -euo pipefail
+          APK=android/app/build/outputs/apk/release/app-release.apk
+          "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --print-certs "$APK" \
+            || "$ANDROID_HOME/build-tools/34.0.0/apksigner" verify --print-certs "$APK" \
+            || (find "$ANDROID_HOME/build-tools" -name apksigner | head -1 | xargs -I{} {} verify --print-certs "$APK")
+
+      - name: Prepare release assets
+        run: |
+          set -euo pipefail
           mkdir -p out
-          cp android/app/build/outputs/apk/debug/app-debug.apk out/WortLand-AI.apk
-          ls -lh out/WortLand-AI.apk
+          cp android/app/build/outputs/apk/release/app-release.apk out/WortLand-AI.apk
+          cp android/app/build/outputs/bundle/release/app-release.aab out/WortLand-AI.aab
+          ls -lh out/
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: WortLand-AI-apk
-          path: out/WortLand-AI.apk
+          path: |
+            out/WortLand-AI.apk
+            out/WortLand-AI.aab
           if-no-files-found: error
 
       - name: Create or update android-latest release
@@ -66,21 +102,24 @@ jobs:
         run: |
           set -euo pipefail
           TAG=android-latest
-          TITLE="WortLand AI Android (latest debug build)"
+          TITLE="WortLand AI Android (latest release build)"
           NOTES="$(cat <<'MD'
-          Debug APK built by GitHub Actions from `main`.
+          Release-signed APK/AAB built by GitHub Actions from `main`.
 
           - **App ID:** `ai.wortland.app`
-          - **Build type:** debug (unsigned for Play Store — allow installs from unknown sources)
-          - Install: download `WortLand-AI.apk`, open it on your Android device, and allow the browser/file manager to install unknown apps if prompted.
+          - **versionCode / versionName:** 7 / 1.2.0
+          - **Signing:** permanent release keystore (same key every build → in-place updates)
+          - **Assets:** `WortLand-AI.apk` (sideload) and `WortLand-AI.aab` (Play Console upload)
+          - **Live updates:** web/game assets can update via self-hosted Capgo OTA without reinstalling the APK
+          - Install once over the previous debug build: uninstall the old debug APK first (one last time), then install this release APK. After that, future APKs signed with this key update in place and keep localStorage progress.
           MD
           )"
 
           if gh release view "$TAG" >/dev/null 2>&1; then
-            gh release upload "$TAG" out/WortLand-AI.apk --clobber
+            gh release upload "$TAG" out/WortLand-AI.apk out/WortLand-AI.aab --clobber
             gh release edit "$TAG" --title "$TITLE" --notes "$NOTES" --prerelease
           else
-            gh release create "$TAG" out/WortLand-AI.apk \
+            gh release create "$TAG" out/WortLand-AI.apk out/WortLand-AI.aab \
               --title "$TITLE" \
               --notes "$NOTES" \
               --prerelease \

@@ -20,9 +20,31 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Install zip
+        run: sudo apt-get update -qq && sudo apt-get install -y -qq zip
+      - name: Build web (Pages base /wortland-ai/)
+        run: npm run build
         env:
           VITE_BASE: /wortland-ai/
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          VITE_NATIVE_VERSION_CODE: '7'
+      - name: Build native-base bundle for OTA (base /)
+        run: |
+          rm -rf dist-native
+          npx vite build --outDir dist-native --emptyOutDir
+        env:
+          VITE_BASE: /
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          VITE_NATIVE_VERSION_CODE: '7'
+      - name: Package OTA zip + latest.json into Pages dist
+        run: node scripts/package-ota.mjs --pages-dist dist --native-dist dist-native
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+          GITHUB_RUN_NUMBER: ${{ github.run_number }}
+          MIN_NATIVE_VERSION: '7'
+          OTA_PUBLIC_BASE: https://abdbadwan91-blip.github.io/wortland-ai
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact

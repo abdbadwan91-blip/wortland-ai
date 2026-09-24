@@ -619,5 +619,17 @@
   "shop.tr_golden_path.desc": "Kartenpfad leuchtet golden.",
   "shop.tr_falcon_glow": "Falkenleuchten",
   "shop.tr_falcon_glow.desc": "Epische Falken-Aura.",
-  "results.retryInstead": "Nochmal versuchen"
+  "results.retryInstead": "Nochmal versuchen",
+  "settings.about": "Info & Updates",
+  "settings.appVersion": "App-Version",
+  "settings.bundleVersion": "Bundle-Version",
+  "settings.checkUpdates": "Nach Updates suchen",
+  "settings.updateChecking": "Prüfe…",
+  "settings.updateDownloaded": "Update geladen — gilt beim nächsten Start.",
+  "settings.updateUpToDate": "Du hast schon das neueste Bundle.",
+  "settings.updateNeedApk": "Dafür brauchst du eine neuere APK-Installation.",
+  "settings.updateError": "Gerade nicht möglich. Später nochmal versuchen.",
+  "settings.updateSkipped": "Kein Update angewendet.",
+  "settings.updateReadyToast": "Neues Update bereit — wird beim nächsten Öffnen angewendet",
+  "settings.otaHint": "Spielstand bleibt bei Live-Updates auf diesem Gerät erhalten."
 }

@@ -619,5 +619,17 @@
   "shop.tr_golden_path.desc": "Map trail shines gold.",
   "shop.tr_falcon_glow": "Falcon Glow",
   "shop.tr_falcon_glow.desc": "Epic falcon trail aura.",
-  "results.retryInstead": "Try again"
+  "results.retryInstead": "Try again",
+  "settings.about": "About & updates",
+  "settings.appVersion": "App version",
+  "settings.bundleVersion": "Bundle version",
+  "settings.checkUpdates": "Check for updates",
+  "settings.updateChecking": "Checking…",
+  "settings.updateDownloaded": "Update downloaded — opens next time you launch.",
+  "settings.updateUpToDate": "You already have the latest bundle.",
+  "settings.updateNeedApk": "This update needs a newer app install from the APK.",
+  "settings.updateError": "Could not check right now. Try again later.",
+  "settings.updateSkipped": "No update applied.",
+  "settings.updateReadyToast": "New update ready — it will apply the next time you open the game",
+  "settings.otaHint": "Game progress stays on this device across live updates."
 }

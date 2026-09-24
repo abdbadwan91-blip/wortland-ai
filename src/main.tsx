@@ -3,12 +3,42 @@ import { createRoot } from 'react-dom/client';
 import { Capacitor } from '@capacitor/core';
 import './styles/global.css';
 import App from './App.tsx';
+import {
+  notifyNativeAppReady,
+  startOtaBackgroundCheck,
+} from './modules/Ota/liveUpdate';
+
+// CRITICAL: tell Capgo the JS bundle booted — otherwise it auto-rolls back (~10s).
+void notifyNativeAppReady();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>,
 );
+
+// Self-hosted OTA: download in background; apply on next launch/background.
+if (Capacitor.isNativePlatform()) {
+  const lang =
+    (typeof localStorage !== 'undefined' &&
+      (() => {
+        try {
+          const raw = localStorage.getItem('deutsch-quest-profile-v1');
+          if (!raw) return 'en';
+          const parsed = JSON.parse(raw) as { appLanguage?: string };
+          return parsed.appLanguage || 'en';
+        } catch {
+          return 'en';
+        }
+      })()) ||
+    'en';
+  const toastByLang: Record<string, string> = {
+    ar: 'تحديث جديد جاهز — سيُطبَّق عند فتح اللعبة مرة أخرى',
+    de: 'Neues Update bereit — wird beim nächsten Öffnen angewendet',
+    en: 'New update ready — it will apply the next time you open the game',
+  };
+  startOtaBackgroundCheck(toastByLang[lang] || toastByLang.en);
+}
 
 // Service workers are for the web/PWA build only — skip inside native WebViews
 // to avoid stale Capacitor asset caching.

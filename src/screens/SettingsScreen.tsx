@@ -1,6 +1,14 @@
+import { useCallback, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { useApp } from '../modules/Auth/AppContext';
 import { LANGUAGES } from '../modules/Localization/languages';
 import type { AppLanguage, AppMode } from '../modules/Profile/types';
+import {
+  checkAndDownloadOta,
+  getEmbeddedAppVersion,
+  getEmbeddedBundleVersion,
+  getEmbeddedNativeVersionCode,
+} from '../modules/Ota/liveUpdate';
 import styles from './SettingsScreen.module.css';
 
 function Toggle({
@@ -52,6 +60,36 @@ function SettingRow({
 export function SettingsScreen() {
   const { t, profile, settings, updateProfile, updateSettings, setScreen } = useApp();
   const currentLanguage = LANGUAGES.find((language) => language.code === profile.appLanguage);
+  const isNative = Capacitor.isNativePlatform();
+  const [updateStatus, setUpdateStatus] = useState<string>('');
+  const [checking, setChecking] = useState(false);
+
+  const onCheckUpdates = useCallback(async () => {
+    if (!isNative || checking) return;
+    setChecking(true);
+    setUpdateStatus(t('settings.updateChecking'));
+    const toastByLang: Record<string, string> = {
+      ar: t('settings.updateReadyToast'),
+      de: t('settings.updateReadyToast'),
+      en: t('settings.updateReadyToast'),
+    };
+    const result = await checkAndDownloadOta({
+      showToast: true,
+      toastMessage: toastByLang[profile.appLanguage] || t('settings.updateReadyToast'),
+    });
+    setChecking(false);
+    if (result.status === 'downloaded') {
+      setUpdateStatus(t('settings.updateDownloaded'));
+    } else if (result.status === 'up-to-date') {
+      setUpdateStatus(t('settings.updateUpToDate'));
+    } else if (result.status === 'native-too-old') {
+      setUpdateStatus(t('settings.updateNeedApk'));
+    } else if (result.status === 'error') {
+      setUpdateStatus(t('settings.updateError'));
+    } else {
+      setUpdateStatus(t('settings.updateSkipped'));
+    }
+  }, [checking, isNative, profile.appLanguage, t]);
 
   return (
     <div className="screen with-nav fade-in">
@@ -172,6 +210,43 @@ export function SettingsScreen() {
             <span className={styles.rowCopy}><strong>{t('settings.familyPrivacy')}</strong><small>{t('settings.familyPrivacyDesc')}</small></span>
             <button type="button" className={styles.linkButton} onClick={() => setScreen('family')}>{t('settings.openFamily')}</button>
           </div>
+        </div>
+      </section>
+
+      <section className={styles.group} aria-labelledby="settings-about">
+        <h2 id="settings-about" className={styles.groupTitle}><span aria-hidden>ℹ️</span>{t('settings.about')}</h2>
+        <div className={styles.groupBody}>
+          <div className={styles.versionBlock}>
+            <span className={styles.rowIcon} aria-hidden>📦</span>
+            <span className={styles.rowCopy}>
+              <strong>{t('settings.appVersion')}</strong>
+              <small>
+                {getEmbeddedAppVersion()}
+                {isNative ? ` · native ${getEmbeddedNativeVersionCode()}` : ''}
+              </small>
+            </span>
+          </div>
+          <div className={styles.versionBlock}>
+            <span className={styles.rowIcon} aria-hidden>🧩</span>
+            <span className={styles.rowCopy}>
+              <strong>{t('settings.bundleVersion')}</strong>
+              <small>{getEmbeddedBundleVersion()}</small>
+            </span>
+          </div>
+          {isNative && (
+            <>
+              <button
+                type="button"
+                className={styles.checkButton}
+                disabled={checking}
+                onClick={() => { void onCheckUpdates(); }}
+              >
+                {checking ? t('settings.updateChecking') : t('settings.checkUpdates')}
+              </button>
+              {updateStatus && <p className={styles.updateStatus}>{updateStatus}</p>}
+              <p className={styles.helper}>{t('settings.otaHint')}</p>
+            </>
+          )}
         </div>
       </section>
 

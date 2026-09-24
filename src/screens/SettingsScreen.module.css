@@ -34,3 +34,14 @@
 .linkButton { flex: 0 0 auto; padding: 5px 0; color: var(--accent-2); font-size: .71rem; font-weight: 900; text-decoration: underline; text-underline-offset: 3px; }
 .footerNote { margin: 2px 0 4px; color: var(--text-muted); font-size: .68rem; font-weight: 600; text-align: center; }
 @media (max-width: 360px) { .select { max-width: 116px; } .linkButton { font-size: .65rem; } }
+.versionBlock { display: flex; align-items: flex-start; gap: 11px; min-height: 52px; padding: 4px 0; }
+.versionBlock + .versionBlock { border-top: 1px solid var(--border); }
+.checkButton {
+  display: block; width: 100%; margin-top: 10px; min-height: 44px;
+  border: 1px solid var(--accent); border-radius: 14px;
+  background: var(--accent-soft); color: var(--text);
+  font-size: .8rem; font-weight: 900;
+}
+.checkButton:disabled { opacity: .6; }
+.checkButton:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.updateStatus { margin: 8px 0 0; color: var(--accent-2); font-size: .68rem; font-weight: 700; text-align: center; }

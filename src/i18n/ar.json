@@ -619,5 +619,17 @@
   "shop.tr_golden_path.desc": "مسار الخريطة يتلألأ ذهباً.",
   "shop.tr_falcon_glow": "وهج الصقر",
   "shop.tr_falcon_glow.desc": "هالة صقر ملحمية.",
-  "results.retryInstead": "أعد المحاولة"
+  "results.retryInstead": "أعد المحاولة",
+  "settings.about": "حول والتحديثات",
+  "settings.appVersion": "إصدار التطبيق",
+  "settings.bundleVersion": "إصدار الحزمة",
+  "settings.checkUpdates": "التحقق من التحديثات",
+  "settings.updateChecking": "جاري التحقق…",
+  "settings.updateDownloaded": "تم تنزيل التحديث — يُطبَّق عند الفتح التالي.",
+  "settings.updateUpToDate": "لديك أحدث حزمة بالفعل.",
+  "settings.updateNeedApk": "هذا التحديث يحتاج تثبيت APK أحدث.",
+  "settings.updateError": "تعذّر التحقق الآن. حاول لاحقاً.",
+  "settings.updateSkipped": "لم يُطبَّق تحديث.",
+  "settings.updateReadyToast": "تحديث جديد جاهز — سيُطبَّق عند فتح اللعبة مرة أخرى",
+  "settings.otaHint": "يبقى تقدّم اللعبة على هذا الجهاز مع التحديثات المباشرة."
 }
