@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
-import { getAvatar } from '../data/avatars';
+import { PlayerAvatar, useEquippedTitleKey } from '../components/PlayerAvatar';
 import { LANGUAGES } from '../modules/Localization/languages';
 import { BottomNav } from '../components/BottomNav';
 import { clearMapProgress } from '../modules/MapProgress/mapProgress';
@@ -15,7 +15,7 @@ import styles from './ProfileScreen.module.css';
 
 export function ProfileScreen() {
   const { t, profile, resetOnboarding, setScreen } = useApp();
-  const avatar = getAvatar(profile.avatarId);
+  const equippedTitle = useEquippedTitleKey();
   const lang = LANGUAGES.find((l) => l.code === profile.appLanguage);
   const mastery = useMemo(() => getMasterySummary(), []);
   const badgeViews = useMemo(() => listBadgeViews(), []);
@@ -37,14 +37,19 @@ export function ProfileScreen() {
         </button>
       </div>
       <div className={styles.card}>
-        <div
-          className={styles.avatar}
-          style={{ background: avatar?.bg || '#334155' }}
-          aria-hidden
-        >
-          {avatar?.emoji || '🧒'}
-        </div>
+        <PlayerAvatar avatarId={profile.avatarId} size={72} showBadge showSticker />
         <strong className={styles.name}>{profile.name || '—'}</strong>
+        {equippedTitle && (
+          <p className={styles.shopTitle} data-equipped-title>{t(equippedTitle)}</p>
+        )}
+        <button
+          type="button"
+          className={styles.shopBtn}
+          onClick={() => setScreen('shop')}
+          data-open-shop
+        >
+          🛒 {t('shop.title')}
+        </button>
         <p className={styles.titlePill} data-title={currentTitle.id}>
           <span aria-hidden>🎖️</span> {t(currentTitle.nameKey)}
         </p>

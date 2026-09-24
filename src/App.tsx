@@ -27,6 +27,7 @@ import { WordPuzzleArenaScreen } from './screens/WordPuzzleArenaScreen';
 import { ConversationMissionArenaScreen } from './screens/ConversationMissionArenaScreen';
 import { FamilyScreen } from './screens/FamilyScreen';
 import { GamesHubScreen } from './screens/GamesHubScreen';
+import { ShopScreen } from './screens/ShopScreen';
 
 function Router() {
   const { screen } = useApp();
@@ -78,6 +79,8 @@ function Router() {
       return <ConversationMissionArenaScreen />;
     case 'family':
       return <FamilyScreen />;
+    case 'shop':
+      return <ShopScreen />;
     case 'profile':
       return <ProfileScreen />;
     case 'settings':

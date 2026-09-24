@@ -55,3 +55,10 @@
 }
 
 .spacer { flex: 1; min-height: 16px; }
+
+.iconImg {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
+}

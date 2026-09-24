@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
 import type { AppMode } from '../modules/Profile/types';
 import styles from './ModeScreen.module.css';
+import { assetUrl } from '../modules/Content/assetUrl';
 import { OnboardingProgress } from '../components/OnboardingProgress';
 
 export function ModeScreen() {
@@ -29,7 +30,7 @@ export function ModeScreen() {
           onClick={() => pick('junior')}
           aria-pressed={mode === 'junior'}
         >
-          <span className={styles.icon} aria-hidden>🌈</span>
+          <img className={styles.iconImg} src={assetUrl('ui/onboarding/mode-junior.png')} alt="" draggable={false} />
           <span className={styles.title}>{t('mode.junior.title')}</span>
           <span className={styles.desc}>{t('mode.junior.desc')}</span>
           {mode === 'junior' && <span className={styles.badge}>✓</span>}
@@ -41,7 +42,7 @@ export function ModeScreen() {
           onClick={() => pick('standard')}
           aria-pressed={mode === 'standard'}
         >
-          <span className={styles.icon} aria-hidden>🎯</span>
+          <img className={styles.iconImg} src={assetUrl('ui/onboarding/mode-standard.png')} alt="" draggable={false} />
           <span className={styles.title}>{t('mode.standard.title')}</span>
           <span className={styles.desc}>{t('mode.standard.desc')}</span>
           <span className={styles.recommended}>{t('mode.recommended')}</span>

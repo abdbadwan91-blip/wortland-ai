@@ -65,17 +65,17 @@ export interface GameModeDef {
 
 /** Base mode catalog — lock/unlock via getGameModes(level) */
 export const GAME_MODE_DEFS: GameModeDef[] = [
-  { id: 'classic', icon: '🃏', color: '#3b82f6', minLevel: 1 },
-  { id: 'picture', icon: '🖼️', color: '#22c55e', minLevel: 1 },
-  { id: 'quick', icon: '⚡', color: '#f97316', minLevel: 2 },
-  { id: 'article', icon: '🔤', color: '#06b6d4', minLevel: 3 },
-  { id: 'memory', icon: '🧠', color: '#ec4899', minLevel: 4 },
-  { id: 'build', icon: '🧩', color: '#a855f7', minLevel: 5 },
-  { id: 'master', icon: '🏆', color: '#eab308', minLevel: 6 }, // unlock stub: A1 complete
-  { id: 'listen', icon: '🎧', color: '#14b8a6', minLevel: 7 }, // Hörjagd / Listening Hunt
-  { id: 'speed', icon: '🏎️', color: '#ef4444', minLevel: 8 }, // Schnellrunde / Speed Round / Word Race
-  { id: 'puzzle', icon: '🔠', color: '#f59e0b', minLevel: 9 }, // Wortpuzzle / Word Puzzle / scramble
-  { id: 'conversation', icon: '💬', color: '#f472b6', minLevel: 10 }, // Gesprächsmission / Conversation Mission
+  { id: 'classic', icon: 'ui/modes/classic.png', color: '#3b82f6', minLevel: 1 },
+  { id: 'picture', icon: 'ui/modes/picture.png', color: '#22c55e', minLevel: 1 },
+  { id: 'quick', icon: 'ui/modes/quick.png', color: '#f97316', minLevel: 2 },
+  { id: 'article', icon: 'ui/modes/article.png', color: '#06b6d4', minLevel: 3 },
+  { id: 'memory', icon: 'ui/modes/memory.png', color: '#ec4899', minLevel: 4 },
+  { id: 'build', icon: 'ui/modes/build.png', color: '#a855f7', minLevel: 5 },
+  { id: 'master', icon: 'ui/modes/master.png', color: '#eab308', minLevel: 6 }, // unlock stub: A1 complete
+  { id: 'listen', icon: 'ui/modes/listen.png', color: '#14b8a6', minLevel: 7 }, // Hörjagd / Listening Hunt
+  { id: 'speed', icon: 'ui/modes/speed.png', color: '#ef4444', minLevel: 8 }, // Schnellrunde / Speed Round / Word Race
+  { id: 'puzzle', icon: 'ui/modes/puzzle.png', color: '#f59e0b', minLevel: 9 }, // Wortpuzzle / Word Puzzle / scramble
+  { id: 'conversation', icon: 'ui/modes/conversation.png', color: '#f472b6', minLevel: 10 }, // Gesprächsmission / Conversation Mission
 ];
 
 export function getGameModes(level: number) {

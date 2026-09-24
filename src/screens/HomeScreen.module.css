@@ -498,3 +498,19 @@
   color: var(--text-muted);
   flex-shrink: 0;
 }
+
+.avatarBtn {
+  padding: 0;
+  border: none;
+  background: transparent;
+  border-radius: 16px;
+}
+.shopTitle {
+  margin: 2px 0 0;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #fbbf24;
+}
+.stat {
+  cursor: pointer;
+}

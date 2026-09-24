@@ -70,3 +70,13 @@ The app is currently local-first. Storage keys are defined in the modules that o
 - [x] Native TTS plugin wired through `src/modules/Audio/speech.ts`; service worker skipped on native.
 - [x] GitHub Actions workflow `.github/workflows/build-android.yml` builds `assembleDebug` and publishes `WortLand-AI.apk` to the prerelease tag `android-latest`.
 - [x] GitHub Pages deploy (`.github/workflows/deploy-pages.yml` with `VITE_BASE=/wortland-ai/`) remains separate and unchanged in intent.
+
+## 2026-03-26 — Coin Shop, icons, next challenge, nav fix
+
+- **Coin Shop** (`shop` screen): 21 cosmetic items (avatars, frames, titles, stickers, trails) with rarities/prices; localStorage `wortland.shop.v1`; kid-safe (coins from play only).
+- **Cosmetics** show on Home/Profile via `PlayerAvatar` (equipped avatar/frame/badge/sticker + title).
+- **Mode & game icons**: custom illustrated PNGs under `public/ui/` replace emoji on Mode screen and game mode lists.
+- **Next challenge**: results screens launch the next unlocked mode/level directly (retry if not passed).
+- **Bottom nav**: portaled into `.app-frame` with `position:absolute; bottom:0` + safe-area; fade animation no longer keeps `transform` (fixes Android WebView mid-screen float).
+- Android `versionCode 2` / `versionName 1.1.0`.
+

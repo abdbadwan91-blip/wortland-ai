@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
+import { handleNextChallenge } from '../modules/Progression/launchNext';
 import { recordPracticeDay } from '../modules/Mastery';
 import { recordDailyProgress } from '../modules/Rewards/dailyMission';
 import { applySessionBadges } from '../modules/Rewards/badges';
@@ -18,7 +19,7 @@ export function ClassicCardsResultsScreen({
   total,
   onPlayAgain,
 }: Props) {
-  const { t, setScreen, updateProfile, profile } = useApp();
+  const { t, setScreen, updateProfile, profile, selectedLevel, setSelectedMode, setSelectedLevel } = useApp();
   const applied = useRef(false);
   const coins = Math.max(2, Math.floor(seen / 2));
 
@@ -65,7 +66,18 @@ export function ClassicCardsResultsScreen({
       <button type="button" className="btn-primary" onClick={onPlayAgain}>
         {t('pm.playAgain')}
       </button>
-      <button type="button" className="btn-ghost" onClick={() => setScreen('home')}>
+      <button
+        type="button"
+        className="btn-blue"
+        data-next-challenge
+        onClick={() => handleNextChallenge({ setScreen, setSelectedMode, setSelectedLevel }, { currentMode: 'classic', level: selectedLevel || profile.level || 1, passed: true, onRetry: onPlayAgain })}
+      >
+        {t('pm.nextChallenge')}
+      </button>
+      <button
+        type="button"
+        className="btn-ghost"
+        onClick={() => setScreen('home')}>
         {t('arena.backHome')}
       </button>
       <button type="button" className="btn-ghost" onClick={() => setScreen('gameModes')}>

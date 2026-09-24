@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
+import { handleNextChallenge } from '../modules/Progression/launchNext';
 import {
   calcMasterRewards,
   MASTER_ROUND_SIZE,
@@ -25,7 +26,7 @@ export function MasterChallengeResultsScreen({
   sessionXp,
   onPlayAgain,
 }: Props) {
-  const { t, setScreen, updateProfile, profile } = useApp();
+  const { t, setScreen, updateProfile, profile, selectedLevel, setSelectedMode, setSelectedLevel } = useApp();
   const applied = useRef(false);
   const rewards = calcMasterRewards(correct);
   const totalXpGain = Math.max(rewards.xp, sessionXp);
@@ -138,7 +139,7 @@ export function MasterChallengeResultsScreen({
         <button
           type="button"
           className="btn-blue"
-          onClick={() => setScreen('levelWheel')}
+          onClick={() => handleNextChallenge({ setScreen, setSelectedMode, setSelectedLevel }, { currentMode: 'master', level: selectedLevel || profile.level || 1, passed: Boolean(rewards?.mapAdvance), onRetry: onPlayAgain })}
           data-next-challenge
         >
           {t('mc.nextChallenge')}

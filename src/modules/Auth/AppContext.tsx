@@ -19,6 +19,7 @@ import {
 import { getDir } from '../Localization/languages';
 import { t as translate } from '../Localization/i18n';
 import { clearBadges } from '../Rewards/badges';
+import { clearShop } from '../Shop';
 import { clearMapProgress } from '../MapProgress/mapProgress';
 import { applySettings, loadSettings, saveSettings, type WortlandSettings } from '../Settings/settings';
 
@@ -50,7 +51,8 @@ export type Screen =
   | 'speedRound'
   | 'wordPuzzle'
   | 'conversationMission'
-  | 'family';
+  | 'family'
+  | 'shop';
 
 interface AppState {
   profile: UserProfile;
@@ -112,6 +114,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const resetOnboarding = useCallback(() => {
     clearMapProgress();
     clearBadges();
+    clearShop();
     clearProfile();
     const fresh = loadProfile();
     setProfile(fresh);

@@ -3,6 +3,7 @@ import { BottomNav } from '../components/BottomNav';
 import { useApp, type Screen } from '../modules/Auth/AppContext';
 import { getGameModes, type GameModeId } from '../modules/Content/cefr';
 import styles from './GamesHubScreen.module.css';
+import { assetUrl } from '../modules/Content/assetUrl';
 
 const COMING_SOON = [
   { id: 'conversation', icon: '💬', tone: 'coral' },
@@ -127,7 +128,11 @@ export function GamesHubScreen() {
               onClick={() => openMode(mode.id)}
               data-game-mode={mode.id}
             >
-              <span className={styles.modeIcon} aria-hidden>{mode.icon}</span>
+              <span className={styles.modeIcon} aria-hidden>
+                {mode.icon.includes('/') ? (
+                  <img src={assetUrl(mode.icon)} alt="" draggable={false} />
+                ) : mode.icon}
+              </span>
               <span className={styles.modeBody}>
                 <span className={styles.modeTopline}>
                   <span className={styles.liveLabel}>{t('gamesHub.live')}</span>

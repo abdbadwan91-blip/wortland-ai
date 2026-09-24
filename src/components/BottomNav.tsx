@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom';
+import { useEffect, useState } from 'react';
 import { useApp, type Screen } from '../modules/Auth/AppContext';
 import styles from './BottomNav.module.css';
 
@@ -11,12 +13,18 @@ const ITEMS: { id: Screen; icon: string; key: string }[] = [
 
 export function BottomNav() {
   const { t, screen, setScreen } = useApp();
+  const [host, setHost] = useState<Element | null>(null);
+
+  useEffect(() => {
+    setHost(document.querySelector('.app-frame') || document.body);
+  }, []);
+
   const active = (['home', 'learn', 'games', 'progress', 'profile'] as Screen[]).includes(screen)
     ? screen
     : 'home';
 
-  return (
-    <nav className={styles.nav} aria-label="Main">
+  const nav = (
+    <nav className={styles.nav} aria-label="Main" data-bottom-nav>
       {ITEMS.map((item) => {
         const on = active === item.id;
         return (
@@ -28,11 +36,16 @@ export function BottomNav() {
             aria-current={on ? 'page' : undefined}
             data-nav={item.id}
           >
-            <span className={styles.icon} aria-hidden>{item.icon}</span>
+            <span className={styles.icon} aria-hidden>
+              {item.icon}
+            </span>
             <span className={styles.label}>{t(item.key)}</span>
           </button>
         );
       })}
     </nav>
   );
+
+  if (!host) return null;
+  return createPortal(nav, host);
 }

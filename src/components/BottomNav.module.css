@@ -1,15 +1,17 @@
 .nav {
   position: absolute;
+  left: 0;
+  right: 0;
   bottom: 0;
-  inset-inline: 0;
+  z-index: 50;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 2px;
-  padding: 8px 6px calc(10px + var(--safe-bottom));
-  background: rgba(8, 16, 40, 0.94);
-  backdrop-filter: blur(14px);
+  padding: 8px 6px calc(10px + env(safe-area-inset-bottom, 0px));
+  background: rgba(8, 16, 40, 0.96);
   border-top: 1px solid var(--border);
-  z-index: 20;
+  /* Avoid backdrop-filter here — it can create containing-block bugs on Android WebView */
+  pointer-events: auto;
 }
 
 .item {
@@ -29,5 +31,12 @@
   background: var(--accent-soft);
 }
 
-.icon { font-size: 1.2rem; line-height: 1; }
-.label { font-size: 0.68rem; font-weight: 700; white-space: nowrap; }
+.icon {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}

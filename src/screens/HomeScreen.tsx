@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
 import { getAvatar } from '../data/avatars';
+import { PlayerAvatar, useEquippedTitleKey } from '../components/PlayerAvatar';
 import { cefrColor, cefrLabelKey, levelToCefr } from '../modules/Content/cefr';
 import { BottomNav } from '../components/BottomNav';
 import { QuestMap } from '../components/QuestMap/QuestMap';
@@ -38,7 +39,7 @@ const FEATURES = [
   { id: 'family', icon: '👨‍👩‍👧', key: 'home.feature.family', action: 'family' as const },
   { id: 'board', icon: '🏆', key: 'home.feature.leaderboard', action: null },
   { id: 'stats', icon: '📊', key: 'home.feature.stats', action: 'progress' as const },
-  { id: 'shop', icon: '🛒', key: 'home.feature.shop', action: null },
+  { id: 'shop', icon: '🛒', key: 'home.feature.shop', action: 'shop' as const },
 ];
 
 const GOAL_ICONS: Record<DailyGoalId, string> = {
@@ -58,6 +59,7 @@ export function HomeScreen() {
     updateProfile,
   } = useApp();
   const avatar = getAvatar(profile.avatarId);
+  const equippedTitle = useEquippedTitleKey();
   const level = profile.level || 1;
   const cefr = levelToCefr(level);
   const xpPct = Math.min(100, profile.xp % 100);
@@ -125,6 +127,10 @@ export function HomeScreen() {
   }, []);
 
   const onFeatureClick = (f: (typeof FEATURES)[number]) => {
+    if (f.action === 'shop') {
+      setScreen('shop');
+      return;
+    }
     if (f.action === 'daily') {
       scrollToMission();
       return;
@@ -171,15 +177,20 @@ export function HomeScreen() {
       <header className={styles.top}>
         <div className={styles.row1}>
           <div className={styles.identity}>
-            <div
-              className={styles.avatar}
-              style={{ background: avatar?.bg || '#334155' }}
-              aria-hidden
+            <button
+              type="button"
+              className={styles.avatarBtn}
+              onClick={() => setScreen('shop')}
+              aria-label={t('shop.title')}
+              data-open-shop-avatar
             >
-              {avatar?.emoji || '🧒'}
-            </div>
+              <PlayerAvatar avatarId={profile.avatarId} size={52} showBadge showSticker />
+            </button>
             <div>
               <p className={styles.greet}>{profile.name || '—'}</p>
+              {equippedTitle && (
+                <p className={styles.shopTitle} data-equipped-title>{t(equippedTitle)}</p>
+              )}
               <p className={styles.meta}>
                 <span
                   className={styles.cefrPill}
@@ -192,7 +203,9 @@ export function HomeScreen() {
           </div>
           <div className={styles.stats}>
             <span className={styles.stat} title={t('home.streak')} aria-label={`${t('home.streak')}: ${streak}`}>🔥 {streak}</span>
-            <span className={styles.stat}>🪙 {profile.coins}</span>
+            <button type="button" className={styles.stat} onClick={() => setScreen('shop')} data-open-shop-coins aria-label={t('shop.title')}>
+              🪙 {profile.coins}
+            </button>
           </div>
         </div>
         <div className={styles.xpRow}>

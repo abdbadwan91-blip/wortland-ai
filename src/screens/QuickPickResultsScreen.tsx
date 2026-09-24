@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
+import { handleNextChallenge } from '../modules/Progression/launchNext';
 import {
   calcRoundRewards,
   MAP_PASS_SCORE,
@@ -26,7 +27,7 @@ export function QuickPickResultsScreen({
   sessionXp,
   onPlayAgain,
 }: Props) {
-  const { t, setScreen, updateProfile, profile, selectedLevel, selectedTopic } = useApp();
+  const { t, setScreen, updateProfile, profile, selectedLevel, selectedTopic, setSelectedMode, setSelectedLevel } = useApp();
   const isSmart = selectedTopic === SMART_TOPIC_ID;
   const applied = useRef(false);
   const roundSize = getLevelParams(selectedLevel).roundSize;
@@ -136,7 +137,7 @@ export function QuickPickResultsScreen({
         <button
           type="button"
           className="btn-blue"
-          onClick={() => setScreen(isSmart ? 'home' : 'levelWheel')}
+          onClick={() => { if (isSmart) { setScreen('home'); return; } handleNextChallenge({ setScreen, setSelectedMode, setSelectedLevel }, { currentMode: 'quick', level: selectedLevel || profile.level || 1, passed: Boolean(rewards?.mapAdvance), onRetry: onPlayAgain }); }}
           data-next-challenge
         >
           {t(isSmart ? 'qp.home' : 'qp.nextChallenge')}

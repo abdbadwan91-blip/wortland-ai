@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
+import { handleNextChallenge } from '../modules/Progression/launchNext';
 import {
   BUILD_ROUND_SIZE,
   MAP_PASS_SCORE,
@@ -21,7 +22,7 @@ interface Props {
 }
 
 export function BuildItResultsScreen({ stats, onPlayAgain }: Props) {
-  const { t, setScreen, updateProfile, profile } = useApp();
+  const { t, setScreen, updateProfile, profile, selectedLevel, setSelectedMode, setSelectedLevel } = useApp();
   const applied = useRef(false);
   const total = stats.total || BUILD_ROUND_SIZE;
   const rewards = calcBuildRewards(stats.correct, total);
@@ -128,7 +129,7 @@ export function BuildItResultsScreen({ stats, onPlayAgain }: Props) {
         <button
           type="button"
           className="btn-blue"
-          onClick={() => setScreen('levelWheel')}
+          onClick={() => handleNextChallenge({ setScreen, setSelectedMode, setSelectedLevel }, { currentMode: 'build', level: selectedLevel || profile.level || 1, passed: Boolean(rewards?.mapAdvance), onRetry: onPlayAgain })}
           data-next-challenge
         >
           {t('bi.nextChallenge')}

@@ -203,3 +203,9 @@
   .heroMascot { inset-inline-end: 12px; }
   .modeGrid { grid-template-columns: 1fr; }
 }
+
+.modeIcon img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}

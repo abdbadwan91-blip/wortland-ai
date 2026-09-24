@@ -2,6 +2,7 @@ import { useEffect, useMemo } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
 import { getGameModes, type GameModeId } from '../modules/Content/cefr';
 import styles from './GameModesScreen.module.css';
+import { assetUrl } from '../modules/Content/assetUrl';
 
 function screenForMode(mode: string): 'pictureMatch' | 'quickPick' | 'articlePick' | 'classicCards' | 'memoryFlip' | 'buildIt' | 'masterChallenge' | 'listeningHunt' | 'speedRound' | 'wordPuzzle' | 'conversationMission' | 'arenaStub' {
   if (mode === 'picture') return 'pictureMatch';
@@ -79,7 +80,13 @@ export function GameModesScreen() {
               data-mode={m.id}
               data-locked={m.locked ? '1' : '0'}
             >
-              <span className={styles.icon} aria-hidden>{m.icon}</span>
+              <span className={styles.icon} aria-hidden>
+                {m.icon.includes('/') ? (
+                  <img src={assetUrl(m.icon)} alt="" className={styles.iconImg} draggable={false} />
+                ) : (
+                  m.icon
+                )}
+              </span>
               <span className={styles.body}>
                 <strong>{t(`modes.${m.id}`)}</strong>
                 <small>{m.locked ? t('modes.locked') : t(`modes.${m.id}.desc`)}</small>

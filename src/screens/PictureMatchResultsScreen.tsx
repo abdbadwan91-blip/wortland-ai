@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useApp } from '../modules/Auth/AppContext';
+import { handleNextChallenge } from '../modules/Progression/launchNext';
 import {
   calcRoundRewards,
   MAP_PASS_SCORE,
@@ -25,7 +26,7 @@ export function PictureMatchResultsScreen({
   sessionXp,
   onPlayAgain,
 }: Props) {
-  const { t, setScreen, updateProfile, profile, selectedLevel } = useApp();
+  const { t, setScreen, updateProfile, profile, selectedLevel, setSelectedMode, setSelectedLevel } = useApp();
   const applied = useRef(false);
   const roundSize = getLevelParams(selectedLevel).roundSize;
   const rewards = calcRoundRewards(correct, roundSize);
@@ -134,7 +135,7 @@ export function PictureMatchResultsScreen({
         <button
           type="button"
           className="btn-blue"
-          onClick={() => setScreen('levelWheel')}
+          onClick={() => handleNextChallenge({ setScreen, setSelectedMode, setSelectedLevel }, { currentMode: 'picture', level: selectedLevel || profile.level || 1, passed: Boolean(rewards?.mapAdvance), onRetry: onPlayAgain })}
           data-next-challenge
         >
           {t('pm.nextChallenge')}
