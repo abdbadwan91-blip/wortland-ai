@@ -2,14 +2,18 @@ import { mapTopic, mapTopicLabel } from '../../modules/MapProgress/mapTopics';
 import { isBossStage, worldForStage, worldLabel } from '../../modules/MapProgress/worlds';
 import { missionKindLabel, stageMission } from '../../modules/Progression/stageMission';
 import styles from './WorldStagePanel.module.css';
+import { bossReadiness, readinessLabel } from '../../modules/Progression/bossReadiness';
+import { worldGoalText } from '../../modules/Progression/worldGoal';
 
 export function WorldStagePanel({ language, stage, onSelect }:{language:string;stage:number;onSelect:(stage:number)=>void}) {
   const world=worldForStage(stage);
   const stages=Array.from({length:world.end-world.start+1},(_,i)=>world.start+i);
   const stageText=(n:number)=>language==='ar'?'المرحلة '+n:language==='de'?'Etappe '+n:'Stage '+n;
   const title=worldLabel(world,language);
+  const readiness=bossReadiness(stage);
   return <div className={styles.panel}>
     <div className={styles.head}><span>{world.icon}</span><strong>{title}</strong><small>{stage-world.start+1}/4</small></div>
+    <div className={styles.worldStatus}><span>{worldGoalText(stage,language)}</span><span>{readinessLabel(readiness,language)} · {readiness.percent}%</span></div>
     <div className={styles.stages}>{stages.map(n=>{
       const topic=mapTopic(n);
       const locked=n>stage;
