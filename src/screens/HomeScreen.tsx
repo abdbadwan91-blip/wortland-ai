@@ -7,6 +7,7 @@ import { BottomNav } from '../components/BottomNav';
 import { QuestMap } from '../components/QuestMap/QuestMap';
 import { WorldStrip } from '../components/QuestMap/WorldStrip';
 import { WorldStagePanel } from '../components/QuestMap/WorldStagePanel';
+import { WorldOneBanner } from '../components/QuestMap/WorldOneBanner';
 import { FalconTransition } from '../components/QuestMap/FalconTransition';
 import {
   loadMapProgress,
@@ -242,6 +243,7 @@ export function HomeScreen() {
 
       <section className={styles.mapSection} aria-label={t('home.map.title')}>
         <WorldStrip language={profile.appLanguage} stage={journeyStage} />
+        {journeyStage <= 4 ? <WorldOneBanner language={profile.appLanguage} stage={journeyStage} /> : null}
         <WorldStagePanel language={profile.appLanguage} stage={journeyStage} onSelect={openStage} />
         <QuestMap
           progress={mapProgress}
