@@ -14,6 +14,7 @@ import { skillBadge } from '../modules/Progression/skillBadge';
 import { missionPace, paceLabel } from '../modules/Progression/missionPace';
 import { masteryTarget, masteryText } from '../modules/Progression/masteryTarget';
 import { milestoneLabel, stageMilestone } from '../modules/Progression/stageMilestone';
+import { journeySummary, journeySummaryText } from '../modules/Progression/journeySummary';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -51,6 +52,7 @@ export function JourneyStageScreen() {
   const pace = missionPace(selectedLevel, meta.boss);
   const mastery = masteryTarget(selectedLevel, meta.boss);
   const milestone = stageMilestone(selectedLevel);
+  const summary = journeySummary(selectedLevel);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -67,6 +69,7 @@ export function JourneyStageScreen() {
 
       <section className={styles.hero}>
         <span className={styles.kicker}>WortLand AI · Journey</span>
+        <div className={styles.journeySummary}><span>{journeySummaryText(selectedLevel,profile.appLanguage)}</span><strong>{summary.overallPercent}%</strong></div>
         <div className={styles.missionTopic}><span>{missionTopic.icon}</span><strong>{missionLabel}</strong></div>
         {isWorldBoss ? <div className={styles.bossBanner}><span>👑</span><strong>{bossLabel}</strong><small> · {t('modes.master')}</small></div> : null}
         {isWorldBoss && upcomingWorld ? <div className={styles.nextWorld}><span>🔓</span><span>{profile.appLanguage==='ar'?'التالي: ':profile.appLanguage==='de'?'Als Nächstes: ':'Next: '}{worldLabel(upcomingWorld,profile.appLanguage)}</span></div> : null}
