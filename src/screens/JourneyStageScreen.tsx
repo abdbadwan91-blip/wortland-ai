@@ -19,6 +19,9 @@ import { missionStepLabel, missionSteps } from '../modules/Progression/missionSt
 import { missionRule, missionRuleLabel } from '../modules/Progression/missionRule';
 import { realLifeGoal, realLifeGoalLabel } from '../modules/Progression/realLifeGoal';
 import { canDoLabel, canDoStatement } from '../modules/Progression/canDo';
+import { learningSupport, supportLabel } from '../modules/Progression/learningSupport';
+import { loadText } from '../modules/Progression/languageLoad';
+import { bossChallenge, bossChallengeLabel } from '../modules/Progression/bossChallenge';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -61,6 +64,8 @@ export function JourneyStageScreen() {
   const rule = missionRule(mission.kind);
   const lifeGoal = realLifeGoal(selectedLevel);
   const canDo = canDoStatement(selectedLevel);
+  const support = learningSupport(selectedLevel, meta.boss);
+  const bossSpec = bossChallenge(selectedLevel);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -101,6 +106,8 @@ export function JourneyStageScreen() {
         <div className={styles.stepFlow}>{steps.map((step,index)=><div key={index}><span>{step.icon}</span><small>{missionStepLabel(step,profile.appLanguage)}</small></div>)}</div>
         <div className={styles.missionRule}><span>{rule.icon}</span><span>{missionRuleLabel(rule,profile.appLanguage)}</span></div>
         <div className={styles.canDo}><span>✓</span><span>{canDoLabel(canDo,profile.appLanguage)}</span></div>
+        <div className={styles.supportRow}><span>🧭 {supportLabel(support,profile.appLanguage)} · 💡 {support.hints}</span><span>📚 {loadText(selectedLevel,profile.appLanguage)}</span></div>
+        {isWorldBoss?<div className={styles.bossSpec}><span>👑</span><span>{bossChallengeLabel(bossSpec,profile.appLanguage)} · {bossSpec.skills} skills · {bossSpec.rounds} rounds · {bossSpec.pass}%</span></div>:null}
         <div className={styles.missionStats}>
           <span>{skill.icon} {skill.label}</span><span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>🔥 {paceLabel(pace,profile.appLanguage)} {pace.intensity}/5</span><span>{'★'.repeat(meta.stars)}</span>
         </div>
