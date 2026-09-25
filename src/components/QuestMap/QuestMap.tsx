@@ -51,8 +51,11 @@ function StageNode({
       aria-label={locked ? `${label} — ${topicLabel} — ${lockedLabel}` : `${label} — ${topicLabel}`}
       aria-disabled={locked}
     >
+      <span className={styles.nodeShadow} aria-hidden />
       <span className={styles.nodeInner}>
-        {state === 'completed' ? '✓' : state === 'locked' ? '🔒' : topic.icon}
+        <span className={styles.nodeGloss} aria-hidden />
+        <span className={styles.nodeIcon}>{state === 'completed' ? '✓' : state === 'locked' ? '🔒' : topic.icon}</span>
+        <span className={styles.nodeNumber}>{stage}</span>
       </span>
       <span className={styles.topicLabel}>{topicLabel}</span>
       {state === 'current' ? <span className={styles.playBadge} aria-hidden>▶</span> : null}
