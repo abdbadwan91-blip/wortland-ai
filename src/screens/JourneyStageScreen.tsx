@@ -22,6 +22,12 @@ import { canDoLabel, canDoStatement } from '../modules/Progression/canDo';
 import { learningSupport, supportLabel } from '../modules/Progression/learningSupport';
 import { loadText } from '../modules/Progression/languageLoad';
 import { bossChallenge, bossChallengeLabel } from '../modules/Progression/bossChallenge';
+import { difficultyLabel, difficultyProfile } from '../modules/Progression/difficultyProfile';
+import { skillMix } from '../modules/Progression/skillMix';
+import { rhythmText, stageRhythm } from '../modules/Progression/stageRhythm';
+import { bossPrep, bossPrepText } from '../modules/Progression/bossPrep';
+import { stageIdentity, stageIdentityText } from '../modules/Progression/stageIdentity';
+import { checkpointLabel, journeyCheckpoint } from '../modules/Progression/journeyCheckpoint';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -66,6 +72,12 @@ export function JourneyStageScreen() {
   const canDo = canDoStatement(selectedLevel);
   const support = learningSupport(selectedLevel, meta.boss);
   const bossSpec = bossChallenge(selectedLevel);
+  const difficulty = difficultyProfile(selectedLevel, meta.boss);
+  const mix = skillMix(selectedLevel, meta.boss);
+  const rhythm = stageRhythm(selectedLevel, meta.boss);
+  const prep = bossPrep(selectedLevel);
+  const identity = stageIdentity(selectedLevel);
+  const checkpoint = journeyCheckpoint(selectedLevel);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -83,6 +95,7 @@ export function JourneyStageScreen() {
       <section className={styles.hero}>
         <span className={styles.kicker}>WortLand AI · Journey</span>
         <div className={styles.journeySummary}><span>{journeySummaryText(selectedLevel,profile.appLanguage)}</span><strong>{summary.overallPercent}%</strong></div>
+        <div className={styles.stageIdentity}><span>{identity.icon} {stageIdentityText(identity,profile.appLanguage)}</span><span>{checkpoint.icon} {checkpointLabel(checkpoint,profile.appLanguage)}</span></div>
         <div className={styles.missionTopic}><span>{missionTopic.icon}</span><strong>{missionLabel}</strong></div>
         {isWorldBoss ? <div className={styles.bossBanner}><span>👑</span><strong>{bossLabel}</strong><small> · {t('modes.master')}</small></div> : null}
         {isWorldBoss && upcomingWorld ? <div className={styles.nextWorld}><span>🔓</span><span>{profile.appLanguage==='ar'?'التالي: ':profile.appLanguage==='de'?'Als Nächstes: ':'Next: '}{worldLabel(upcomingWorld,profile.appLanguage)}</span></div> : null}
@@ -106,7 +119,7 @@ export function JourneyStageScreen() {
         <div className={styles.stepFlow}>{steps.map((step,index)=><div key={index}><span>{step.icon}</span><small>{missionStepLabel(step,profile.appLanguage)}</small></div>)}</div>
         <div className={styles.missionRule}><span>{rule.icon}</span><span>{missionRuleLabel(rule,profile.appLanguage)}</span></div>
         <div className={styles.canDo}><span>✓</span><span>{canDoLabel(canDo,profile.appLanguage)}</span></div>
-        <div className={styles.supportRow}><span>🧭 {supportLabel(support,profile.appLanguage)} · 💡 {support.hints}</span><span>📚 {loadText(selectedLevel,profile.appLanguage)}</span></div>
+        <div className={styles.supportRow}><span>🧭 {supportLabel(support,profile.appLanguage)} · 💡 {support.hints}</span><span>📚 {loadText(selectedLevel,profile.appLanguage)}</span><span>{difficulty.icon} {difficultyLabel(difficulty,profile.appLanguage)} {difficulty.level}/5</span><span>{mix.icon} {mix.primary} + {mix.secondary}</span><span>🧩 {rhythmText(rhythm,profile.appLanguage)}</span><span>👑 {bossPrepText(prep,profile.appLanguage)}</span></div>
         {isWorldBoss?<div className={styles.bossSpec}><span>👑</span><span>{bossChallengeLabel(bossSpec,profile.appLanguage)} · {bossSpec.skills} skills · {bossSpec.rounds} rounds · {bossSpec.pass}%</span></div>:null}
         <div className={styles.missionStats}>
           <span>{skill.icon} {skill.label}</span><span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>🔥 {paceLabel(pace,profile.appLanguage)} {pace.intensity}/5</span><span>{'★'.repeat(meta.stars)}</span>
