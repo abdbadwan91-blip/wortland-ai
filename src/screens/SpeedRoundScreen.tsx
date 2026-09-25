@@ -11,6 +11,7 @@ import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import type { LearningObject } from '../modules/Content/types';
 import styles from './SpeedRoundScreen.module.css';
+import { comboReward } from '../modules/Gamification/comboReward';
 
 type CardState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -126,8 +127,7 @@ export function SpeedRoundScreen({ onFinish }: Props) {
       advancing.current = true;
       const nextCorrect = correctCount + 1;
       const nextStreak = streak + 1;
-      const streakBonus = nextStreak >= 3 ? 2 : nextStreak >= 2 ? 1 : 0;
-      const gained = 5 + streakBonus;
+      const gained = comboReward(nextStreak).xp;
       const nextXp = sessionXp + gained;
       setCorrectCount(nextCorrect);
       setSessionXp(nextXp);
