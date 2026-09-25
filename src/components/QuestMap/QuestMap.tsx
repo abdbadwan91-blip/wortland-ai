@@ -6,6 +6,7 @@ import { MountainScene } from './MountainScene';
 import { ForestScene } from './ForestScene';
 import styles from './QuestMap.module.css';
 import { mapTopic, mapTopicLabel } from '../../modules/MapProgress/mapTopics';
+import { worldOneStage } from '../../modules/WorldOne/worldOne';
 
 interface Props {
   progress: MapProgress;
@@ -40,7 +41,8 @@ function StageNode({
 }) {
   const locked = state === 'locked';
   const topic = mapTopic(stage);
-  const topicLabel = mapTopicLabel(stage, language);
+  const w1 = worldOneStage(stage);
+  const topicLabel = w1 ? (language === 'ar' ? w1.ar : language === 'de' ? w1.de : w1.en) : mapTopicLabel(stage, language);
   return (
     <button
       type="button"
@@ -54,7 +56,7 @@ function StageNode({
       <span className={styles.nodeShadow} aria-hidden />
       <span className={styles.nodeInner}>
         <span className={styles.nodeGloss} aria-hidden />
-        <span className={styles.nodeIcon}>{state === 'completed' ? '✓' : state === 'locked' ? '🔒' : topic.icon}</span>
+        <span className={styles.nodeIcon}>{state === 'completed' ? '✓' : state === 'locked' ? '🔒' : (w1?.icon ?? topic.icon)}</span>
         <span className={styles.nodeNumber}>{stage}</span>
       </span>
       <span className={styles.topicLabel}>{topicLabel}</span>
