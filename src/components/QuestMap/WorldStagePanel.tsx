@@ -4,6 +4,8 @@ import { missionKindLabel, stageMission } from '../../modules/Progression/stageM
 import styles from './WorldStagePanel.module.css';
 import { bossReadiness, readinessLabel } from '../../modules/Progression/bossReadiness';
 import { worldGoalText } from '../../modules/Progression/worldGoal';
+import { isWorldOne, worldOneMission, worldOneStage } from '../../modules/WorldOne/worldOne';
+import { worldOneReward } from '../../modules/WorldOne/worldOneRewards';
 
 export function WorldStagePanel({ language, stage, onSelect }:{language:string;stage:number;onSelect:(stage:number)=>void}) {
   const world=worldForStage(stage);
@@ -19,10 +21,13 @@ export function WorldStagePanel({ language, stage, onSelect }:{language:string;s
       const locked=n>stage;
       const completed=n<stage;
       const boss=isBossStage(n);
+      const w1=worldOneStage(n);
+      const reward=isWorldOne(n)?worldOneReward(n):null;
       return <button type="button" key={n} className={n===stage?styles.current:styles.stage} disabled={locked} onClick={()=>onSelect(n)} aria-label={stageText(n)+' — '+mapTopicLabel(n,language)}>
         <span className={styles.iconShell}><span className={styles.icon}>{locked?'🔒':completed?'✓':boss?'👑':topic.icon}</span><span className={styles.miniStage}>{n}</span></span>
-        <span className={styles.name}>{mapTopicLabel(n,language)}</span>
-        <small>{boss?'Boss · ':missionKindLabel(stageMission(n),language)+' · '}{stageText(n)}</small>
+        <span className={styles.name}>{w1 ? (language==='ar'?w1.ar:language==='de'?w1.de:w1.en) : mapTopicLabel(n,language)}</span>
+        {w1?<span className={styles.missionLine}>{worldOneMission(w1,language)}</span>:null}
+        <small>{boss?'Boss · ':missionKindLabel(stageMission(n),language)+' · '}{stageText(n)}{reward?' · ⭐ '+reward.xp+' · 🪙 '+reward.coins:''}</small>
       </button>;
     })}</div>
   </div>;
