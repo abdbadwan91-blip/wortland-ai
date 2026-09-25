@@ -284,3 +284,16 @@
 }
 
 .topicLabel{position:absolute;top:53px;left:50%;transform:translateX(-50%);width:92px;padding:3px 5px;border-radius:8px;background:rgba(7,18,38,.82);border:1px solid rgba(255,255,255,.12);color:#fff7d6;font-size:.58rem;font-weight:850;line-height:1.15;text-align:center;box-shadow:0 3px 9px rgba(0,0,0,.28);pointer-events:none}.current .topicLabel{top:61px;background:rgba(92,45,8,.9)}.locked .topicLabel{opacity:.48}
+
+/* WortLand 3D visual language — layered toy-like stage pieces */
+.nodeShadow{position:absolute;left:50%;top:36px;width:52px;height:17px;transform:translateX(-50%);border-radius:50%;background:rgba(2,8,18,.48);filter:blur(5px);z-index:-1}
+.nodeInner{position:relative;overflow:visible;perspective:180px;background:linear-gradient(155deg,#72e56f 0%,#2dbd55 44%,#087438 100%);border:3px solid #eaffd7;box-shadow:0 8px 0 #07572e,0 12px 18px rgba(0,0,0,.42),inset 0 3px 3px rgba(255,255,255,.58),inset 0 -5px 7px rgba(0,64,30,.32)}
+.nodeGloss{position:absolute;left:8px;right:8px;top:5px;height:13px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.68),rgba(255,255,255,0));pointer-events:none}
+.nodeIcon{position:relative;z-index:2;font-size:1.15rem;filter:drop-shadow(0 2px 1px rgba(0,0,0,.25));transform:translateY(-1px)}
+.nodeNumber{position:absolute;right:-7px;bottom:-7px;z-index:3;display:grid;place-items:center;min-width:21px;height:21px;padding:0 4px;border-radius:8px;background:linear-gradient(180deg,#fff7c5,#ffc34d);border:2px solid #fffbe3;color:#4b2600;font-size:.55rem;font-weight:1000;box-shadow:0 3px 6px rgba(0,0,0,.38)}
+.current .nodeInner{background:linear-gradient(150deg,#ffe36d 0%,#ffae36 40%,#ff6a24 100%);box-shadow:0 9px 0 #a73a10,0 0 0 5px rgba(255,226,105,.25),0 14px 25px rgba(92,27,3,.55),inset 0 3px 3px rgba(255,255,255,.65)}
+.completed .nodeInner{background:linear-gradient(150deg,#8cf09a,#32c96a 45%,#08763c);box-shadow:0 8px 0 #07582f,0 12px 18px rgba(0,0,0,.38),inset 0 3px 3px rgba(255,255,255,.55)}
+.locked .nodeInner{background:linear-gradient(155deg,#9ba9bd,#5d6d83 48%,#344257);box-shadow:0 7px 0 #263142,0 10px 15px rgba(0,0,0,.36),inset 0 2px 2px rgba(255,255,255,.25)}
+.node:active:not(:disabled) .nodeInner{transform:translateY(5px) scale(.96);box-shadow:0 3px 0 #07572e,0 7px 10px rgba(0,0,0,.35)}
+.topicLabel{top:58px;background:linear-gradient(180deg,rgba(20,42,72,.94),rgba(5,17,37,.95));border:1px solid rgba(194,225,255,.3);box-shadow:0 6px 13px rgba(0,0,0,.38),inset 0 1px rgba(255,255,255,.12);backdrop-filter:blur(7px)}
+.current .topicLabel{top:68px;background:linear-gradient(180deg,rgba(119,62,12,.96),rgba(66,29,5,.96));border-color:rgba(255,218,128,.48)}
