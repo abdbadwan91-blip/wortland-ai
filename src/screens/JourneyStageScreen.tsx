@@ -15,6 +15,8 @@ import { missionPace, paceLabel } from '../modules/Progression/missionPace';
 import { masteryTarget, masteryText } from '../modules/Progression/masteryTarget';
 import { milestoneLabel, stageMilestone } from '../modules/Progression/stageMilestone';
 import { journeySummary, journeySummaryText } from '../modules/Progression/journeySummary';
+import { missionStepLabel, missionSteps } from '../modules/Progression/missionSteps';
+import { missionRule, missionRuleLabel } from '../modules/Progression/missionRule';
 
 const MODE_SCREENS: Record<GameModeId, Screen> = {
   classic: 'classicCards',
@@ -53,6 +55,8 @@ export function JourneyStageScreen() {
   const mastery = masteryTarget(selectedLevel, meta.boss);
   const milestone = stageMilestone(selectedLevel);
   const summary = journeySummary(selectedLevel);
+  const steps = missionSteps(mission.kind);
+  const rule = missionRule(mission.kind);
 
   const playTopic = (topicId: string) => {
     const mode: GameModeId = isWorldBoss ? 'master' : getJourneyMode(selectedLevel, topicId);
@@ -89,6 +93,8 @@ export function JourneyStageScreen() {
         <div className={styles.missionType}><span>{mission.icon}</span><strong>{missionKindLabel(mission,profile.appLanguage)}</strong></div>
         <p>{missionGoal(profile.appLanguage, meta.boss)}</p>
         <div className={styles.objective}><span>🎓</span><span>{objectiveLabel(objective,profile.appLanguage)} · {objective.target}</span></div>
+        <div className={styles.stepFlow}>{steps.map((step,index)=><div key={index}><span>{step.icon}</span><small>{missionStepLabel(step,profile.appLanguage)}</small></div>)}</div>
+        <div className={styles.missionRule}><span>{rule.icon}</span><span>{missionRuleLabel(rule,profile.appLanguage)}</span></div>
         <div className={styles.missionStats}>
           <span>{skill.icon} {skill.label}</span><span>⚡ {reward.xp} XP</span><span>🪙 {reward.coins}</span><span>🎯 {meta.rounds}</span><span>⏱ {meta.minutes} min</span><span>🔥 {paceLabel(pace,profile.appLanguage)} {pace.intensity}/5</span><span>{'★'.repeat(meta.stars)}</span>
         </div>
