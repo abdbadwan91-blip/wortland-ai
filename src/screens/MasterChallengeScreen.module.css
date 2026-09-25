@@ -375,3 +375,5 @@
 .feedbackHint { color: #fbbf24; font-size: 0.95rem; }
 
 .spacer { flex: 1; min-height: 8px; }
+
+.comboChip{padding:6px 9px;border-radius:999px;background:rgba(255,139,61,.15);border:1px solid rgba(255,171,87,.3);font-size:.62rem;font-weight:950;color:#ffd59b;animation:comboPop .22s ease-out}@keyframes comboPop{from{transform:scale(.75)}to{transform:scale(1)}}

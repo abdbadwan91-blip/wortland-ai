@@ -10,6 +10,7 @@ import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { MASTER_ROUND_SIZE } from '../modules/Rewards/rewards';
 import type { Article, LearningObject } from '../modules/Content/types';
 import styles from './MasterChallengeScreen.module.css';
+import { comboReward, comboText } from '../modules/Gamification/comboReward';
 
 type CardState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -45,6 +46,7 @@ export function MasterChallengeScreen({ onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [sessionXp, setSessionXp] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [fails, setFails] = useState(0);
   const [feedback, setFeedback] = useState<'ok' | 'retry' | 'hint' | null>(null);
   const [locked, setLocked] = useState(false);
@@ -118,9 +120,12 @@ export function MasterChallengeScreen({ onFinish }: Props) {
       setLocked(true);
       advancing.current = true;
       const nextCorrect = correctCount + 1;
-      const nextXp = sessionXp + XP_PER_HIT;
+      const nextStreak = streak + 1;
+      const reward = comboReward(nextStreak, XP_PER_HIT);
+      const nextXp = sessionXp + reward.xp;
       setCorrectCount(nextCorrect);
       setSessionXp(nextXp);
+      setStreak(nextStreak);
       setFeedback('ok');
       const nextStates: Record<string, CardState> = {};
       for (const k of optionKeys) {
@@ -135,6 +140,7 @@ export function MasterChallengeScreen({ onFinish }: Props) {
 
   const markSoftMiss = useCallback(
     (wrongKey: string, correctKey: string, optionKeys: string[]) => {
+      setStreak(0);
       const nextFails = fails + 1;
       setFails(nextFails);
       setCardStates((prev) => ({ ...prev, [wrongKey]: 'wrong' }));
@@ -229,6 +235,7 @@ export function MasterChallengeScreen({ onFinish }: Props) {
           ← {t('mc.back')}
         </button>
         <div className={styles.metaChips}>
+          {streak>=3&&<span className={styles.comboChip}>{comboText(streak,'en')}</span>}
           <span className={styles.timerChip} dir="ltr" data-timer>
             ⏱ {formatElapsed(elapsedMs)}
           </span>

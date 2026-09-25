@@ -11,6 +11,7 @@ import { SpeechSpeedChip } from '../components/SpeechSpeedChip';
 import { recordResult } from '../modules/Mastery';
 import type { LearningObject } from '../modules/Content/types';
 import styles from './QuickPickScreen.module.css';
+import { comboReward, comboText } from '../modules/Gamification/comboReward';
 
 type CardState = 'idle' | 'correct' | 'wrong' | 'dim';
 
@@ -29,6 +30,7 @@ export function QuickPickScreen({ onFinish }: Props) {
   const [index, setIndex] = useState(0);
   const [correctCount, setCorrectCount] = useState(0);
   const [sessionXp, setSessionXp] = useState(0);
+  const [streak, setStreak] = useState(0);
   const [feedback, setFeedback] = useState<'ok' | 'retry' | 'hint' | null>(null);
   const [locked, setLocked] = useState(false);
   const [cardStates, setCardStates] = useState<Record<string, CardState>>({});
@@ -91,6 +93,7 @@ export function QuickPickScreen({ onFinish }: Props) {
 
   const applyGentleMiss = useCallback(() => {
     if (!q || locked || advancing.current) return;
+    setStreak(0);
     const nextFails = failsRef.current + 1;
     failsRef.current = nextFails;
     setFeedback('retry');
@@ -126,10 +129,13 @@ export function QuickPickScreen({ onFinish }: Props) {
       setLocked(true);
       advancing.current = true;
       const nextCorrect = correctCount + 1;
-      const gained = 5;
+      const nextStreak = streak + 1;
+      const reward = comboReward(nextStreak);
+      const gained = reward.xp;
       const nextXp = sessionXp + gained;
       setCorrectCount(nextCorrect);
       setSessionXp(nextXp);
+      setStreak(nextStreak);
       setFeedback('ok');
       const nextStates: Record<string, CardState> = {};
       for (const o of q.options) {
@@ -194,7 +200,7 @@ export function QuickPickScreen({ onFinish }: Props) {
         >
           ← {t('qp.back')}
         </button>
-        <span className={styles.xpChip} dir="ltr">⭐ +{sessionXp}</span>
+        <div className={styles.rewardChips}>{streak>=3&&<span className={styles.comboChip}>{comboText(streak,'en')}</span>}<span className={styles.xpChip} dir="ltr">⭐ +{sessionXp}</span></div>
       </div>
 
       <div className={styles.progress}>
