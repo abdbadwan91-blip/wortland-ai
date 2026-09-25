@@ -10,3 +10,5 @@
 .current .iconShell{background:linear-gradient(155deg,#ffe16d,#ff9e32);border-color:#fff2b7;box-shadow:0 5px 0 #a94714,0 8px 12px rgba(0,0,0,.32),inset 0 2px rgba(255,255,255,.5)}
 .icon{font-size:1.2rem;filter:drop-shadow(0 2px 1px rgba(0,0,0,.25))}
 .miniStage{position:absolute;right:-6px;bottom:-5px;display:grid;place-items:center;width:18px;height:18px;border-radius:7px;background:#fff1a8;border:1px solid #fff8d7;color:#4b2600;font-size:.48rem;font-weight:950;box-shadow:0 2px 5px rgba(0,0,0,.3)}
+
+.missionLine{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.1em;font-size:.49rem;line-height:1.08;color:rgba(225,237,255,.76);text-align:center}.current .missionLine{color:#ffe9b8}.stages{align-items:stretch}.stage,.current{min-height:116px;justify-content:flex-start}
