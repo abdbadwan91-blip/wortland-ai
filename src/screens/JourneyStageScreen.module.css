@@ -55,3 +55,5 @@
 .objective,.tip,.rewardHint{display:flex;align-items:center;gap:7px;margin-top:8px;padding:7px 8px;border-radius:11px;font-size:.65rem;font-weight:750}.objective{background:rgba(103,159,255,.1);color:#dce9ff}.tip{background:rgba(255,255,255,.045);color:#d7e0ef}.rewardHint{justify-content:space-between;background:rgba(255,205,91,.08);color:#ffe4a7}.rewardHint span:first-child{white-space:nowrap;font-weight:900}
 
 .mastery,.milestone{display:flex;align-items:center;gap:7px;margin-top:8px;padding:7px 8px;border-radius:11px;font-size:.65rem;font-weight:800}.mastery{background:rgba(102,232,171,.09);color:#baf4d4}.milestone{background:rgba(185,123,255,.09);color:#e4caff}
+
+.journeySummary{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:8px;font-size:.62rem;color:#dce8ff}.journeySummary strong{padding:3px 7px;border-radius:999px;background:rgba(115,229,163,.12);color:#9ff3c3}
